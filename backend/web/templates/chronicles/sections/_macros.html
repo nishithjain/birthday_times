@@ -1,0 +1,8 @@
+{% macro newspaper_illustration(slot_name, placeholder) -%}
+{% set item = (chronicle.illustrations or {}).get(slot_name) %}
+{% if item and item.displayPath %}
+<img src="{{ url_for('static', filename=item.displayPath) }}" alt="" class="newspaper-illustration">
+{% else %}
+<div class="image-placeholder">{{ placeholder }}</div>
+{% endif %}
+{%- endmacro %}

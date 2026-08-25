@@ -1,0 +1,73 @@
+{
+    "schemaVersion": 1,
+    "defaultTemplateId": "classic_01",
+    "selection": {
+        "mode": "deterministic",
+        "seedFields": [
+            "personName",
+            "birthDate"
+        ]
+    },
+    "templates": [
+        {
+            "id": "classic_01",
+            "headlineTemplate": "CELEBRITIES SHARE {monthNameShortUpper} {dayOrdinalUpper} BIRTHDAY",
+            "introTemplate": "{monthName} {dayOrdinal} seems to be a popular day to be born, at least according to the impressive list of famous people born on that day! Also born this date are {celebrityNames}.",
+            "daysAliveTemplate": "It's interesting to note that as of {asOfDateLong}, {personFirstName} has been alive for {daysAliveFormatted} days!"
+        },
+        {
+            "id": "classic_02",
+            "headlineTemplate": "FAMOUS FACES SHARE {monthNameShortUpper} {dayOrdinalUpper} BIRTHDAY",
+            "introTemplate": "{monthName} {dayOrdinal} has produced its fair share of famous names through the years. Sharing this birthday with {personFirstName} are {celebrityNames}.",
+            "daysAliveTemplate": "As of {asOfDateLong}, {personFirstName} has enjoyed an impressive {daysAliveFormatted} days since arriving in the world!"
+        },
+        {
+            "id": "classic_03",
+            "headlineTemplate": "{monthNameShortUpper} {dayOrdinalUpper} — A DAY FOR FAMOUS BIRTHDAYS",
+            "introTemplate": "There must be something special about {monthName} {dayOrdinal}. Among the notable people born on this very date are {celebrityNames}.",
+            "daysAliveTemplate": "And here's a number worth remembering: by {asOfDateLong}, {personFirstName} has been alive for {daysAliveFormatted} days."
+        },
+        {
+            "id": "classic_04",
+            "headlineTemplate": "{personFirstNameUpper} SHARES A BIRTHDAY WITH THE STARS",
+            "introTemplate": "{personFirstName} is certainly in distinguished company. Other well-known people born on {monthName} {dayOrdinal} include {celebrityNames}.",
+            "daysAliveTemplate": "Counting from that special birthday to {asOfDateLong}, {personFirstName} has been part of the world for {daysAliveFormatted} days!"
+        },
+        {
+            "id": "classic_05",
+            "headlineTemplate": "NOTABLE NAMES BORN ON {monthNameShortUpper} {dayOrdinalUpper}",
+            "introTemplate": "{monthName} {dayOrdinal} has long been a birthday shared by people who went on to make their mark. Among them are {celebrityNames}.",
+            "daysAliveTemplate": "As of {asOfDateLong}, no fewer than {daysAliveFormatted} days have passed since {personFirstName}'s own arrival."
+        },
+        {
+            "id": "classic_06",
+            "headlineTemplate": "A BIRTHDAY SHARED WITH FAME",
+            "introTemplate": "The calendar page for {monthName} {dayOrdinal} contains quite a collection of famous birthdays. {personFirstName} shares the date with {celebrityNames}.",
+            "daysAliveTemplate": "By {asOfDateLong}, {personFirstName} has been alive for a grand total of {daysAliveFormatted} days."
+        },
+        {
+            "id": "classic_07",
+            "headlineTemplate": "THE FAMOUS BIRTHDAY CLUB — {monthNameShortUpper} {dayOrdinalUpper}",
+            "introTemplate": "{personFirstName} belongs to quite a birthday club. Also celebrating their arrival on {monthName} {dayOrdinal} are such notable names as {celebrityNames}.",
+            "daysAliveTemplate": "The calendar has turned plenty of pages since then — {daysAliveFormatted} days to be exact as of {asOfDateLong}."
+        },
+        {
+            "id": "classic_08",
+            "headlineTemplate": "WHO ELSE WAS BORN ON {monthNameShortUpper} {dayOrdinalUpper}?",
+            "introTemplate": "A look through the history books reveals that {monthName} {dayOrdinal} has welcomed many remarkable people. Among those sharing {personFirstName}'s birthday are {celebrityNames}.",
+            "daysAliveTemplate": "As of {asOfDateLong}, {personFirstName}'s own story has already stretched across {daysAliveFormatted} days."
+        },
+        {
+            "id": "classic_09",
+            "headlineTemplate": "{monthNameShortUpper} {dayOrdinalUpper} HAS ITS SHARE OF STARS",
+            "introTemplate": "Some dates seem to attract famous birthdays, and {monthName} {dayOrdinal} is certainly one of them. Notable names born on the date include {celebrityNames}.",
+            "daysAliveTemplate": "Meanwhile, {personFirstName} has accumulated {daysAliveFormatted} days of memories by {asOfDateLong}."
+        },
+        {
+            "id": "classic_10",
+            "headlineTemplate": "BORN ON THE SAME DAY AS THE FAMOUS",
+            "introTemplate": "{personFirstName} shares {monthName} {dayOrdinal} with an impressive collection of well-known personalities, including {celebrityNames}.",
+            "daysAliveTemplate": "From that birthday to {asOfDateLong}, exactly {daysAliveFormatted} days have gone by in {personFirstName}'s life."
+        }
+    ]
+}

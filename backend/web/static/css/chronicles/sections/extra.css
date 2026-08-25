@@ -1,0 +1,151 @@
+.chronicle-extra {
+    --extra-rule-weight: 1px;
+    --extra-headline-tracking: .03em;
+    --extra-special-gap: 4px;
+    --extra-ornament-size: 8px;
+    --extra-edition-rule-width: 15px;
+    --extra-divider-weight: 1px;
+    width: 230px;
+    height: 100px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 4px 7px;
+    display: grid;
+    grid-template-rows: 23px 1px minmax(0, 1fr) 16px;
+    align-items: center;
+    justify-items: center;
+    background: transparent;
+    color: var(--ink, #17120c);
+    overflow: visible;
+    text-align: center;
+}
+
+.chronicle-extra .extra-headline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+}
+
+.chronicle-extra .extra-headline-rule {
+    height: 0;
+    flex: 1 1 auto;
+    border-top: var(--extra-rule-weight) solid currentColor;
+}
+
+.chronicle-extra .extra-headline-rule-left,
+.chronicle-extra .extra-headline-rule-right {
+    max-width: 56px;
+}
+
+.chronicle-extra .extra-headline-text {
+    font-family: var(--font-headline);
+    font-size: 21px;
+    font-weight: 800;
+    line-height: 23px;
+    letter-spacing: var(--extra-headline-tracking);
+    white-space: nowrap;
+}
+
+.chronicle-extra .extra-divider {
+    width: 100%;
+    border-top: var(--extra-divider-weight) solid var(--rule-light);
+}
+
+.chronicle-extra .extra-edition {
+    align-self: center;
+    font-family: var(--font-headline);
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 13px;
+    letter-spacing: .05em;
+    white-space: nowrap;
+}
+
+.chronicle-extra .extra-special-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--extra-special-gap);
+    white-space: nowrap;
+}
+
+.chronicle-extra .extra-ornament {
+    color: inherit;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: var(--extra-ornament-size);
+    line-height: 1;
+    flex: 0 0 auto;
+}
+
+.chronicle-extra .extra-special-text {
+    flex: 0 0 auto;
+}
+
+.chronicle-extra .extra-edition-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 2px;
+    white-space: nowrap;
+}
+
+.chronicle-extra .extra-edition-rule {
+    width: var(--extra-edition-rule-width);
+    border-top: var(--extra-rule-weight) solid currentColor;
+}
+
+.chronicle-extra .extra-edition-text {
+    flex: 0 0 auto;
+}
+
+.chronicle-extra[data-extra-style="1950"],
+.chronicle-extra[data-extra-style="1960"] {
+    --extra-rule-weight: 2px;
+    --extra-divider-weight: 1.5px;
+}
+
+.chronicle-extra[data-extra-style="1970"],
+.chronicle-extra[data-extra-style="1980"] {
+    --extra-headline-tracking: .05em;
+    --extra-ornament-size: 9px;
+}
+
+.chronicle-extra[data-extra-style="1990"],
+.chronicle-extra[data-extra-style="1995"],
+.chronicle-extra[data-extra-style="2000"] {
+    --extra-divider-weight: 1.5px;
+    --extra-edition-rule-width: 18px;
+}
+
+.chronicle-extra[data-extra-style="2005"],
+.chronicle-extra[data-extra-style="2010"] {
+    --extra-edition-rule-width: 18px;
+    --extra-divider-weight: 1px;
+}
+
+.chronicle-extra[data-extra-style="2015"] {
+    --extra-headline-tracking: .04em;
+    --extra-ornament-size: 7px;
+    --extra-edition-rule-width: 13px;
+}
+
+.chronicle-extra .extra-date {
+    width: 100%;
+    font-family: var(--font-headline);
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: .03em;
+    white-space: nowrap;
+}
+
+.section-test-frame-extra {
+    width: 230px;
+    height: 100px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}

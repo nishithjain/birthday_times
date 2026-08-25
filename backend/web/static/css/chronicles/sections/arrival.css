@@ -1,0 +1,240 @@
+.chronicle-arrival {
+    width: 920px;
+    height: 310px;
+    box-sizing: border-box;
+    margin: 0;
+    background: transparent;
+    color: var(--ink, #17120c);
+    overflow: hidden;
+}
+
+.chronicle-arrival .arrival-feature-header {
+    width: 920px;
+    height: 80px;
+    box-sizing: border-box;
+    padding: 8px 10px 5px;
+    text-align: center;
+    border-bottom: 1px solid var(--rule-light);
+}
+
+.chronicle-arrival .arrival-feature-headline {
+    margin: 0;
+    font-family: var(--font-headline);
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 46px;
+}
+
+.chronicle-arrival .arrival-feature-deck {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 11px;
+    line-height: 20px;
+}
+
+.chronicle-arrival .arrival-body {
+    width: 920px;
+    height: 230px;
+    display: grid;
+    grid-template-columns: 160px 450px 310px;
+    grid-template-rows: 230px;
+    align-items: start;
+    box-sizing: border-box;
+    min-height: 0;
+}
+
+.chronicle-arrival .arrival-dispatch,
+.chronicle-arrival .arrival-story,
+.chronicle-arrival .arrival-white-house {
+    min-width: 0;
+    height: 230px;
+    min-height: 0;
+    box-sizing: border-box;
+    padding: 10px 8px;
+}
+
+.chronicle-arrival .arrival-story {
+    padding: 10px 12px;
+    border-left: 1px solid currentColor;
+}
+
+.chronicle-arrival .arrival-white-house {
+    border-left: 1px solid currentColor;
+}
+
+.chronicle-arrival .arrival-white-house-content {
+    width: 294px;
+    height: 180px;
+    display: grid;
+    grid-template-columns: 106px 180px;
+    column-gap: 8px;
+    align-items: start;
+    box-sizing: border-box;
+}
+
+.chronicle-arrival .arrival-president-column {
+    min-width: 0;
+}
+
+.chronicle-arrival .arrival-president-info {
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chronicle-arrival .arrival-president-photo-box {
+    width: 106px;
+    height: 134px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.chronicle-arrival .arrival-column-heading {
+    margin: 0;
+    font-family: var(--font-headline);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22px;
+}
+
+.chronicle-arrival .arrival-column-rule {
+    margin: 3px 0 8px;
+    border-top: 1px solid var(--rule-light);
+}
+
+.chronicle-arrival .arrival-dispatch-label,
+.chronicle-arrival .arrival-dispatch-city,
+.chronicle-arrival .arrival-dispatch-country,
+.chronicle-arrival .arrival-dispatch-status,
+.chronicle-arrival .arrival-president-role {
+    font-family: var(--font-headline);
+}
+
+.chronicle-arrival .arrival-dispatch-label {
+    font-size: 10px;
+    line-height: 15px;
+    text-align: center;
+}
+
+.chronicle-arrival .arrival-dispatch-art {
+    width: 124px;
+    height: 80px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 4px auto 6px;
+    color: var(--ink-muted);
+    font: 700 12px var(--font-headline);
+}
+
+.chronicle-arrival .arrival-dispatch-art img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 124px;
+    max-height: 80px;
+    object-fit: contain;
+    margin: 0;
+}
+
+.chronicle-arrival .arrival-dispatch-city {
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 16px;
+    overflow-wrap: anywhere;
+}
+
+.chronicle-arrival .arrival-dispatch-country {
+    font-family: var(--font-body);
+    font-size: 9px;
+    line-height: 13px;
+}
+
+.chronicle-arrival .arrival-dispatch-status {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 14px;
+    letter-spacing: .04em;
+}
+
+.chronicle-arrival .arrival-story p {
+    margin: 0 0 7px;
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    line-height: 17px;
+    text-align: justify;
+    hyphens: auto;
+}
+
+.chronicle-arrival .arrival-president-photo {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 106px;
+    max-height: 134px;
+    object-fit: contain;
+}
+
+.chronicle-arrival .arrival-president-identity {
+    min-width: 0;
+    flex: 0 0 auto;
+}
+
+.chronicle-arrival .arrival-president-info-rule {
+    width: 100%;
+    flex: 0 0 auto;
+    margin: 4px 0 5px;
+    border-top: 1px solid var(--rule-light);
+}
+
+.chronicle-arrival .arrival-president-name {
+    width: 100%;
+    font-family: var(--font-headline);
+    font-size: 11px;
+    line-height: 12px;
+    font-weight: 700;
+    text-align: left;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: normal;
+    text-wrap: balance;
+}
+
+.chronicle-arrival .arrival-president-role {
+    font-size: 9px;
+    line-height: 12px;
+    text-align: left;
+}
+
+.chronicle-arrival .arrival-president-context {
+    min-width: 0;
+    min-height: 0;
+    flex: 1 1 auto;
+    height: auto;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: var(--font-body);
+    font-size: 10px;
+    line-height: 14px;
+    text-align: left;
+    hyphens: auto;
+}
+
+.section-test-frame-arrival {
+    width: 920px;
+    height: 310px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.chronicle-arrival.arrival-fit-pending {
+    visibility: visible;
+}

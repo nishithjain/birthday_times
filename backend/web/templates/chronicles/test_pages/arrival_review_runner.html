@@ -1,0 +1,331 @@
+{% extends "base.html" %}
+{% block title %}Arrival / Birth Story Visual Review{% endblock %}
+{% block extra_head %}
+<style>
+    :root {
+        --review-paper: #ead9ae;
+        --review-ink: #17120c;
+        --review-muted: #6b5d4f;
+        --review-rule: rgba(30, 20, 10, .3);
+        --review-accent: #8f3d2e;
+    }
+
+    .arrival-review {
+        width: min(1120px, calc(100vw - 32px));
+        margin: 28px auto;
+        padding: 24px;
+        color: var(--review-ink);
+        background: var(--review-paper);
+        border: 1px solid var(--review-ink);
+        font-family: var(--font-body);
+    }
+
+    .arrival-review h1 {
+        margin: 0 0 6px;
+        font: 24px var(--font-headline);
+        letter-spacing: .04em;
+        text-align: center;
+    }
+
+    .arrival-review-status {
+        min-height: 22px;
+        margin-bottom: 14px;
+        font: 14px var(--font-headline);
+        letter-spacing: .03em;
+        text-align: center;
+    }
+
+    .arrival-review-status.complete,
+    .arrival-review-status.warning {
+        color: var(--review-accent);
+    }
+
+    .arrival-review-meta {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+        margin-bottom: 14px;
+        text-align: center;
+    }
+
+    .arrival-review-meta strong,
+    .arrival-review-meta span {
+        display: block;
+    }
+
+    .arrival-review-meta strong {
+        font: 14px var(--font-headline);
+        text-transform: uppercase;
+    }
+
+    .arrival-review-meta span {
+        margin-top: 2px;
+        color: var(--review-muted);
+        font-size: 12px;
+    }
+
+    .arrival-review-url {
+        display: block;
+        width: 100%;
+        margin-bottom: 16px;
+        padding: 8px;
+        border: 1px solid var(--review-rule);
+        background: rgba(255, 255, 255, .22);
+        color: var(--review-ink);
+        font: 12px/1.2 monospace;
+        box-sizing: border-box;
+    }
+
+    .arrival-review-frame {
+        display: flex;
+        justify-content: center;
+        min-height: 340px;
+        padding: 14px;
+        border: 1px solid var(--review-rule);
+        background: rgba(255, 255, 255, .18);
+        overflow-x: auto;
+    }
+
+    .arrival-review-frame iframe {
+        width: 960px;
+        height: 340px;
+        border: 0;
+        background: transparent;
+    }
+
+    .arrival-review-progress {
+        height: 8px;
+        margin: 16px 0;
+        border: 1px solid var(--review-ink);
+    }
+
+    .arrival-review-progress span {
+        display: block;
+        width: 0;
+        height: 100%;
+        background: var(--review-accent);
+        transition: width .15s linear;
+    }
+
+    .arrival-review-controls {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .arrival-review-controls button {
+        min-width: 92px;
+        padding: 8px 12px;
+        border: 1px solid var(--review-ink);
+        background: transparent;
+        color: var(--review-ink);
+        font: 700 12px var(--font-headline);
+        letter-spacing: .04em;
+        cursor: pointer;
+    }
+
+    .arrival-review-controls button:hover,
+    .arrival-review-controls button:focus-visible {
+        background: var(--review-ink);
+        color: var(--review-paper);
+    }
+
+    .arrival-review-candidates {
+        margin-top: 16px;
+        padding: 10px 14px;
+        border: 1px solid var(--review-rule);
+        background: rgba(255, 255, 255, .18);
+        font: 12px/1.5 monospace;
+    }
+
+    .arrival-review-candidates h2 {
+        margin: 0 0 6px;
+        font: 13px var(--font-headline);
+        letter-spacing: .03em;
+        text-transform: uppercase;
+    }
+
+    .arrival-review-candidates ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .arrival-review-candidates li.selected {
+        color: var(--review-accent);
+        font-weight: 700;
+    }
+
+    .arrival-review-settings {
+        margin-top: 14px;
+        color: var(--review-muted);
+        font-size: 13px;
+        text-align: center;
+    }
+
+    @media (max-width: 700px) {
+        .arrival-review {
+            margin: 16px auto;
+            padding: 16px;
+        }
+
+        .arrival-review-meta {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .arrival-review-frame {
+            padding: 8px 0;
+        }
+    }
+</style>
+{% endblock %}
+{% block content %}
+<main class="arrival-review" data-arrival-review-runner>
+    <h1>ARRIVAL / BIRTH STORY VISUAL REVIEW</h1>
+    <div class="arrival-review-status" data-arrival-review-status aria-live="polite">Preparing review...</div>
+    <div class="arrival-review-meta">
+        <div><strong data-arrival-review-position>0 / 0</strong><span>Test</span></div>
+        <div><strong data-arrival-review-date>-</strong><span>Date</span></div>
+        <div><strong data-arrival-review-name>-</strong><span>Name</span></div>
+        <div><strong data-arrival-review-city>-</strong><span>City</span></div>
+        <div><strong data-arrival-review-style>-</strong><span>Style</span></div>
+        <div><strong data-arrival-review-dispatch-label>-</strong><span>Dispatch Label</span></div>
+        <div><strong data-arrival-review-dispatch-art>-</strong><span>Dispatch Artwork</span></div>
+        <div><strong data-arrival-review-dispatch-natural>-</strong><span>Natural Size</span></div>
+        <div><strong data-arrival-review-dispatch-expected>-</strong><span>Expected Render</span></div>
+        <div><strong data-arrival-review-dispatch-rendered>-</strong><span>Rendered</span></div>
+        <div><strong data-arrival-review-context-president>-</strong><span>President</span></div>
+        <div><strong data-arrival-review-context-capacity>-</strong><span>Estimated Capacity</span></div>
+        <div><strong data-arrival-review-context-safe-capacity>-</strong><span>Safe Capacity</span></div>
+        <div><strong data-arrival-review-context-count>-</strong><span>Candidate Count</span></div>
+        <div><strong data-arrival-review-context-estimated-id>-</strong><span>Server Selected ID</span></div>
+        <div><strong data-arrival-review-context-estimated-character-count>-</strong><span>Server Selected
+                Characters</span></div>
+        <div><strong data-arrival-review-context-selected-id>-</strong><span>Browser Selected ID</span></div>
+        <div><strong data-arrival-review-context-character-count>-</strong><span>Browser Selected Characters</span>
+        </div>
+        <div><strong data-arrival-review-context-attempts>-</strong><span>Attempt Count</span></div>
+        <div><strong data-arrival-review-context-width>-</strong><span>Message Client Width</span></div>
+        <div><strong data-arrival-review-context-scroll-width>-</strong><span>Message Scroll Width</span></div>
+        <div><strong data-arrival-review-context-height>-</strong><span>Message Client Height</span></div>
+        <div><strong data-arrival-review-context-scroll-height>-</strong><span>Message Scroll Height</span></div>
+        <div><strong data-arrival-review-context-utilization>-</strong><span>Height Utilization</span></div>
+        <div><strong data-arrival-review-context-result>-</strong><span>Fit Result</span></div>
+    </div>
+    <input class="arrival-review-url" data-arrival-review-url type="text" readonly aria-label="Current Arrival URL">
+    <div class="arrival-review-frame"><iframe data-arrival-review-frame
+            title="Current Birth Story review page"></iframe></div>
+    <div class="arrival-review-progress" aria-hidden="true"><span data-arrival-review-progress></span></div>
+    <div class="arrival-review-controls">
+        <button type="button" data-arrival-review-action="previous">PREVIOUS</button>
+        <button type="button" data-arrival-review-action="toggle">PAUSE</button>
+        <button type="button" data-arrival-review-action="next">NEXT</button>
+        <button type="button" data-arrival-review-action="restart">RESTART</button>
+    </div>
+    <div class="arrival-review-candidates">
+        <h2>Candidate Lengths</h2>
+        <ul data-arrival-review-candidate-list></ul>
+    </div>
+    <div class="arrival-review-settings">Interval: {{ interval }} ms</div>
+</main>
+{% endblock %}
+{% block extra_js %}
+<script>
+    (() => {
+        const DEFAULT_INTERVAL_MS = 1000;
+        const intervalMs = {{ interval| tojson
+    }} || DEFAULT_INTERVAL_MS;
+    const cases = {{ review_cases| tojson }};
+    const runner = document.querySelector('[data-arrival-review-runner]');
+    const frame = runner.querySelector('[data-arrival-review-frame]');
+    const status = runner.querySelector('[data-arrival-review-status]');
+    const position = runner.querySelector('[data-arrival-review-position]');
+    const reviewDate = runner.querySelector('[data-arrival-review-date]');
+    const name = runner.querySelector('[data-arrival-review-name]');
+    const city = runner.querySelector('[data-arrival-review-city]');
+    const style = runner.querySelector('[data-arrival-review-style]');
+    const dispatchLabel = runner.querySelector('[data-arrival-review-dispatch-label]');
+    const dispatchArtwork = runner.querySelector('[data-arrival-review-dispatch-art]');
+    const dispatchNatural = runner.querySelector('[data-arrival-review-dispatch-natural]');
+    const dispatchExpected = runner.querySelector('[data-arrival-review-dispatch-expected]');
+    const dispatchRendered = runner.querySelector('[data-arrival-review-dispatch-rendered]');
+    const contextPresident = runner.querySelector('[data-arrival-review-context-president]');
+    const contextCapacity = runner.querySelector('[data-arrival-review-context-capacity]');
+    const contextSafeCapacity = runner.querySelector('[data-arrival-review-context-safe-capacity]');
+    const contextCount = runner.querySelector('[data-arrival-review-context-count]');
+    const contextEstimatedId = runner.querySelector('[data-arrival-review-context-estimated-id]');
+    const contextEstimatedCharacterCount = runner.querySelector('[data-arrival-review-context-estimated-character-count]');
+    const contextSelectedId = runner.querySelector('[data-arrival-review-context-selected-id]');
+    const contextAttempts = runner.querySelector('[data-arrival-review-context-attempts]');
+    const contextCharacterCount = runner.querySelector('[data-arrival-review-context-character-count]');
+    const contextWidth = runner.querySelector('[data-arrival-review-context-width]');
+    const contextScrollWidth = runner.querySelector('[data-arrival-review-context-scroll-width]');
+    const contextHeight = runner.querySelector('[data-arrival-review-context-height]');
+    const contextScrollHeight = runner.querySelector('[data-arrival-review-context-scroll-height]');
+    const contextUtilization = runner.querySelector('[data-arrival-review-context-utilization]');
+    const contextResult = runner.querySelector('[data-arrival-review-context-result]');
+    const candidateList = runner.querySelector('[data-arrival-review-candidate-list]');
+    const urlInput = runner.querySelector('[data-arrival-review-url]');
+    const progress = runner.querySelector('[data-arrival-review-progress]');
+    const toggleButton = runner.querySelector('[data-arrival-review-action="toggle"]');
+    const contextFields = [contextPresident, contextCapacity, contextSafeCapacity, contextCount, contextEstimatedId, contextEstimatedCharacterCount, contextSelectedId, contextAttempts, contextCharacterCount, contextWidth, contextScrollWidth, contextHeight, contextScrollHeight, contextUtilization, contextResult];
+    let index = 0, paused = false, finished = false, timer = null, loadToken = 0;
+    const tests = cases.map(test => ({ ...test, url: `/dev/sections/arrival?date=${encodeURIComponent(test.date)}&name=${encodeURIComponent(test.name)}&city=${encodeURIComponent(test.city)}&country=${encodeURIComponent(test.country)}` }));
+    function setStatus(text, state = '') { status.textContent = text; status.className = `arrival-review-status ${state}`; }
+    function clearTimer() { if (timer) window.clearTimeout(timer); timer = null; }
+    function updateMeta(test) {
+        position.textContent = `${index + 1} / ${tests.length}`;
+        reviewDate.textContent = test?.date || '-';
+        name.textContent = test?.name || '-';
+        city.textContent = test?.city || '-';
+        style.textContent = test?.styleId || '-';
+        dispatchLabel.textContent = test?.dispatchLabel || '-';
+        dispatchArtwork.textContent = test?.dispatchArtwork || '-';
+        dispatchNatural.textContent = test?.dispatchNatural || '-';
+        dispatchExpected.textContent = test?.dispatchExpected || '-';
+        dispatchRendered.textContent = '-';
+        contextFields.forEach(element => { element.textContent = '-'; });
+        candidateList.textContent = '';
+        urlInput.value = test?.url || '';
+        progress.style.width = tests.length ? `${((index + 1) / tests.length) * 100}%` : '0%';
+    }
+    function updateContextMeta() {
+        const message = frame.contentDocument?.querySelector('[data-president-context-fit]');
+        const data = frame.contentDocument?.querySelector('[data-president-context-candidates]');
+        if (!message) return;
+        contextPresident.textContent = frame.contentDocument?.querySelector('.arrival-president-name')?.textContent.trim() || 'none';
+        contextEstimatedId.textContent = message.dataset.presidentContextEstimatedId || '-';
+        contextCapacity.textContent = message.dataset.presidentContextEstimatedCapacity || 'none';
+        contextSafeCapacity.textContent = message.dataset.presidentContextSafeEstimatedCapacity || 'none';
+        contextSelectedId.textContent = message.dataset.presidentContextBrowserSelectedId || '-';
+        contextAttempts.textContent = message.dataset.presidentContextAttemptCount || '-';
+        contextCharacterCount.textContent = message.dataset.presidentContextBrowserSelectedCharacterCount || '-';
+        contextWidth.textContent = message.dataset.presidentContextClientWidth || '-';
+        contextScrollWidth.textContent = message.dataset.presidentContextScrollWidth || '-';
+        contextHeight.textContent = message.dataset.presidentContextClientHeight || '-';
+        contextScrollHeight.textContent = message.dataset.presidentContextScrollHeight || '-';
+        contextUtilization.textContent = message.dataset.presidentContextHeightUtilization ? `${(Number(message.dataset.presidentContextHeightUtilization) * 100).toFixed(1)}%` : '-';
+        contextResult.textContent = message.dataset.presidentContextFitResult || '-';
+        let candidates = [];
+        try { candidates = JSON.parse(data?.textContent || '[]'); } catch (error) { candidates = []; }
+        contextCount.textContent = candidates.length || '-';
+        candidateList.textContent = '';
+        candidates.forEach(candidate => {
+            const item = document.createElement('li');
+            item.textContent = `${candidate.id}    ${candidate.characterCount}${candidate.id === message.dataset.presidentContextEstimatedId ? '  <- server selected' : ''}`;
+            if (candidate.id === message.dataset.presidentContextEstimatedId) item.classList.add('selected');
+            candidateList.appendChild(item);
+        });
+    }
+    function loadCurrent() { clearTimer(); if (!tests.length) { finished = true; setStatus('NO ARRIVAL REVIEW CASES FOUND', 'warning'); updateMeta(null); return; } finished = false; const test = tests[index]; updateMeta(test); setStatus(`LOADING ${index + 1} / ${tests.length}`); const token = ++loadToken; let settled = false; const settle = loaded => { if (settled || token !== loadToken) return; settled = true; window.clearTimeout(timeout); if (loaded) { const image = frame.contentDocument?.querySelector('.arrival-dispatch-image'); dispatchRendered.textContent = image ? `${image.getBoundingClientRect().width.toFixed(1)} x ${image.getBoundingClientRect().height.toFixed(1)}` : 'No image'; updateContextMeta(); } setStatus(loaded ? (paused ? 'PAUSED' : `VIEWING ${index + 1} / ${tests.length}`) : `LOAD WARNING: ${test.date}`, loaded ? '' : 'warning'); if (!paused && index < tests.length - 1) timer = window.setTimeout(() => { index += 1; loadCurrent(); }, intervalMs); else if (!paused && index === tests.length - 1) { finished = true; setStatus('REVIEW COMPLETE', 'complete'); } }; const timeout = window.setTimeout(() => settle(false), 5000); frame.onload = () => { const message = frame.contentDocument?.querySelector('[data-president-context-fit]'); if (!message || message.dataset.presidentContextFitComplete === 'true') { settle(true); return; } const onFit = () => { frame.contentDocument?.removeEventListener('president-context-fit-complete', onFit); settle(true); }; frame.contentDocument?.addEventListener('president-context-fit-complete', onFit, { once: true }); }; frame.onerror = () => settle(false); frame.src = test.url; }
+    function pause() { paused = true; clearTimer(); toggleButton.textContent = 'RESUME'; if (!finished) setStatus('PAUSED'); }
+    function resume() { paused = false; toggleButton.textContent = 'PAUSE'; if (finished) { finished = false; loadCurrent(); return; } setStatus(`VIEWING ${index + 1} / ${tests.length}`); if (index < tests.length - 1) timer = window.setTimeout(() => { index += 1; loadCurrent(); }, intervalMs); }
+    function move(delta) { if (!tests.length) return; pause(); index = Math.max(0, Math.min(tests.length - 1, index + delta)); loadCurrent(); pause(); }
+    function restart() { index = 0; paused = false; finished = false; toggleButton.textContent = 'PAUSE'; loadCurrent(); }
+    runner.addEventListener('click', event => { const action = event.target.closest('[data-arrival-review-action]')?.dataset.arrivalReviewAction; if (action === 'toggle') paused ? resume() : pause(); if (action === 'previous') move(-1); if (action === 'next') move(1); if (action === 'restart') restart(); });
+    document.addEventListener('keydown', event => { if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return; if (event.key === ' ') { event.preventDefault(); paused ? resume() : pause(); } if (event.key === 'ArrowLeft') move(-1); if (event.key === 'ArrowRight') move(1); if (event.key.toLowerCase() === 'r') restart(); });
+    window.arrivalReviewTests = tests; window.arrivalReviewState = () => ({ index, paused, finished, intervalMs, total: tests.length }); loadCurrent();
+}) ();
+</script>
+{% endblock %}

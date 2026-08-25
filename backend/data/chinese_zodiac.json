@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "animals": [
+    {"id":"rat","name":"Rat","traits":["clever","resourceful","adaptable"],"illustrationId":"zodiac_rat"},
+    {"id":"ox","name":"Ox","traits":["dependable","strong","determined"],"illustrationId":"zodiac_ox"},
+    {"id":"tiger","name":"Tiger","traits":["brave","confident","energetic"],"illustrationId":"zodiac_tiger"},
+    {"id":"rabbit","name":"Rabbit","traits":["gentle","thoughtful","gracious"],"illustrationId":"zodiac_rabbit"},
+    {"id":"dragon","name":"Dragon","traits":["confident","enthusiastic","ambitious"],"illustrationId":"zodiac_dragon"},
+    {"id":"snake","name":"Snake","traits":["wise","observant","intuitive"],"illustrationId":"zodiac_snake"},
+    {"id":"horse","name":"Horse","traits":["energetic","independent","spirited"],"illustrationId":"zodiac_horse"},
+    {"id":"goat","name":"Goat","traits":["creative","gentle","compassionate"],"illustrationId":"zodiac_goat"},
+    {"id":"monkey","name":"Monkey","traits":["intelligent","influential","enthusiastic"],"illustrationId":"zodiac_monkey"},
+    {"id":"rooster","name":"Rooster","traits":["observant","confident","hardworking"],"illustrationId":"zodiac_rooster"},
+    {"id":"dog","name":"Dog","traits":["loyal","honest","dependable"],"illustrationId":"zodiac_dog"},
+    {"id":"pig","name":"Pig","traits":["generous","sincere","warmhearted"],"illustrationId":"zodiac_pig"}
+  ]
+}

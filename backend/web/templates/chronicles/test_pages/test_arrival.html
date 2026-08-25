@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chronicles/chronicle_common.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chronicles/sections/arrival.css') }}">{% endblock %}{%
+block content %}<div class="section-test-page">
+    <div class="section-test-label">Arrival / Birth Story - 920 x 310</div>
+    <div class="section-test-frame section-test-frame-arrival">
+        {% include "chronicles/sections/arrival_president.html" %}
+    </div>
+</div>{% endblock %}

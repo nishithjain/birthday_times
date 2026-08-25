@@ -1,0 +1,13 @@
+<article class="chronicle-section chronicle-famous-birthdays article-celebrity" data-section="famous-birthdays">
+    <div class="article-header">
+        <h3 class="article-headline">{{ chronicle.famous_birthdays.headline if chronicle.famous_birthdays else
+            'Celebrities Share Your Birthday' }}</h3>
+    </div>
+    <div class="image-slot image-slot--portrait image-slot--photo image-slot--celebrity-portrait">
+        <div class="image-placeholder">CELEBRITY / ACTOR</div>
+    </div>
+    <div class="celebrity-content">{% if chronicle.famous_birthdays and chronicle.famous_birthdays.people %}<p
+            class="article-body">{{ chronicle.famous_birthdays.introText }}</p>{% else %}<p
+            class="article-body placeholder-text">Famous birthdays from this day will appear here as the archive grows.
+        </p>{% endif %}</div>
+</article>

@@ -1,0 +1,15 @@
+<section class="chronicle-section chronicle-masthead" data-section="masthead"
+    data-masthead-style="{{ chronicle.newspaper_style.id|default('2015') }}">
+    <div class="masthead-eyebrow">A RECORD OF YOUR BIRTHDAY</div>
+    <div class="masthead-upper-rule" aria-hidden="true"></div>
+    <h1 class="masthead-title">{{ chronicle.mastheadTitle|default('The Birthday Times') }}</h1>
+    <div class="masthead-tagline">WHAT THE WORLD WAS LIKE WHEN YOU WERE BORN</div>
+    <div class="masthead-meta-rule" aria-hidden="true"></div>
+    <div class="masthead-meta">
+        <div class="masthead-meta-left">BIRTHDAY EDITION</div>
+        <div class="masthead-meta-date">{{ chronicle.calendar.day_of_week|upper }}, {{
+            chronicle.person.birth_date_display|upper }}</div>
+        <div class="masthead-meta-right">SPECIAL EDITION</div>
+    </div>
+    <div class="masthead-bottom-rule" aria-hidden="true"></div>
+</section>

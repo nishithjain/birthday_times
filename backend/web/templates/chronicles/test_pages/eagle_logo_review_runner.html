@@ -1,0 +1,318 @@
+{% extends "base.html" %}
+{% block title %}Eagle / Logo Visual Review{% endblock %}
+{% block extra_head %}
+<style>
+    :root {
+        --review-paper: #ead9ae;
+        --review-ink: #17120c;
+        --review-muted: #6b5d4f;
+        --review-rule: rgba(30, 20, 10, .3);
+        --review-accent: #8f3d2e;
+    }
+
+    .eagle-review {
+        width: min(760px, calc(100vw - 32px));
+        margin: 28px auto;
+        padding: 24px;
+        color: var(--review-ink);
+        background: var(--review-paper);
+        border: 1px solid var(--review-ink);
+        font-family: var(--font-body);
+    }
+
+    .eagle-review h1 {
+        margin: 0 0 6px;
+        font-family: var(--font-headline);
+        font-size: 24px;
+        letter-spacing: .04em;
+        text-align: center;
+    }
+
+    .eagle-review-status {
+        min-height: 22px;
+        margin-bottom: 14px;
+        text-align: center;
+        font: 14px var(--font-headline);
+        letter-spacing: .03em;
+    }
+
+    .eagle-review-status.complete,
+    .eagle-review-status.warning {
+        color: var(--review-accent);
+    }
+
+    .eagle-review-meta {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 14px;
+        text-align: center;
+    }
+
+    .eagle-review-meta strong,
+    .eagle-review-meta span {
+        display: block;
+    }
+
+    .eagle-review-meta strong {
+        font: 16px var(--font-headline);
+        text-transform: uppercase;
+    }
+
+    .eagle-review-meta span {
+        margin-top: 2px;
+        color: var(--review-muted);
+        font-size: 13px;
+    }
+
+    .eagle-review-url {
+        display: block;
+        width: 100%;
+        margin-bottom: 16px;
+        padding: 8px;
+        border: 1px solid var(--review-rule);
+        background: rgba(255, 255, 255, .22);
+        color: var(--review-ink);
+        font: 12px/1.2 monospace;
+        box-sizing: border-box;
+    }
+
+    .eagle-review-frame {
+        display: flex;
+        justify-content: center;
+        min-height: 130px;
+        padding: 14px;
+        border: 1px solid var(--review-rule);
+        background: rgba(255, 255, 255, .18);
+    }
+
+    .eagle-review-frame iframe {
+        width: 520px;
+        height: 130px;
+        border: 0;
+        background: transparent;
+    }
+
+    .eagle-review-progress {
+        height: 8px;
+        margin: 16px 0;
+        border: 1px solid var(--review-ink);
+    }
+
+    .eagle-review-progress span {
+        display: block;
+        width: 0;
+        height: 100%;
+        background: var(--review-accent);
+        transition: width .15s linear;
+    }
+
+    .eagle-review-controls {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .eagle-review-controls button {
+        min-width: 92px;
+        padding: 8px 12px;
+        border: 1px solid var(--review-ink);
+        background: transparent;
+        color: var(--review-ink);
+        font: 700 12px var(--font-headline);
+        letter-spacing: .04em;
+        cursor: pointer;
+    }
+
+    .eagle-review-controls button:hover,
+    .eagle-review-controls button:focus-visible {
+        background: var(--review-ink);
+        color: var(--review-paper);
+    }
+
+    .eagle-review-settings {
+        margin-top: 14px;
+        color: var(--review-muted);
+        font-size: 13px;
+        text-align: center;
+    }
+
+    @media (max-width: 600px) {
+        .eagle-review {
+            margin: 16px auto;
+            padding: 16px;
+        }
+
+        .eagle-review-meta {
+            grid-template-columns: 1fr;
+            gap: 6px;
+        }
+
+        .eagle-review-frame {
+            padding: 8px 0;
+            overflow-x: auto;
+        }
+    }
+</style>
+{% endblock %}
+{% block content %}
+<main class="eagle-review" data-eagle-review-runner>
+    <h1>EAGLE / LOGO VISUAL REVIEW</h1>
+    <div class="eagle-review-status" data-eagle-review-status aria-live="polite">Preparing review...</div>
+
+    <div class="eagle-review-meta">
+        <div><strong data-eagle-review-position>0 / 0</strong><span>Test</span></div>
+        <div><strong data-eagle-review-year>-</strong><span>Birth year</span></div>
+        <div><strong data-eagle-review-date>-</strong><span>1982-style date</span></div>
+    </div>
+
+    <input class="eagle-review-url" data-eagle-review-url type="text" readonly aria-label="Current Eagle Logo URL">
+
+    <div class="eagle-review-frame">
+        <iframe data-eagle-review-frame title="Current Eagle Logo review page"></iframe>
+    </div>
+
+    <div class="eagle-review-progress" aria-hidden="true"><span data-eagle-review-progress></span></div>
+
+    <div class="eagle-review-controls">
+        <button type="button" data-eagle-review-action="previous">PREVIOUS</button>
+        <button type="button" data-eagle-review-action="toggle">PAUSE</button>
+        <button type="button" data-eagle-review-action="next">NEXT</button>
+        <button type="button" data-eagle-review-action="restart">RESTART</button>
+    </div>
+    <div class="eagle-review-settings">Interval: {{ interval }} ms</div>
+</main>
+{% endblock %}
+{% block extra_js %}
+<script>
+    (() => {
+        const DEFAULT_INTERVAL_MS = 1000;
+        const LOAD_TIMEOUT_MS = 5000;
+        const intervalMs = {{ interval| tojson
+    }} || DEFAULT_INTERVAL_MS;
+    const years = {{ review_years| tojson }};
+    const runner = document.querySelector('[data-eagle-review-runner]');
+    const frame = runner.querySelector('[data-eagle-review-frame]');
+    const status = runner.querySelector('[data-eagle-review-status]');
+    const position = runner.querySelector('[data-eagle-review-position]');
+    const year = runner.querySelector('[data-eagle-review-year]');
+    const reviewDate = runner.querySelector('[data-eagle-review-date]');
+    const urlInput = runner.querySelector('[data-eagle-review-url]');
+    const progress = runner.querySelector('[data-eagle-review-progress]');
+    const toggleButton = runner.querySelector('[data-eagle-review-action="toggle"]');
+    let index = 0;
+    let paused = false;
+    let finished = false;
+    let timer = null;
+    let loadToken = 0;
+
+    const tests = years.map((birthYear) => {
+        const date = `${birthYear}-05-09`;
+        const params = new URLSearchParams({ date });
+        return { birthYear, date, url: `/dev/sections/eagle-logo?${params.toString()}` };
+    });
+
+    function setStatus(text, state = '') {
+        status.textContent = text;
+        status.className = `eagle-review-status ${state}`;
+    }
+
+    function clearTimer() {
+        if (timer) window.clearTimeout(timer);
+        timer = null;
+    }
+
+    function updateMeta(test) {
+        position.textContent = `${index + 1} / ${tests.length}`;
+        year.textContent = test ? test.birthYear : '-';
+        reviewDate.textContent = test ? test.date : '-';
+        urlInput.value = test ? test.url : '';
+        progress.style.width = tests.length ? `${((index + 1) / tests.length) * 100}%` : '0%';
+    }
+
+    function loadCurrent() {
+        clearTimer();
+        if (!tests.length) {
+            finished = true;
+            setStatus('NO EAGLE REVIEW CASES FOUND', 'warning');
+            updateMeta(null);
+            return;
+        }
+        finished = false;
+        const test = tests[index];
+        updateMeta(test);
+        setStatus(`LOADING ${index + 1} / ${tests.length}`);
+        const token = ++loadToken;
+        let settled = false;
+        const settle = (loaded) => {
+            if (settled || token !== loadToken) return;
+            settled = true;
+            window.clearTimeout(timeout);
+            setStatus(loaded ? (paused ? 'PAUSED' : `VIEWING ${index + 1} / ${tests.length}`) : `LOAD WARNING: ${test.birthYear}`, loaded ? '' : 'warning');
+            if (!paused && index < tests.length - 1) {
+                timer = window.setTimeout(() => { index += 1; loadCurrent(); }, intervalMs);
+            } else if (!paused && index === tests.length - 1) {
+                finished = true;
+                setStatus('REVIEW COMPLETE', 'complete');
+            }
+        };
+        const timeout = window.setTimeout(() => settle(false), LOAD_TIMEOUT_MS);
+        frame.onload = () => settle(true);
+        frame.onerror = () => settle(false);
+        frame.src = test.url;
+    }
+
+    function pause() {
+        paused = true;
+        clearTimer();
+        toggleButton.textContent = 'RESUME';
+        if (!finished) setStatus('PAUSED');
+    }
+
+    function resume() {
+        paused = false;
+        toggleButton.textContent = 'PAUSE';
+        if (finished) { finished = false; loadCurrent(); return; }
+        setStatus(`VIEWING ${index + 1} / ${tests.length}`);
+        if (index < tests.length - 1) timer = window.setTimeout(() => { index += 1; loadCurrent(); }, intervalMs);
+    }
+
+    function move(delta) {
+        if (!tests.length) return;
+        pause();
+        index = Math.max(0, Math.min(tests.length - 1, index + delta));
+        loadCurrent();
+        pause();
+    }
+
+    function restart() {
+        index = 0;
+        paused = false;
+        finished = false;
+        toggleButton.textContent = 'PAUSE';
+        loadCurrent();
+    }
+
+    runner.addEventListener('click', (event) => {
+        const action = event.target.closest('[data-eagle-review-action]')?.dataset.eagleReviewAction;
+        if (action === 'toggle') paused ? resume() : pause();
+        if (action === 'previous') move(-1);
+        if (action === 'next') move(1);
+        if (action === 'restart') restart();
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return;
+        if (event.key === ' ') { event.preventDefault(); paused ? resume() : pause(); }
+        if (event.key === 'ArrowLeft') move(-1);
+        if (event.key === 'ArrowRight') move(1);
+        if (event.key.toLowerCase() === 'r') restart();
+    });
+
+    window.eagleReviewTests = tests;
+    window.eagleReviewState = () => ({ index, paused, finished, intervalMs, total: tests.length });
+    loadCurrent();
+}) ();
+</script>
+{% endblock %}

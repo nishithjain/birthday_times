@@ -1,0 +1,15 @@
+http://127.0.0.1:5000/dev/chronicle-master?date=1982-05-09
+
+http://127.0.0.1:5000/dev/sections/weather?date=1982-05-09&city=Bengaluru
+
+http://127.0.0.1:5000/dev/sections/arrival?date=1960-05-09&name=Nishith
+
+http://127.0.0.1:5000/dev/sections/world-news?date=1982-05-09
+
+http://127.0.0.1:5000/dev/sections/around-this-time?date=1982-05-09
+
+http://127.0.0.1:5000/dev/sections/movies?date=1960-05-09
+
+http://127.0.0.1:5000/dev/sections/music?date=1975-05-09
+
+http://127.0.0.1:5000/dev/sections/zodiac?date=1975-05-09&name=Nishith

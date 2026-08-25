@@ -1,0 +1,22 @@
+<section class="chronicle-section chronicle-extra" data-section="extra"
+    data-extra-style="{{ chronicle.newspaper_style.id|default('2015') }}">
+    <div class="extra-headline">
+        <span class="extra-headline-rule extra-headline-rule-left" aria-hidden="true"></span>
+        <span class="extra-headline-text">EXTRA!</span>
+        <span class="extra-headline-rule extra-headline-rule-right" aria-hidden="true"></span>
+    </div>
+    <div class="extra-divider" aria-hidden="true"></div>
+    <div class="extra-edition">
+        <div class="extra-special-line">
+            <span class="extra-ornament" aria-hidden="true">{{ chronicle.extraOrnament|default("•") }}</span>
+            <span class="extra-special-text">SPECIAL BIRTHDAY</span>
+            <span class="extra-ornament" aria-hidden="true">{{ chronicle.extraOrnament|default("•") }}</span>
+        </div>
+        <div class="extra-edition-line">
+            <span class="extra-edition-rule extra-edition-rule-left" aria-hidden="true"></span>
+            <span class="extra-edition-text">EDITION</span>
+            <span class="extra-edition-rule extra-edition-rule-right" aria-hidden="true"></span>
+        </div>
+    </div>
+    <div class="extra-date">{{ chronicle.person.birth_date_display|upper }}</div>
+</section>

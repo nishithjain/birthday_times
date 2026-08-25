@@ -1,0 +1,19 @@
+<article class="chronicle-section chronicle-chinese-zodiac article-zodiac" data-section="chinese-zodiac">
+    <div class="article-header">
+        <h3 class="article-headline">{{ chronicle.chinese_zodiac.headline if chronicle.chinese_zodiac and
+            chronicle.chinese_zodiac.available else 'Chinese Zodiac' }}</h3>
+    </div>
+    <div class="zodiac-content">
+        <div class="zodiac-text zodiac-copy">{% if chronicle.chinese_zodiac and chronicle.chinese_zodiac.available %}<p
+                class="article-body">{{ chronicle.chinese_zodiac.introText }}</p>
+            <p class="article-body">{{ chronicle.chinese_zodiac.fortuneText }}</p>{% else %}<p
+                class="article-body placeholder-text">Chinese zodiac information is unavailable for this date.</p>{%
+            endif %}<p class="article-body">Western zodiac: {{ chronicle.calendar.western_zodiac }} &bull; Birthstone:
+                {{ chronicle.calendar.birthstone }} &bull; Generation: {{ chronicle.calendar.generation }}</p>
+        </div>
+        <div class="zodiac-illustration-box">{% if chronicle.chinese_zodiac and chronicle.chinese_zodiac.illustration
+            and chronicle.chinese_zodiac.illustration.displayPath %}<img
+                src="{{ url_for('static', filename=chronicle.chinese_zodiac.illustration.displayPath) }}"
+                alt="{{ chronicle.chinese_zodiac.animal }} - Chinese zodiac illustration">{% endif %}</div>
+    </div>
+</article>

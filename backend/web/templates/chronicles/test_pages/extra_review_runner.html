@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+{% block title %}Extra! Visual Review{% endblock %}
+{% block extra_head %}
+<style>
+    :root {
+        --review-paper: #ead9ae;
+        --review-ink: #17120c;
+        --review-muted: #6b5d4f;
+        --review-rule: rgba(30, 20, 10, .3);
+        --review-accent: #8f3d2e;
+    }
+
+    .extra-review {
+        width: min(760px, calc(100vw - 32px));
+        margin: 28px auto;
+        padding: 24px;
+        color: var(--review-ink);
+        background: var(--review-paper);
+        border: 1px solid var(--review-ink);
+        font-family: var(--font-body);
+    }
+
+    .extra-review h1 {
+        margin: 0 0 6px;
+        font: 24px var(--font-headline);
+        letter-spacing: .04em;
+        text-align: center;
+    }
+
+    .extra-review-status {
+        min-height: 22px;
+        margin-bottom: 14px;
+        font: 14px var(--font-headline);
+        letter-spacing: .03em;
+        text-align: center;
+    }
+
+    .extra-review-status.complete,
+    .extra-review-status.warning {
+        color: var(--review-accent);
+    }
+
+    .extra-review-meta {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 14px;
+        text-align: center;
+    }
+
+    .extra-review-meta strong,
+    .extra-review-meta span {
+        display: block;
+    }
+
+    .extra-review-meta strong {
+        font: 16px var(--font-headline);
+        text-transform: uppercase;
+    }
+
+    .extra-review-meta span {
+        margin-top: 2px;
+        color: var(--review-muted);
+        font-size: 13px;
+    }
+
+    .extra-review-url {
+        display: block;
+        width: 100%;
+        margin-bottom: 16px;
+        padding: 8px;
+        border: 1px solid var(--review-rule);
+        background: rgba(255, 255, 255, .22);
+        color: var(--review-ink);
+        font: 12px/1.2 monospace;
+        box-sizing: border-box;
+    }
+
+    .extra-review-frame {
+        display: flex;
+        justify-content: center;
+        min-height: 130px;
+        padding: 14px;
+        border: 1px solid var(--review-rule);
+        background: rgba(255, 255, 255, .18);
+    }
+
+    .extra-review-frame iframe {
+        width: 300px;
+        height: 130px;
+        border: 0;
+        background: transparent;
+    }
+
+    .extra-review-progress {
+        height: 8px;
+        margin: 16px 0;
+        border: 1px solid var(--review-ink);
+    }
+
+    .extra-review-progress span {
+        display: block;
+        width: 0;
+        height: 100%;
+        background: var(--review-accent);
+        transition: width .15s linear;
+    }
+
+    .extra-review-controls {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .extra-review-controls button {
+        min-width: 92px;
+        padding: 8px 12px;
+        border: 1px solid var(--review-ink);
+        background: transparent;
+        color: var(--review-ink);
+        font: 700 12px var(--font-headline);
+        letter-spacing: .04em;
+        cursor: pointer;
+    }
+
+    .extra-review-controls button:hover,
+    .extra-review-controls button:focus-visible {
+        background: var(--review-ink);
+        color: var(--review-paper);
+    }
+
+    .extra-review-settings {
+        margin-top: 14px;
+        color: var(--review-muted);
+        font-size: 13px;
+        text-align: center;
+    }
+
+    @media (max-width: 600px) {
+        .extra-review {
+            margin: 16px auto;
+            padding: 16px;
+        }
+
+        .extra-review-meta {
+            grid-template-columns: 1fr;
+            gap: 6px;
+        }
+
+        .extra-review-frame {
+            padding: 8px 0;
+            overflow-x: auto;
+        }
+    }
+</style>
+{% endblock %}
+{% block content %}
+<main class="extra-review" data-extra-review-runner>
+    <h1>EXTRA! VISUAL REVIEW</h1>
+    <div class="extra-review-status" data-extra-review-status aria-live="polite">Preparing review...</div>
+    <div class="extra-review-meta">
+        <div><strong data-extra-review-position>0 / 0</strong><span>Test</span></div>
+        <div><strong data-extra-review-date>-</strong><span>Date</span></div>
+        <div><strong data-extra-review-era>-</strong><span>Era</span></div>
+        <div><strong data-extra-review-style>-</strong><span>Style</span></div>
+        <div><strong data-extra-review-ornament>-</strong><span>Ornament</span></div>
+    </div>
+    <input class="extra-review-url" data-extra-review-url type="text" readonly aria-label="Current Extra URL">
+    <div class="extra-review-frame"><iframe data-extra-review-frame title="Current Extra review page"></iframe></div>
+    <div class="extra-review-progress" aria-hidden="true"><span data-extra-review-progress></span></div>
+    <div class="extra-review-controls">
+        <button type="button" data-extra-review-action="previous">PREVIOUS</button>
+        <button type="button" data-extra-review-action="toggle">PAUSE</button>
+        <button type="button" data-extra-review-action="next">NEXT</button>
+        <button type="button" data-extra-review-action="restart">RESTART</button>
+    </div>
+    <div class="extra-review-settings">Interval: {{ interval }} ms</div>
+</main>
+{% endblock %}
+{% block extra_js %}
+<script>
+    (() => {
+        const DEFAULT_INTERVAL_MS = 1000;
+        const LOAD_TIMEOUT_MS = 5000;
+        const intervalMs = {{ interval| tojson
+    }} || DEFAULT_INTERVAL_MS;
+    const cases = {{ review_cases| tojson }};
+    const runner = document.querySelector('[data-extra-review-runner]');
+    const frame = runner.querySelector('[data-extra-review-frame]');
+    const status = runner.querySelector('[data-extra-review-status]');
+    const position = runner.querySelector('[data-extra-review-position]');
+    const reviewDate = runner.querySelector('[data-extra-review-date]');
+    const era = runner.querySelector('[data-extra-review-era]');
+    const style = runner.querySelector('[data-extra-review-style]');
+    const ornament = runner.querySelector('[data-extra-review-ornament]');
+    const urlInput = runner.querySelector('[data-extra-review-url]');
+    const progress = runner.querySelector('[data-extra-review-progress]');
+    const toggleButton = runner.querySelector('[data-extra-review-action="toggle"]');
+    let index = 0, paused = false, finished = false, timer = null, loadToken = 0;
+    const tests = cases.map(test => ({ ...test, url: `/dev/sections/extra?date=${encodeURIComponent(test.date)}`, era: Number(test.date.slice(0, 4)) }));
+
+    function setStatus(text, state = '') { status.textContent = text; status.className = `extra-review-status ${state}`; }
+    function clearTimer() { if (timer) window.clearTimeout(timer); timer = null; }
+    function eraText(year) { if (year < 1970) return '1950-1969'; if (year < 1990) return '1970-1989'; if (year < 2005) return '1990-2004'; if (year < 2015) return '2005-2014'; return '2015-present'; }
+    function updateMeta(test) { position.textContent = `${index + 1} / ${tests.length}`; reviewDate.textContent = test?.date || '-'; era.textContent = test ? eraText(test.era) : '-'; style.textContent = test?.styleId || '-'; ornament.textContent = test?.ornament || '-'; urlInput.value = test?.url || ''; progress.style.width = tests.length ? `${((index + 1) / tests.length) * 100}%` : '0%'; }
+    function loadCurrent() {
+        clearTimer();
+        if (!tests.length) { finished = true; setStatus('NO EXTRA REVIEW CASES FOUND', 'warning'); updateMeta(null); return; }
+        finished = false; const test = tests[index]; updateMeta(test); setStatus(`LOADING ${index + 1} / ${tests.length}`); const token = ++loadToken; let settled = false;
+        const settle = loaded => { if (settled || token !== loadToken) return; settled = true; window.clearTimeout(timeout); setStatus(loaded ? (paused ? 'PAUSED' : `VIEWING ${index + 1} / ${tests.length}`) : `LOAD WARNING: ${test.date}`, loaded ? '' : 'warning'); if (!paused && index < tests.length - 1) timer = window.setTimeout(() => { index += 1; loadCurrent(); }, intervalMs); else if (!paused && index === tests.length - 1) { finished = true; setStatus('REVIEW COMPLETE', 'complete'); } };
+        const timeout = window.setTimeout(() => settle(false), LOAD_TIMEOUT_MS); frame.onload = () => settle(true); frame.onerror = () => settle(false); frame.src = test.url;
+    }
+    function pause() { paused = true; clearTimer(); toggleButton.textContent = 'RESUME'; if (!finished) setStatus('PAUSED'); }
+    function resume() { paused = false; toggleButton.textContent = 'PAUSE'; if (finished) { finished = false; loadCurrent(); return; } setStatus(`VIEWING ${index + 1} / ${tests.length}`); if (index < tests.length - 1) timer = window.setTimeout(() => { index += 1; loadCurrent(); }, intervalMs); }
+    function move(delta) { if (!tests.length) return; pause(); index = Math.max(0, Math.min(tests.length - 1, index + delta)); loadCurrent(); pause(); }
+    function restart() { index = 0; paused = false; finished = false; toggleButton.textContent = 'PAUSE'; loadCurrent(); }
+    runner.addEventListener('click', event => { const action = event.target.closest('[data-extra-review-action]')?.dataset.extraReviewAction; if (action === 'toggle') paused ? resume() : pause(); if (action === 'previous') move(-1); if (action === 'next') move(1); if (action === 'restart') restart(); });
+    document.addEventListener('keydown', event => { if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return; if (event.key === ' ') { event.preventDefault(); paused ? resume() : pause(); } if (event.key === 'ArrowLeft') move(-1); if (event.key === 'ArrowRight') move(1); if (event.key.toLowerCase() === 'r') restart(); });
+    window.extraReviewTests = tests; window.extraReviewState = () => ({ index, paused, finished, intervalMs, total: tests.length }); loadCurrent();
+}) ();
+</script>
+{% endblock %}

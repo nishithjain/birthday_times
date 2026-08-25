@@ -1,0 +1,168 @@
+{
+    "sunny": {
+        "compact": "Bright conditions were common during the month.",
+        "standard": "Bright conditions were typical, with clearer skies common through the month.",
+        "long": "Bright conditions were typical, with clearer skies common through the month."
+    },
+    "partly_cloudy": {
+        "compact": "Sunshine often mixed with passing clouds.",
+        "standard": "A mix of sunshine and passing clouds was typical for the month.",
+        "long": "Sunshine regularly shared the sky with passing clouds during the month."
+    },
+    "cloudy": {
+        "compact": "Cloudier skies were common during the month.",
+        "standard": "Cloudier skies were typical, with occasional brighter intervals.",
+        "long": "Cloudier skies were typical, with sunshine appearing only in brief spells."
+    },
+    "showers": {
+        "compact": "Occasional showers were typical for the month.",
+        "standard": "Occasional showers regularly interrupted otherwise settled weather.",
+        "long": "Occasional showers were typical, bringing brief breaks in otherwise settled weather."
+    },
+    "rain": {
+        "compact": "Wetter spells were a familiar part of the month.",
+        "standard": "Rain was a familiar part of the month, with regular wetter spells.",
+        "long": "Rain was a familiar part of the month, with wetter spells occurring regularly."
+    },
+    "thunderstorm": {
+        "compact": "Unsettled weather sometimes brought thunderstorms.",
+        "standard": "Warm, unsettled conditions often brought thunderstorms and heavier rain.",
+        "long": "Warm, unsettled conditions often brought thunderstorms and bursts of heavier rain."
+    },
+    "snow": {
+        "compact": "Cold conditions often brought wintry weather.",
+        "standard": "Cold conditions made snow and wintry weather familiar during the month.",
+        "long": "Cold conditions made snow and wintry weather a familiar feature of the month."
+    },
+    "fog": {
+        "compact": "Mist and fog were familiar in cooler conditions.",
+        "standard": "Cool, damp conditions often brought periods of mist or fog.",
+        "long": "Cool, damp conditions often brought mist or fog during quieter parts of the day."
+    },
+    "windy": {
+        "compact": "Breezier conditions were common during the month.",
+        "standard": "Breezier conditions were typical, with stronger winds at times.",
+        "long": "Breezier conditions were typical, with stronger winds adding a noticeable chill."
+    },
+    "generic": {
+        "compact": "Seasonal conditions were typical for the month.",
+        "standard": "Conditions reflected the usual seasonal weather for this time of year.",
+        "long": "Conditions reflected the usual seasonal weather for this place and time of year."
+    },
+    "combinations": {
+        "sunny": {
+            "very_cold": {
+                "compact": "Bright skies were common, but temperatures remained sharply cold.",
+                "standard": "Bright skies were common, but temperatures remained sharply cold during the month.",
+                "long": "Bright skies were common, but temperatures remained sharply cold for this time of year."
+            },
+            "cold": {
+                "compact": "Clear, bright conditions were common, though temperatures remained cold.",
+                "standard": "Clear, bright conditions were common, though temperatures remained cold during the month.",
+                "long": "Clear, bright conditions were common, though temperatures remained cold for this time of year."
+            },
+            "cool": {
+                "compact": "Bright conditions were common, with generally cool temperatures.",
+                "standard": "Bright conditions were common, with generally cool temperatures during the month.",
+                "long": "Bright conditions were common, with generally cool temperatures for this time of year."
+            },
+            "mild": {
+                "compact": "Bright conditions were common, with mild temperatures during the month.",
+                "standard": "Bright conditions were typical, with mild temperatures through the month.",
+                "long": "Bright conditions were typical, with mild temperatures for this time of year."
+            },
+            "warm": {
+                "compact": "Sunny and warm conditions were typical.",
+                "standard": "Bright sunshine and warm conditions were typical for the month.",
+                "long": "Bright, sunny conditions were typical, with plenty of warmth through the day."
+            },
+            "hot": {
+                "compact": "Strong sunshine and hot conditions were typical.",
+                "standard": "Strong sunshine and hot conditions were typical during the month.",
+                "long": "Strong sunshine and hot conditions were typical during the month."
+            }
+        }
+    },
+    "fallbacks": {
+        "generic_hot_dry": {
+            "compact": "Hot, dry conditions were typical.",
+            "standard": "Hot, generally dry conditions were typical during the month.",
+            "long": "Hot, dry conditions were typical for this place and time of year."
+        },
+        "generic_warm_dry": {
+            "compact": "Warm, dry conditions were typical.",
+            "standard": "Warm, generally dry conditions were typical during the month.",
+            "long": "Warm, generally dry conditions were typical for this place and time of year."
+        },
+        "generic_mild_dry": {
+            "compact": "Mild, dry conditions were typical.",
+            "standard": "Mild, generally dry conditions were typical during the month.",
+            "long": "Mild, generally dry conditions were typical for this place and time of year."
+        },
+        "generic_very_cold_breezy": {
+            "compact": "Cold and breezy conditions were typical.",
+            "standard": "Cold and breezy conditions were typical during the month.",
+            "long": "Cold and breezy conditions were typical for this place and time of year."
+        },
+        "generic_cold_breezy": {
+            "compact": "Cold and breezy conditions were typical.",
+            "standard": "Cold and breezy conditions were typical during the month.",
+            "long": "Cold and breezy conditions were typical for this place and time of year."
+        },
+        "generic_cool_breezy": {
+            "compact": "Cool and breezy conditions were typical.",
+            "standard": "Cool and breezy conditions were typical during the month.",
+            "long": "Cool and breezy conditions were typical for this place and time of year."
+        },
+        "generic_mild_breezy": {
+            "compact": "Mild and breezy conditions were typical.",
+            "standard": "Mild and breezy conditions were typical during the month.",
+            "long": "Mild and breezy conditions were typical for this place and time of year."
+        },
+        "generic_warm_breezy": {
+            "compact": "Warm and breezy conditions were typical.",
+            "standard": "Warm and breezy conditions were typical during the month.",
+            "long": "Warm and breezy conditions were typical for this place and time of year."
+        },
+        "generic_very_cold_conditions": {
+            "compact": "Cold seasonal conditions were typical.",
+            "standard": "Cold seasonal conditions were typical during the month.",
+            "long": "Cold seasonal conditions were typical for this place and time of year."
+        },
+        "generic_cold_conditions": {
+            "compact": "Cold conditions were typical.",
+            "standard": "Cold conditions were typical during the month.",
+            "long": "Cold conditions were typical for this place and time of year."
+        },
+        "generic_cool_conditions": {
+            "compact": "Cool conditions were typical.",
+            "standard": "Cool conditions were typical during the month.",
+            "long": "Cool conditions were typical for this place and time of year."
+        },
+        "generic_mild_conditions": {
+            "compact": "Mild conditions were typical.",
+            "standard": "Mild conditions were typical during the month.",
+            "long": "Mild conditions were typical for this place and time of year."
+        },
+        "generic_warm_conditions": {
+            "compact": "Warm conditions were typical.",
+            "standard": "Warm conditions were typical during the month.",
+            "long": "Warm conditions were typical for this place and time of year."
+        },
+        "generic_hot_conditions": {
+            "compact": "Hot conditions were typical.",
+            "standard": "Hot conditions were typical during the month.",
+            "long": "Hot conditions were typical for this place and time of year."
+        },
+        "generic_wet": {
+            "compact": "Wetter seasonal conditions were typical.",
+            "standard": "Wetter seasonal conditions were typical during the month.",
+            "long": "Wetter seasonal conditions were typical for this place and time of year."
+        },
+        "generic_seasonal": {
+            "compact": "Seasonal conditions were typical for the month.",
+            "standard": "Conditions reflected the usual seasonal weather for this time of year.",
+            "long": "Conditions reflected the usual seasonal weather for this place and time of year."
+        }
+    }
+}

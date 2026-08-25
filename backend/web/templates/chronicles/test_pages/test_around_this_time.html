@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chronicles/chronicle_common.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chronicles/sections/around_this_time.css') }}">{%
+endblock %}{% block content %}<div class="section-test-page">
+    <div class="section-test-frame">{% include "chronicles/sections/around_this_time.html" %}</div>
+</div>{% endblock %}

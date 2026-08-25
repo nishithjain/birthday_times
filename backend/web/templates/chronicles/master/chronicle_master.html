@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Chronicle Modular Preview - {{ chronicle.person.birth_date_display }}{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chronicles/chronicle_common.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chronicles/chronicle_master.css') }}">
+{% for stylesheet in chronicle.section_stylesheets|default([]) %}
+<link rel="stylesheet" href="{{ url_for('static', filename=stylesheet) }}">{% endfor %}
+{% endblock %}
+{% block content %}
+<div class="chronicle-master chronicle-section-development">
+    {% include "chronicles/sections/masthead.html" %}
+    {% include "chronicles/sections/eagle_logo.html" %}
+    {% include "chronicles/sections/weather.html" %}
+    <section class="chronicle-year-headline" data-section="year-headline">
+        <p>{{ chronicle.person.birth_date|year }}</p>
+        <h2>{{ chronicle.lead_story.headline }}</h2>
+    </section>
+    {% include "chronicles/sections/arrival_president.html" %}
+    {% include "chronicles/sections/world_news.html" %}
+    {% include "chronicles/sections/famous_birthdays.html" %}
+    {% include "chronicles/sections/around_this_time.html" %}
+    {% include "chronicles/sections/movies.html" %}
+    {% include "chronicles/sections/music.html" %}
+    {% include "chronicles/sections/chinese_zodiac.html" %}
+    {% include "chronicles/sections/what_things_cost.html" %}
+    {% include "chronicles/sections/sports.html" %}
+    {% include "chronicles/sections/footer.html" %}
+</div>
+{% endblock %}

@@ -1,0 +1,347 @@
+{% extends "base.html" %}
+{% block title %}Weather Visual Review{% endblock %}
+{% block extra_head %}
+<style>
+    :root {
+        --review-paper: #ead9ae;
+        --review-ink: #17120c;
+        --review-muted: #6b5d4f;
+        --review-rule: rgba(30, 20, 10, .3);
+        --review-accent: #8f3d2e;
+    }
+
+    .weather-review {
+        width: min(680px, calc(100vw - 32px));
+        margin: 28px auto;
+        padding: 24px;
+        color: var(--review-ink);
+        background: var(--review-paper);
+        border: 1px solid var(--review-ink);
+        font-family: var(--font-body);
+    }
+
+    .weather-review h1 {
+        margin: 0 0 6px;
+        font-family: var(--font-headline);
+        font-size: 24px;
+        letter-spacing: .04em;
+        text-align: center;
+    }
+
+    .review-status {
+        min-height: 22px;
+        margin-bottom: 14px;
+        text-align: center;
+        font-family: var(--font-headline);
+        font-size: 14px;
+        letter-spacing: .03em;
+    }
+
+    .review-status.complete {
+        color: var(--review-accent);
+    }
+
+    .review-status.warning {
+        color: var(--review-accent);
+    }
+
+    .review-meta {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 14px;
+        text-align: center;
+    }
+
+    .review-meta strong,
+    .review-meta span {
+        display: block;
+    }
+
+    .review-meta strong {
+        font-family: var(--font-headline);
+        font-size: 16px;
+        text-transform: uppercase;
+    }
+
+    .review-meta span {
+        margin-top: 2px;
+        color: var(--review-muted);
+        font-size: 13px;
+    }
+
+    .review-url {
+        display: block;
+        width: 100%;
+        margin-bottom: 16px;
+        padding: 8px;
+        border: 1px solid var(--review-rule);
+        background: rgba(255, 255, 255, .22);
+        color: var(--review-ink);
+        font: 12px/1.2 monospace;
+        box-sizing: border-box;
+    }
+
+    .review-frame {
+        display: flex;
+        justify-content: center;
+        min-height: 180px;
+        padding: 14px;
+        border: 1px solid var(--review-rule);
+        background: rgba(255, 255, 255, .18);
+    }
+
+    .review-frame iframe {
+        width: 320px;
+        height: 180px;
+        border: 0;
+        background: transparent;
+    }
+
+    .review-progress {
+        height: 8px;
+        margin: 16px 0;
+        border: 1px solid var(--review-ink);
+        background: transparent;
+    }
+
+    .review-progress span {
+        display: block;
+        width: 0;
+        height: 100%;
+        background: var(--review-accent);
+        transition: width .15s linear;
+    }
+
+    .review-controls {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .review-controls button {
+        min-width: 92px;
+        padding: 8px 12px;
+        border: 1px solid var(--review-ink);
+        background: transparent;
+        color: var(--review-ink);
+        font: 700 12px var(--font-headline);
+        letter-spacing: .04em;
+        cursor: pointer;
+    }
+
+    .review-controls button:hover,
+    .review-controls button:focus-visible {
+        background: var(--review-ink);
+        color: var(--review-paper);
+    }
+
+    .review-settings {
+        margin-top: 14px;
+        color: var(--review-muted);
+        font-size: 13px;
+        text-align: center;
+    }
+
+    @media (max-width: 480px) {
+        .weather-review {
+            margin: 16px auto;
+            padding: 16px;
+        }
+
+        .review-meta {
+            grid-template-columns: 1fr;
+            gap: 6px;
+        }
+
+        .review-frame {
+            padding: 8px 0;
+            overflow-x: auto;
+        }
+    }
+</style>
+{% endblock %}
+{% block content %}
+<main class="weather-review" data-review-runner>
+    <h1>WEATHER VISUAL REVIEW</h1>
+    <div class="review-status" data-review-status aria-live="polite">Preparing review...</div>
+
+    <div class="review-meta">
+        <div><strong data-review-position>0 / 0</strong><span>Test</span></div>
+        <div><strong data-review-city>-</strong><span data-review-month>-</span></div>
+        <div><strong data-review-date>-</strong><span>1982 climatology</span></div>
+    </div>
+
+    <input class="review-url" data-review-url type="text" readonly aria-label="Current Weather URL">
+
+    <div class="review-frame">
+        <iframe data-review-frame title="Current Weather review page"></iframe>
+    </div>
+
+    <div class="review-progress" aria-hidden="true"><span data-review-progress></span></div>
+
+    <div class="review-controls">
+        <button type="button" data-review-action="previous">PREVIOUS</button>
+        <button type="button" data-review-action="toggle">PAUSE</button>
+        <button type="button" data-review-action="next">NEXT</button>
+        <button type="button" data-review-action="restart">RESTART</button>
+    </div>
+    <div class="review-settings">Interval: {{ interval }} ms</div>
+</main>
+{% endblock %}
+{% block extra_js %}
+<script>
+    (() => {
+        const DEFAULT_INTERVAL_MS = 1000;
+        const LOAD_TIMEOUT_MS = 5000;
+        const FIT_TIMEOUT_MS = 3000;
+        const intervalMs = {{ interval| tojson
+    }} || DEFAULT_INTERVAL_MS;
+    const monthFilter = {{ month| tojson }};
+    const cities = {{ review_cities| tojson }};
+    const monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    const runner = document.querySelector('[data-review-runner]');
+    const frame = runner.querySelector('[data-review-frame]');
+    const status = runner.querySelector('[data-review-status]');
+    const position = runner.querySelector('[data-review-position]');
+    const city = runner.querySelector('[data-review-city]');
+    const month = runner.querySelector('[data-review-month]');
+    const reviewDate = runner.querySelector('[data-review-date]');
+    const urlInput = runner.querySelector('[data-review-url]');
+    const progress = runner.querySelector('[data-review-progress]');
+    const toggleButton = runner.querySelector('[data-review-action="toggle"]');
+    let index = 0;
+    let paused = false;
+    let finished = false;
+    let timer = null;
+    let loadToken = 0;
+
+    const tests = cities.flatMap((testCity) => {
+        const selectedMonths = monthFilter ? [monthFilter] : monthNames.map((_, monthIndex) => monthIndex + 1);
+        return selectedMonths.map((monthNumber) => {
+            const date = `1982-${String(monthNumber).padStart(2, '0')}-09`;
+            const params = new URLSearchParams({ date, city: testCity });
+            return { city: testCity, month: monthNames[monthNumber - 1], date, url: `/dev/sections/weather?${params.toString()}` };
+        });
+    });
+
+    function setStatus(text, state = '') {
+        status.textContent = text;
+        status.className = `review-status ${state}`;
+    }
+
+    function clearTimer() {
+        if (timer) window.clearTimeout(timer);
+        timer = null;
+    }
+
+    function updateMeta(test) {
+        position.textContent = `${index + 1} / ${tests.length}`;
+        city.textContent = test ? test.city : '-';
+        month.textContent = test ? test.month : '-';
+        reviewDate.textContent = test ? test.date : '-';
+        urlInput.value = test ? test.url : '';
+        progress.style.width = tests.length ? `${((index + 1) / tests.length) * 100}%` : '0%';
+    }
+
+    function waitForWeatherFit() {
+        return new Promise((resolve) => {
+            const started = performance.now();
+            const check = () => {
+                let pending = false;
+                try {
+                    pending = Boolean(frame.contentDocument.querySelector('[data-weather-component].weather-fit-pending'));
+                } catch (error) {
+                    resolve();
+                    return;
+                }
+                if (!pending || performance.now() - started >= FIT_TIMEOUT_MS) resolve();
+                else window.setTimeout(check, 50);
+            };
+            check();
+        });
+    }
+
+    function loadCurrent() {
+        clearTimer();
+        if (!tests.length) {
+            finished = true;
+            setStatus('NO COMPLETE WEATHER CITIES FOUND', 'warning');
+            updateMeta(null);
+            return;
+        }
+        finished = false;
+        const test = tests[index];
+        updateMeta(test);
+        setStatus(`LOADING ${index + 1} / ${tests.length}`);
+        const token = ++loadToken;
+        let settled = false;
+        const settle = async (loaded) => {
+            if (settled || token !== loadToken) return;
+            settled = true;
+            window.clearTimeout(timeout);
+            if (!loaded) {
+                setStatus(`LOAD WARNING: ${test.city} - ${test.month}`, 'warning');
+            } else {
+                await waitForWeatherFit();
+                if (token !== loadToken) return;
+                setStatus(paused ? 'PAUSED' : `VIEWING ${index + 1} / ${tests.length}`);
+            }
+            if (!paused && index < tests.length - 1) timer = window.setTimeout(() => { index += 1; loadCurrent(); }, intervalMs);
+            else if (!paused && index === tests.length - 1) { finished = true; setStatus('REVIEW COMPLETE', 'complete'); }
+        };
+        const timeout = window.setTimeout(() => settle(false), LOAD_TIMEOUT_MS);
+        frame.onload = () => settle(true);
+        frame.onerror = () => settle(false);
+        frame.src = test.url;
+    }
+
+    function pause() {
+        paused = true;
+        clearTimer();
+        toggleButton.textContent = 'RESUME';
+        if (!finished) setStatus('PAUSED');
+    }
+
+    function resume() {
+        paused = false;
+        toggleButton.textContent = 'PAUSE';
+        if (finished) { finished = false; loadCurrent(); return; }
+        setStatus(`VIEWING ${index + 1} / ${tests.length}`);
+        if (index < tests.length - 1) timer = window.setTimeout(() => { index += 1; loadCurrent(); }, intervalMs);
+    }
+
+    function move(delta) {
+        if (!tests.length) return;
+        pause();
+        index = Math.max(0, Math.min(tests.length - 1, index + delta));
+        loadCurrent();
+        pause();
+    }
+
+    runner.addEventListener('click', (event) => {
+        const action = event.target.closest('[data-review-action]')?.dataset.reviewAction;
+        if (action === 'toggle') paused ? resume() : pause();
+        if (action === 'previous') move(-1);
+        if (action === 'next') move(1);
+        if (action === 'restart') { index = 0; paused = false; finished = false; toggleButton.textContent = 'PAUSE'; loadCurrent(); }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return;
+        if (event.key === ' ') { event.preventDefault(); paused ? resume() : pause(); }
+        if (event.key === 'ArrowLeft') move(-1);
+        if (event.key === 'ArrowRight') move(1);
+        if (event.key.toLowerCase() === 'r') { index = 0; paused = false; finished = false; toggleButton.textContent = 'PAUSE'; loadCurrent(); }
+    });
+
+    window.weatherReviewTests = tests;
+    window.weatherReviewState = () => ({ index, paused, finished, intervalMs, total: tests.length });
+    loadCurrent();
+}) ();
+</script>
+{% endblock %}

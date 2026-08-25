@@ -1,0 +1,129 @@
+.chronicle-masthead {
+    --masthead-rule-weight: 1px;
+    --masthead-title-tracking: .015em;
+    width: 920px;
+    height: 150px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 8px 10px 6px;
+    display: grid;
+    grid-template-rows: 12px 1px 66px 14px 1px 17px 3px;
+    align-items: center;
+    background: transparent;
+    color: var(--ink, #17120c);
+    overflow: visible;
+    text-align: center;
+}
+
+.chronicle-masthead .masthead-eyebrow,
+.chronicle-masthead .masthead-tagline,
+.chronicle-masthead .masthead-meta {
+    font-family: var(--font-headline);
+    text-transform: uppercase;
+}
+
+.chronicle-masthead .masthead-eyebrow {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    line-height: 12px;
+}
+
+.chronicle-masthead .masthead-upper-rule,
+.chronicle-masthead .masthead-meta-rule {
+    width: 100%;
+    border-top: var(--masthead-rule-weight) solid currentColor;
+}
+
+.chronicle-masthead .masthead-title {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    font-family: var(--font-masthead);
+    font-size: 52px;
+    font-weight: 700;
+    line-height: 60px;
+    letter-spacing: var(--masthead-title-tracking);
+    white-space: nowrap;
+    transform: scaleY(1.10);
+    transform-origin: center center;
+}
+
+.chronicle-masthead .masthead-tagline {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    line-height: 14px;
+    white-space: nowrap;
+}
+
+.chronicle-masthead .masthead-meta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
+    align-items: center;
+    width: 100%;
+    font-family: var(--font-headline);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    line-height: 17px;
+    white-space: nowrap;
+}
+
+.chronicle-masthead .masthead-meta>div {
+    min-width: 0;
+}
+
+.chronicle-masthead .masthead-meta-left {
+    text-align: left;
+}
+
+.chronicle-masthead .masthead-meta-date {
+    text-align: center;
+}
+
+.chronicle-masthead .masthead-meta-right {
+    text-align: right;
+}
+
+.chronicle-masthead .masthead-bottom-rule {
+    width: 100%;
+    height: 3px;
+    border-top: 2px solid currentColor;
+    border-bottom: 1px solid currentColor;
+}
+
+.chronicle-masthead[data-masthead-style="1950"],
+.chronicle-masthead[data-masthead-style="1960"] {
+    --masthead-rule-weight: 2px;
+    --masthead-title-tracking: 0;
+}
+
+.chronicle-masthead[data-masthead-style="1970"],
+.chronicle-masthead[data-masthead-style="1980"] {
+    --masthead-title-tracking: .025em;
+}
+
+.chronicle-masthead[data-masthead-style="1990"],
+.chronicle-masthead[data-masthead-style="1995"],
+.chronicle-masthead[data-masthead-style="2000"] {
+    --masthead-title-tracking: .01em;
+}
+
+.chronicle-masthead[data-masthead-style="2005"],
+.chronicle-masthead[data-masthead-style="2010"] {
+    --masthead-rule-weight: 1px;
+    --masthead-title-tracking: .02em;
+}
+
+.chronicle-masthead[data-masthead-style="2015"] {
+    --masthead-title-tracking: .035em;
+}
+
+.section-test-frame-masthead {
+    width: 920px;
+    height: 150px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}

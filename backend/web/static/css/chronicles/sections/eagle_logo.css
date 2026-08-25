@@ -1,0 +1,61 @@
+.chronicle-eagle-logo {
+    width: 458px;
+    height: 100px;
+    box-sizing: border-box;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    overflow: visible;
+}
+
+.chronicle-eagle-logo .eagle-logo-image {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: var(--logo-max-width, 420px);
+    max-height: var(--logo-max-height, 90px);
+    object-fit: contain;
+}
+
+.chronicle-eagle-logo[data-logo-type="eagle"] {
+    --logo-max-width: 420px;
+    --logo-max-height: 90px;
+}
+
+.chronicle-eagle-logo[data-logo-type="eagle-globe"] {
+    --logo-max-width: 420px;
+    --logo-max-height: 92px;
+}
+
+.chronicle-eagle-logo[data-logo-type="newspaper-globe"] {
+    --logo-max-width: 420px;
+    --logo-max-height: 90px;
+}
+
+.chronicle-eagle-logo[data-logo-type="chronicle-seal"] {
+    --logo-max-width: none;
+    --logo-max-height: 96px;
+}
+
+.chronicle-eagle-logo[data-logo-type="bc-logo"] {
+    --logo-max-width: 420px;
+    --logo-max-height: 90px;
+}
+
+.chronicle-eagle-logo .eagle-logo-placeholder {
+    color: var(--ink-muted, #3d3228);
+    font-family: var(--font-headline);
+    font-size: 11px;
+    letter-spacing: .04em;
+    text-align: center;
+}
+
+.section-test-frame-eagle-logo {
+    width: 458px;
+    height: 100px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}

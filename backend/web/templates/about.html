@@ -1,0 +1,55 @@
+<!-- backend/web/templates/about.html -->
+{% extends "base.html" %}
+
+{% block title %}About - Birthday Chronicles{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/newspaper.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="app-container">
+    <div class="form-container" style="max-width: 700px;">
+        <div class="form-header">
+            <div class="form-ornament">✦ ✦ ✦</div>
+            <h1 class="form-masthead">About</h1>
+            <p class="form-tagline">The Birthday Chronicle</p>
+        </div>
+
+        <div style="font-family: var(--font-body); color: var(--ink); line-height: 1.7; font-size: 15px;">
+            <p>
+                <strong>The Birthday Chronicle</strong> is a personalized keepsake newspaper
+                that tells you what happened in the world on your birthday.
+            </p>
+
+            <p style="margin-top: 15px;">
+                Inspired by vintage newspapers, it combines historical events, famous birthdays,
+                movies, music, sports, and economic data from the year you were born.
+            </p>
+
+            <hr style="border: none; border-top: 2px solid var(--paper-dark); margin: 20px 0;">
+
+            <h4 style="font-family: var(--font-headline); font-size: 16px; margin-bottom: 8px;">Data Sources</h4>
+            <ul style="padding-left: 20px; font-size: 14px; color: var(--ink-muted);">
+                <li><strong>Historical Events</strong> — Wikidata</li>
+                <li><strong>Famous Birthdays</strong> — Wikidata</li>
+                <li><strong>Movies</strong> — TMDB</li>
+                <li><strong>Economic Data</strong> — World Bank</li>
+            </ul>
+
+            <hr style="border: none; border-top: 2px solid var(--paper-dark); margin: 20px 0;">
+
+            <p style="font-size: 13px; color: var(--ink-light); text-align: center;">
+                ✧ Made with ❤️ by the Birthday Chronicles team ✧
+            </p>
+        </div>
+
+        <div style="text-align: center; margin-top: 25px;">
+            <a href="{{ url_for('index') }}" class="btn-primary"
+                style="display: inline-block; text-decoration: none; font-size: 16px; padding: 10px 30px;">
+                ← Back to Home
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

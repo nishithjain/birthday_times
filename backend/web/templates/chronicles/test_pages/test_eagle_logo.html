@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Eagle / Logo - 458 x 100{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chronicles/chronicle_common.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chronicles/sections/eagle_logo.css') }}">
+{% endblock %}
+{% block content %}
+<div class="section-test-page">
+    <div class="section-test-label">Eagle / Logo - 458 x 100</div>
+    <div class="section-test-frame section-test-frame-eagle-logo">
+        {% include "chronicles/sections/eagle_logo.html" %}
+    </div>
+</div>
+{% endblock %}

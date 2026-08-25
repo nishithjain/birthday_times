@@ -1,0 +1,318 @@
+{
+  "styles": [
+    {
+      "id": "1950",
+      "yearFrom": 1950,
+      "yearTo": 1959,
+      "backgroundImage": "images/newspaper/1950.png",
+      "mastheadFont": "\"UnifrakturCook\", \"Old English Text MT\", serif",
+      "headlineFont": "\"Oswald\", \"Arial Narrow\", sans-serif",
+      "bodyFont": "Georgia, \"Times New Roman\", serif",
+      "theme": "classic-vintage",
+      "template": "chronicles/chronicle_1950.html",
+      "stylesheet": "css/chronicles/chronicle_1950.css",
+      "printStyle": {
+        "colorMode": "black_and_white",
+        "photoTreatment": "coarse_halftone",
+        "photoTone": {
+          "dark": "#24180d",
+          "light": "#c8a86b"
+        },
+        "colorStrength": 0.0,
+        "halftoneStrength": 0.9,
+        "grainStrength": 0.75,
+        "contrast": 1.35,
+        "brightness": 0.92
+      },
+      "illustrationPrintStyle": {
+        "colorMode": "monochrome",
+        "colorStrength": 0.0,
+        "inkStrength": 0.88,
+        "inkSpread": 0.32,
+        "roughness": 0.28,
+        "detailRetention": 0.78,
+        "grainStrength": 0.28,
+        "softness": 0.14
+      }
+    },
+    {
+      "id": "1960",
+      "yearFrom": 1960,
+      "yearTo": 1969,
+      "backgroundImage": "images/newspaper/1960.png",
+      "mastheadFont": "\"UnifrakturCook\", \"Old English Text MT\", serif",
+      "headlineFont": "\"Oswald\", \"Arial Narrow\", sans-serif",
+      "bodyFont": "Georgia, \"Times New Roman\", serif",
+      "theme": "classic-vintage",
+      "template": "chronicles/chronicle_1950.html",
+      "stylesheet": "css/chronicles/chronicle_1950.css",
+      "printStyle": {
+        "colorMode": "black_and_white",
+        "photoTreatment": "medium_halftone",
+        "colorStrength": 0.0,
+        "halftoneStrength": 0.75,
+        "grainStrength": 0.6,
+        "contrast": 1.3,
+        "brightness": 0.94
+      },
+      "illustrationPrintStyle": {
+        "colorMode": "monochrome",
+        "colorStrength": 0.0,
+        "inkStrength": 0.90,
+        "inkSpread": 0.25,
+        "roughness": 0.22,
+        "detailRetention": 0.83,
+        "grainStrength": 0.23,
+        "softness": 0.11
+      }
+    },
+    {
+      "id": "1970",
+      "yearFrom": 1970,
+      "yearTo": 1979,
+      "backgroundImage": "images/newspaper/1970.png",
+      "mastheadFont": "\"UnifrakturCook\", \"Old English Text MT\", serif",
+      "headlineFont": "\"Roboto Condensed\", \"Arial Narrow\", sans-serif",
+      "bodyFont": "Georgia, \"Times New Roman\", serif",
+      "theme": "classic-vintage",
+      "template": "chronicles/chronicle_1970.html",
+      "stylesheet": "css/chronicles/chronicle_1970.css",
+      "printStyle": {
+        "colorMode": "black_and_white",
+        "photoTreatment": "fine_halftone",
+        "colorStrength": 0.0,
+        "halftoneStrength": 0.6,
+        "grainStrength": 0.45,
+        "contrast": 1.24,
+        "brightness": 0.96
+      },
+      "illustrationPrintStyle": {
+        "colorMode": "monochrome",
+        "colorStrength": 0.0,
+        "inkStrength": 0.92,
+        "inkSpread": 0.17,
+        "roughness": 0.15,
+        "detailRetention": 0.90,
+        "grainStrength": 0.16,
+        "softness": 0.07
+      }
+    },
+    {
+      "id": "1980",
+      "yearFrom": 1980,
+      "yearTo": 1989,
+      "backgroundImage": "images/newspaper/1980.png",
+      "mastheadFont": "\"UnifrakturCook\", \"Old English Text MT\", serif",
+      "headlineFont": "\"Roboto Condensed\", Arial, sans-serif",
+      "bodyFont": "Georgia, \"Times New Roman\", serif",
+      "theme": "classic-vintage",
+      "template": "chronicles/chronicle_1970.html",
+      "stylesheet": "css/chronicles/chronicle_1970.css",
+      "printStyle": {
+        "colorMode": "limited_color",
+        "photoTreatment": "muted_color_halftone",
+        "colorStrength": 0.35,
+        "halftoneStrength": 0.5,
+        "grainStrength": 0.35,
+        "contrast": 1.18,
+        "brightness": 0.98
+      },
+      "illustrationPrintStyle": {
+        "colorMode": "limited_color",
+        "colorStrength": 0.20,
+        "inkStrength": 0.94,
+        "inkSpread": 0.11,
+        "roughness": 0.10,
+        "detailRetention": 0.94,
+        "grainStrength": 0.11,
+        "softness": 0.05
+      }
+    },
+    {
+      "id": "1990",
+      "yearFrom": 1990,
+      "yearTo": 1994,
+      "backgroundImage": "images/newspaper/1990.png",
+      "mastheadFont": "\"UnifrakturCook\", \"Old English Text MT\", serif",
+      "headlineFont": "\"Roboto Condensed\", Arial, sans-serif",
+      "bodyFont": "\"Times New Roman\", Georgia, serif",
+      "theme": "classic-news",
+      "template": "chronicles/chronicle_1990.html",
+      "stylesheet": "css/chronicles/chronicle_1990.css",
+      "printStyle": {
+        "colorMode": "muted_color",
+        "photoTreatment": "newspaper_color",
+        "colorStrength": 0.6,
+        "halftoneStrength": 0.38,
+        "grainStrength": 0.25,
+        "contrast": 1.15,
+        "brightness": 0.99
+      },
+      "illustrationPrintStyle": {
+        "colorMode": "muted_color",
+        "colorStrength": 0.40,
+        "inkStrength": 0.95,
+        "inkSpread": 0.07,
+        "roughness": 0.07,
+        "detailRetention": 0.96,
+        "grainStrength": 0.08,
+        "softness": 0.03
+      }
+    },
+    {
+      "id": "1995",
+      "yearFrom": 1995,
+      "yearTo": 1999,
+      "backgroundImage": "images/newspaper/1995.png",
+      "mastheadFont": "\"UnifrakturCook\", \"Old English Text MT\", serif",
+      "headlineFont": "\"Roboto Condensed\", Arial, sans-serif",
+      "bodyFont": "\"Times New Roman\", Georgia, serif",
+      "theme": "classic-news",
+      "template": "chronicles/chronicle_1990.html",
+      "stylesheet": "css/chronicles/chronicle_1990.css",
+      "printStyle": {
+        "colorMode": "color",
+        "photoTreatment": "newspaper_color",
+        "colorStrength": 0.75,
+        "halftoneStrength": 0.3,
+        "grainStrength": 0.2,
+        "contrast": 1.12,
+        "brightness": 1.0
+      },
+      "illustrationPrintStyle": {
+        "colorMode": "muted_color",
+        "colorStrength": 0.55,
+        "inkStrength": 0.96,
+        "inkSpread": 0.05,
+        "roughness": 0.05,
+        "detailRetention": 0.97,
+        "grainStrength": 0.06,
+        "softness": 0.02
+      }
+    },
+    {
+      "id": "2000",
+      "yearFrom": 2000,
+      "yearTo": 2004,
+      "backgroundImage": "images/newspaper/2000.png",
+      "mastheadFont": "\"UnifrakturCook\", \"Old English Text MT\", serif",
+      "headlineFont": "\"Roboto Condensed\", Arial, sans-serif",
+      "bodyFont": "Georgia, \"Times New Roman\", serif",
+      "theme": "modern-news",
+      "template": "chronicles/chronicle_1990.html",
+      "stylesheet": "css/chronicles/chronicle_1990.css",
+      "printStyle": {
+        "colorMode": "full_color",
+        "photoTreatment": "clean_newspaper_color",
+        "colorStrength": 0.88,
+        "halftoneStrength": 0.22,
+        "grainStrength": 0.14,
+        "contrast": 1.1,
+        "brightness": 1.0
+      },
+      "illustrationPrintStyle": {
+        "colorMode": "color",
+        "colorStrength": 0.70,
+        "inkStrength": 0.97,
+        "inkSpread": 0.035,
+        "roughness": 0.035,
+        "detailRetention": 0.98,
+        "grainStrength": 0.045,
+        "softness": 0.015
+      }
+    },
+    {
+      "id": "2005",
+      "yearFrom": 2005,
+      "yearTo": 2009,
+      "backgroundImage": "images/newspaper/2005.png",
+      "mastheadFont": "\"UnifrakturCook\", \"Old English Text MT\", serif",
+      "headlineFont": "\"Roboto Condensed\", Arial, sans-serif",
+      "bodyFont": "Georgia, \"Times New Roman\", serif",
+      "theme": "modern-news",
+      "template": "chronicles/chronicle_2005.html",
+      "stylesheet": "css/chronicles/chronicle_2005.css",
+      "printStyle": {
+        "colorMode": "full_color",
+        "photoTreatment": "clean_newspaper_color",
+        "colorStrength": 0.94,
+        "halftoneStrength": 0.16,
+        "grainStrength": 0.1,
+        "contrast": 1.08,
+        "brightness": 1.0
+      },
+      "illustrationPrintStyle": {
+        "colorMode": "color",
+        "colorStrength": 0.82,
+        "inkStrength": 0.98,
+        "inkSpread": 0.025,
+        "roughness": 0.025,
+        "detailRetention": 0.99,
+        "grainStrength": 0.035,
+        "softness": 0.01
+      }
+    },
+    {
+      "id": "2010",
+      "yearFrom": 2010,
+      "yearTo": 2014,
+      "backgroundImage": "images/newspaper/2010.png",
+      "mastheadFont": "\"UnifrakturCook\", \"Old English Text MT\", serif",
+      "headlineFont": "\"Roboto Condensed\", Arial, sans-serif",
+      "bodyFont": "\"Newsreader\", Georgia, serif",
+      "theme": "modern-news",
+      "template": "chronicles/chronicle_2005.html",
+      "stylesheet": "css/chronicles/chronicle_2005.css",
+      "printStyle": {
+        "colorMode": "full_color",
+        "photoTreatment": "modern_newspaper_color",
+        "colorStrength": 0.98,
+        "halftoneStrength": 0.1,
+        "grainStrength": 0.06,
+        "contrast": 1.06,
+        "brightness": 1.0
+      },
+      "illustrationPrintStyle": {
+        "colorMode": "full_color",
+        "colorStrength": 0.92,
+        "inkStrength": 0.99,
+        "inkSpread": 0.015,
+        "roughness": 0.015,
+        "detailRetention": 0.995,
+        "grainStrength": 0.02,
+        "softness": 0.005
+      }
+    },
+    {
+      "id": "2015",
+      "yearFrom": 2015,
+      "yearTo": 2026,
+      "backgroundImage": "images/newspaper/2015.png",
+      "mastheadFont": "\"UnifrakturCook\", \"Old English Text MT\", serif",
+      "headlineFont": "\"Roboto Condensed\", Arial, sans-serif",
+      "bodyFont": "\"Newsreader\", Georgia, serif",
+      "theme": "modern-news",
+      "template": "chronicles/chronicle_2015.html",
+      "stylesheet": "css/chronicles/chronicle_2015.css",
+      "printStyle": {
+        "colorMode": "full_color",
+        "photoTreatment": "modern_editorial",
+        "colorStrength": 1.0,
+        "halftoneStrength": 0.06,
+        "grainStrength": 0.04,
+        "contrast": 1.04,
+        "brightness": 1.0
+      },
+      "illustrationPrintStyle": {
+        "colorMode": "full_color",
+        "colorStrength": 1.0,
+        "inkStrength": 1.0,
+        "inkSpread": 0.005,
+        "roughness": 0.005,
+        "detailRetention": 1.0,
+        "grainStrength": 0.01,
+        "softness": 0.0
+      }
+    }
+  ]
+}

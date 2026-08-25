@@ -1,0 +1,820 @@
+/* Shared Chronicle shell: page ratio, controls, image helpers, print base */
+/* backend/web/static/css/newspaper.css */
+/*
+ * Birthday Chronicle — Frozen Master Layout
+ * Canonical design size: 1000 × 1596 px (aspect ratio 1 : 1.596)
+ * Outer page margin: 40 px (usable inner width: 920 px)
+ *
+ * Image source standard (future asset library):
+ *   PORTRAIT   600 × 750   (4:5)
+ *   LANDSCAPE  900 × 600   (3:2)
+ *   SQUARE     500 × 500   (1:1)
+ *   EAGLE      900 × 300   (3:1)
+ *   ZODIAC     750 × 500   (3:2)
+ */
+
+:root {
+    --paper: #d7bb7d;
+    --paper-light: #e5cc94;
+    --paper-dark: #c4a86a;
+    --ink: #17120c;
+    --ink-headline: #100d09;
+    --ink-muted: #3d3228;
+    --ink-light: #6b5d4f;
+    --rule: rgba(30, 20, 10, 0.65);
+    --rule-light: rgba(30, 20, 10, 0.25);
+    --rule-thin: rgba(30, 20, 10, 0.15);
+    --font-masthead: "Old English Text MT", "UnifrakturCook", "Cloister Black", serif;
+    --font-headline: "Oswald", "Roboto Condensed", "Arial Narrow", sans-serif;
+    --font-subhead: "Libre Franklin", "Helvetica", sans-serif;
+    --font-body: Georgia, "Times New Roman", serif;
+    --page-width: 1000px;
+    --page-height: 1596px;
+    --page-margin: 40px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ============================================================
+   App Container & Controls
+   ============================================================ */
+
+.app-container {
+    min-height: 100vh;
+    background: #1a1510;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn-print,
+.btn-new {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 4px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.btn-print {
+    background: var(--ink);
+    color: var(--paper-light);
+}
+
+.btn-print:hover {
+    background: #2a2018;
+}
+
+.btn-new {
+    background: var(--paper-light);
+    color: var(--ink);
+}
+
+.btn-new:hover {
+    background: var(--paper);
+}
+
+/* ============================================================
+   Newspaper Wrapper & Page
+   ============================================================ */
+
+.newspaper-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.newspaper {
+    width: min(var(--page-width), calc(100vw - 40px));
+    aspect-ratio: 1000 / 1596;
+    height: auto;
+    padding: var(--page-margin);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    color: var(--ink);
+    background-color: #d3b477;
+    background-image: var(--newspaper-bg,
+            url("../images/aged-newspaper-paper.png"));
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    box-shadow:
+        inset 0 0 26px rgba(62, 35, 11, 0.16),
+        inset 0 0 78px rgba(75, 43, 14, 0.08),
+        0 18px 48px rgba(0, 0, 0, 0.52);
+    font-family: var(--body-font, var(--font-body));
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.newspaper::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 0 0, rgba(71, 40, 13, 0.13), transparent 22%),
+        radial-gradient(circle at 100% 0, rgba(75, 42, 13, 0.09), transparent 18%),
+        radial-gradient(circle at 0 100%, rgba(65, 36, 11, 0.14), transparent 24%),
+        radial-gradient(circle at 100% 100%, rgba(62, 34, 10, 0.11), transparent 20%);
+    mix-blend-mode: multiply;
+}
+
+/*
+ * No z-index here on purpose: a z-index would make each page section its own
+ * stacking context, which isolates descendants from the paper background and
+ * silently neutralises `mix-blend-mode: multiply` on illustrations. Positioned
+ * children still paint above ::before because they follow it in tree order.
+ */
+.newspaper>* {
+    position: relative;
+}
+
+/* Shared image-slot helpers */
+.image-slot {
+    overflow: hidden;
+    position: relative;
+}
+
+.image-slot img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.image-slot--portrait {
+    aspect-ratio: 4 / 5;
+}
+
+.image-slot--landscape {
+    aspect-ratio: 3 / 2;
+}
+
+.image-slot--square {
+    aspect-ratio: 1 / 1;
+}
+
+.image-slot--eagle {
+    aspect-ratio: 3 / 1;
+}
+
+.image-slot--illustration img {
+    object-fit: contain;
+}
+
+.image-slot--photo img {
+    object-fit: cover;
+}
+
+.newspaper-illustration {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.newspaper-page .weather-box {
+    box-sizing: border-box;
+    overflow: hidden;
+    gap: 3px;
+}
+
+.newspaper-page .weather-box .weather-illustration {
+    width: 46px;
+    height: 46px;
+    max-width: 46px;
+    max-height: 46px;
+    flex: 0 0 46px;
+    flex-shrink: 0;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    background: transparent;
+}
+
+.newspaper-page .weather-box .weather-icon {
+    font-size: 36px;
+    line-height: 46px;
+    text-align: center;
+}
+
+.newspaper-page .weather-box .weather-label,
+.newspaper-page .weather-box .weather-text,
+.newspaper-page .weather-box .weather-secondary,
+.newspaper-page .weather-box .weather-date {
+    display: block;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0;
+    text-align: center;
+    line-height: 1.05;
+}
+
+.newspaper-page .weather-box .weather-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+}
+
+.newspaper-page .weather-box .weather-text {
+    font-size: 10.5px;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+}
+
+.newspaper-page .weather-box .weather-secondary {
+    font-size: 9px;
+}
+
+.newspaper-page .weather-box .weather-date {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+/* ============================================================
+   Newspaper Illustrations — paper show-through
+   ------------------------------------------------------------
+   Illustrations must read as ink printed onto the selected paper.
+   `mix-blend-mode: multiply` is what makes white and light-grey
+   artwork inherit the real paper — its stains, grain and folds —
+   instead of showing as digital white. The era tint therefore
+   comes from the paper itself; the per-era filters below only
+   control how aged the ink looks, getting cleaner over time.
+
+   Selectors are scoped to .newspaper-page so they outrank the
+   per-era stylesheets, which load after this file.
+   ============================================================ */
+
+.newspaper-page {
+    --illustration-filter: grayscale(100%) contrast(112%) brightness(92%);
+    --illustration-opacity: 0.96;
+}
+
+.newspaper-page[data-era="1950"] {
+    --illustration-filter: grayscale(100%) sepia(30%) contrast(120%) brightness(85%);
+    --illustration-opacity: 0.92;
+}
+
+.newspaper-page[data-era="1960"] {
+    --illustration-filter: grayscale(100%) sepia(24%) contrast(117%) brightness(88%);
+    --illustration-opacity: 0.93;
+}
+
+.newspaper-page[data-era="1970"] {
+    --illustration-filter: grayscale(100%) sepia(18%) contrast(115%) brightness(90%);
+    --illustration-opacity: 0.94;
+}
+
+.newspaper-page[data-era="1980"] {
+    --illustration-filter: grayscale(100%) sepia(13%) contrast(113%) brightness(92%);
+    --illustration-opacity: 0.95;
+}
+
+.newspaper-page[data-era="1990"] {
+    --illustration-filter: grayscale(100%) sepia(8%) contrast(111%) brightness(94%);
+    --illustration-opacity: 0.96;
+}
+
+.newspaper-page[data-era="1995"] {
+    --illustration-filter: grayscale(100%) sepia(5%) contrast(109%) brightness(96%);
+    --illustration-opacity: 0.97;
+}
+
+.newspaper-page[data-era="2000"] {
+    --illustration-filter: grayscale(100%) sepia(4%) contrast(108%) brightness(97%);
+    --illustration-opacity: 0.98;
+}
+
+.newspaper-page[data-era="2005"] {
+    --illustration-filter: grayscale(100%) sepia(3%) contrast(107%) brightness(98%);
+    --illustration-opacity: 0.98;
+}
+
+.newspaper-page[data-era="2010"] {
+    --illustration-filter: grayscale(100%) sepia(1%) contrast(105%) brightness(99%);
+    --illustration-opacity: 0.99;
+}
+
+.newspaper-page[data-era="2015"] {
+    --illustration-filter: grayscale(100%) sepia(0%) contrast(103%) brightness(100%);
+    --illustration-opacity: 1;
+}
+
+/* The attribute selectors are a safety net for any illustration that is
+   rendered without the shared class. Photographs, QR codes and uploads live
+   outside the illustrations directory and are deliberately untouched. */
+.newspaper-page img.newspaper-illustration,
+.newspaper-page img[src*="/illustrations/"],
+.newspaper-page img[src*="images/illustrations/"] {
+    background: transparent;
+    mix-blend-mode: multiply;
+    filter: var(--illustration-filter);
+    opacity: var(--illustration-opacity);
+    object-fit: contain;
+}
+
+/* Containers must never paint a light plate behind the artwork, or the paper
+   texture stops at the image bounds. */
+.newspaper-page .image-slot--illustration,
+.newspaper-page .masthead-eagle,
+.newspaper-page .weather-box {
+    background: transparent;
+}
+
+.arrival-portrait-block {
+    flex-shrink: 0;
+}
+
+.president-portrait {
+    width: 150px;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    display: block;
+}
+
+.newspaper-photo {
+    mix-blend-mode: multiply;
+    opacity: 1;
+}
+
+.president-caption {
+    width: 150px;
+    margin-top: 4px;
+    text-align: center;
+}
+
+.president-caption-kicker {
+    margin: 0;
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.2;
+}
+
+.president-caption-name {
+    margin: 2px 0 0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+}
+
+.article-arrival.arrival-fit--compact .article-body {
+    font-size: 13.5px;
+    line-height: 1.21;
+    margin: 3px 0;
+}
+
+.article-arrival.arrival-fit--tight .article-body {
+    font-size: 13px;
+    line-height: 1.16;
+    margin: 2px 0;
+}
+
+.article-arrival.arrival-fit--tight .article-headline {
+    font-size: 23px;
+    line-height: 1.02;
+}
+
+.article-arrival {
+    min-height: 0;
+}
+
+.arrival-fit-pending {
+    visibility: hidden;
+}
+
+.arrival-president-wish,
+.arrival-body {
+    text-align: justify;
+    text-align-last: left;
+    hyphens: auto;
+    overflow-wrap: normal;
+    word-break: normal;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.arrival-body:last-child {
+    margin-bottom: 0;
+}
+
+@media print {
+    @page {
+        size: 210mm 335.16mm;
+        margin: 6mm;
+    }
+
+    .app-container {
+        padding: 0;
+        background: white;
+        display: block;
+    }
+
+    .controls {
+        display: none !important;
+    }
+
+    .newspaper-wrapper {
+        width: 100%;
+        margin: 0;
+    }
+
+    .newspaper {
+        width: 100%;
+        aspect-ratio: 1000 / 1596;
+        box-shadow: none;
+        padding: var(--page-margin);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
+
+.world-news-fit-pending .world-headlines {
+    visibility: hidden;
+}
+
+.article-world .article-kicker {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    line-height: 1;
+    margin: 0 0 2px;
+}
+
+.around-content {
+    min-height: 0;
+}
+
+.around-feature {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 8px;
+    align-items: start;
+}
+
+.around-illustration {
+    width: 120px;
+    height: 100px;
+}
+
+.around-illustration img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.around-feature-copy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.around-feature-label,
+.around-secondary-heading {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.around-feature-date {
+    font-size: 10px;
+    font-weight: 700;
+    margin-top: 2px;
+}
+
+.around-feature-title {
+    font-size: 15px;
+    line-height: 1.08;
+    margin-top: 3px;
+}
+
+.around-feature-description {
+    font-family: var(--body-font, var(--font-body));
+    font-size: 11px;
+    line-height: 1.18;
+    margin-top: 4px;
+}
+
+.around-divider {
+    border-top: 1px solid var(--rule-light);
+    margin: 6px 0 4px;
+}
+
+.around-secondary-list {
+    list-style: none;
+    padding: 0;
+    margin: 3px 0 0;
+}
+
+.around-secondary-list li {
+    display: flex;
+    gap: 5px;
+    align-items: flex-start;
+    font-family: var(--body-font, var(--font-body));
+    font-size: 11px;
+    line-height: 1.2;
+    padding: 2px 0;
+}
+
+.newspaper-page .zodiac-content {
+    display: block;
+    min-height: 0;
+}
+
+.zodiac-copy {
+    min-width: 0;
+}
+
+.zodiac-illustration-box {
+    float: right;
+    width: min(175px, 42%);
+    max-height: 150px;
+    margin: 4px 0 8px 10px;
+    padding: 7px;
+    border: 1px solid var(--rule-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.zodiac-illustration-box img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+.zodiac-optional {
+    display: none;
+}
+
+.zodiac-fit-pending {
+    visibility: hidden;
+}
+
+.newspaper-page .zodiac-copy .article-body {
+    text-align: justify;
+    text-align-last: left;
+    hyphens: auto;
+    overflow-wrap: normal;
+    word-break: normal;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.newspaper-page .zodiac-copy .article-body:last-child {
+    margin-bottom: 0;
+}
+
+.article-zodiac.zodiac-fit--tight .zodiac-copy .article-body {
+    font-size: 12px;
+    line-height: 1.1;
+    margin-bottom: 2px;
+}
+
+.movie-illustration {
+    float: left;
+    width: 125px;
+    height: 90px;
+    margin: 0 8px 5px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.movie-illustration img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.movie-feature-copy {
+    min-width: 0;
+}
+
+.movie-feature-label,
+.movie-secondary-heading {
+    display: block;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.movie-feature-title {
+    display: block;
+    font-size: 15px;
+    line-height: 1.08;
+    margin-top: 3px;
+}
+
+.movie-feature-credit {
+    display: block;
+    font-size: 10px;
+    margin-top: 2px;
+}
+
+.movie-feature-description {
+    display: block;
+    font-family: var(--body-font, var(--font-body));
+    font-size: 11px;
+    line-height: 1.18;
+    text-align: justify;
+    text-align-last: left;
+    hyphens: auto;
+    margin-top: 4px;
+}
+
+.movie-divider {
+    border-top: 1px solid var(--rule-light);
+    margin: 6px 0 4px;
+    clear: both;
+}
+
+.movie-secondary-list {
+    list-style: none;
+    padding: 0;
+    margin: 3px 0 0;
+}
+
+.movie-secondary-list li {
+    display: flex;
+    gap: 5px;
+    align-items: flex-start;
+    font-family: var(--body-font, var(--font-body));
+    font-size: 11px;
+    line-height: 1.2;
+    padding: 2px 0;
+}
+
+.movie-bullet {
+    flex: 0 0 auto;
+}
+
+.music-fit-pending {
+    visibility: hidden;
+}
+
+.music-body {
+    text-align: justify;
+    text-align-last: left;
+    hyphens: auto;
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
+.movies-fit-pending {
+    visibility: hidden;
+}
+
+.around-bullet {
+    flex: 0 0 auto;
+}
+
+.around-fit-pending {
+    visibility: hidden;
+}
+
+.newspaper-page .zodiac-content {
+    display: block;
+    min-height: 0;
+}
+
+.zodiac-copy {
+    min-width: 0;
+}
+
+.zodiac-illustration-box {
+    float: right;
+    width: min(175px, 42%);
+    max-height: 150px;
+    margin: 4px 0 8px 10px;
+    padding: 7px;
+    border: 1px solid var(--rule-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.zodiac-illustration-box img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+.zodiac-optional {
+    display: none;
+}
+
+.zodiac-fit-pending {
+    visibility: hidden;
+}
+
+.movie-illustration {
+    float: left;
+    width: 125px;
+    height: 90px;
+    margin: 0 8px 5px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.movie-illustration img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.movie-feature-copy {
+    min-width: 0;
+}
+
+.movie-feature-label,
+.movie-secondary-heading {
+    display: block;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.movie-feature-title {
+    display: block;
+    font-size: 15px;
+    line-height: 1.08;
+    margin-top: 3px;
+}
+
+.movie-feature-credit {
+    display: block;
+    font-size: 10px;
+    margin-top: 2px;
+}
+
+.movie-feature-description {
+    display: block;
+    font-family: var(--body-font, var(--font-body));
+    font-size: 11px;
+    line-height: 1.18;
+    text-align: justify;
+    text-align-last: left;
+    hyphens: auto;
+    margin-top: 4px;
+}
+
+.movie-divider {
+    border-top: 1px solid var(--rule-light);
+    margin: 6px 0 4px;
+    clear: both;
+}
+
+.movie-secondary-list {
+    list-style: none;
+    padding: 0;
+    margin: 3px 0 0;
+}
+
+.movie-secondary-list li {
+    display: flex;
+    gap: 5px;
+    align-items: flex-start;
+    font-family: var(--body-font, var(--font-body));
+    font-size: 11px;
+    line-height: 1.2;
+    padding: 2px 0;
+}
+
+.movie-bullet {
+    flex: 0 0 auto;
+}

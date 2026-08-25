@@ -1,0 +1,66 @@
+{
+    "schemaVersion": 1,
+    "defaultTemplateId": "classic_01",
+    "templates": [
+        {
+            "id": "classic_01",
+            "headlineTemplate": "CHINESE CELEBRATE YEAR OF THE {animalUpper}",
+            "introTemplate": "According to the traditional Chinese zodiac, {personFirstName} was born in the Year of the {animal}. People associated with this sign are traditionally described as {traitList}.",
+            "fortuneTemplate": "Today's fortune cookie says, \"{fortuneMessage}\""
+        },
+        {
+            "id": "classic_02",
+            "headlineTemplate": "BORN IN THE YEAR OF THE {animalUpper}",
+            "introTemplate": "{personFirstName} arrived in a year traditionally associated with the {animal}. Those born under this sign are often described as {traitList}.",
+            "fortuneTemplate": "A fortune for {personFirstName}: \"{fortuneMessage}\""
+        },
+        {
+            "id": "classic_03",
+            "headlineTemplate": "{animalUpper} YEAR WELCOMES {personFirstNameUpper}",
+            "introTemplate": "The Chinese zodiac places {personFirstName} under the {animal}, a sign traditionally linked with being {traitList}.",
+            "fortuneTemplate": "The day's fortune reads: \"{fortuneMessage}\""
+        },
+        {
+            "id": "classic_04",
+            "headlineTemplate": "{personFirstNameUpper} ARRIVES IN THE YEAR OF THE {animalUpper}",
+            "introTemplate": "By traditional zodiac reckoning, {personFirstName} shares the {animal} year with people known for being {traitList}.",
+            "fortuneTemplate": "Today's small piece of wisdom: \"{fortuneMessage}\""
+        },
+        {
+            "id": "classic_05",
+            "headlineTemplate": "THE CHINESE ZODIAC SAYS: {animalUpper}",
+            "introTemplate": "The {animal} is the traditional Chinese zodiac sign for {personFirstName}, and its familiar descriptions include {traitList}.",
+            "fortuneTemplate": "The fortune cookie offers this thought: \"{fortuneMessage}\""
+        },
+        {
+            "id": "classic_06",
+            "headlineTemplate": "A {animalUpper} YEAR BIRTHDAY",
+            "introTemplate": "{personFirstName} was born in the Year of the {animal}. Traditional descriptions of this sign call it {traitList}.",
+            "fortuneTemplate": "A timely fortune for {personFirstName}: \"{fortuneMessage}\""
+        },
+        {
+            "id": "classic_07",
+            "headlineTemplate": "A BIRTHDAY UNDER THE {animalUpper}",
+            "introTemplate": "The traditional Chinese zodiac gives {personFirstName} the {animal} sign, associated with {traitList}.",
+            "fortuneTemplate": "Today's fortune cookie says, \"{fortuneMessage}\""
+        },
+        {
+            "id": "classic_08",
+            "headlineTemplate": "{animalUpper}: THE YEAR'S ZODIAC SIGN",
+            "introTemplate": "In the old zodiac tradition, {personFirstName} belongs to the Year of the {animal}, a sign described as {traitList}.",
+            "fortuneTemplate": "The paper fortune reads: \"{fortuneMessage}\""
+        },
+        {
+            "id": "classic_09",
+            "headlineTemplate": "A {animalUpper} YEAR FOR {personFirstNameUpper}",
+            "introTemplate": "The calendar's traditional Chinese zodiac sign for {personFirstName} is the {animal}, with qualities often described as {traitList}.",
+            "fortuneTemplate": "A little fortune for the day: \"{fortuneMessage}\""
+        },
+        {
+            "id": "classic_10",
+            "headlineTemplate": "YEAR OF THE {animalUpper}",
+            "introTemplate": "According to Chinese zodiac tradition, {personFirstName} was born under the {animal}, whose traditional qualities include being {traitList}.",
+            "fortuneTemplate": "Today's fortune: \"{fortuneMessage}\""
+        }
+    ]
+}

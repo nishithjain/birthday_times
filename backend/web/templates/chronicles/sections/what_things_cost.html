@@ -1,0 +1,8 @@
+<section class="chronicle-section chronicle-what-things-cost prices-section" data-section="what-things-cost">
+    <h3 class="prices-title">{{ chronicle.what_things_cost.headline if chronicle.what_things_cost else 'WHAT THINGS COST
+        IN ' ~ chronicle.person.birth_date|year }}</h3>
+    <div class="prices-grid">{% if chronicle.what_things_cost and chronicle.what_things_cost.hasAnyData %}{% for item in
+        chronicle.what_things_cost.items %}<div class="price-item"><span class="price-label">{{ item.label
+                }}</span><span class="price-value">{{ item.detail or item.displayValue or '-' }}</span></div>{% endfor
+        %}{% else %}<p class="placeholder-text">Historical price data not available for this year.</p>{% endif %}</div>
+</section>

@@ -1,0 +1,60 @@
+{
+    "schemaVersion": 1,
+    "fallbackIllustrationId": "weather_generic",
+    "conditions": {
+        "sunny": {
+            "illustrationId": "weather_sunny"
+        },
+        "clear": {
+            "illustrationId": "weather_sunny"
+        },
+        "dry": {
+            "illustrationId": "weather_sunny"
+        },
+        "partly_cloudy": {
+            "illustrationId": "weather_partly_cloudy"
+        },
+        "cloudy": {
+            "illustrationId": "weather_cloudy"
+        },
+        "overcast": {
+            "illustrationId": "weather_cloudy"
+        },
+        "showers": {
+            "illustrationId": "weather_showers"
+        },
+        "showery": {
+            "illustrationId": "weather_showers"
+        },
+        "rain": {
+            "illustrationId": "weather_rain"
+        },
+        "rainy": {
+            "illustrationId": "weather_rain"
+        },
+        "storm": {
+            "illustrationId": "weather_thunderstorm"
+        },
+        "thunderstorm": {
+            "illustrationId": "weather_thunderstorm"
+        },
+        "snow": {
+            "illustrationId": "weather_snow"
+        },
+        "snowy": {
+            "illustrationId": "weather_snow"
+        },
+        "fog": {
+            "illustrationId": "weather_fog"
+        },
+        "foggy": {
+            "illustrationId": "weather_fog"
+        },
+        "windy": {
+            "illustrationId": "weather_windy"
+        },
+        "unknown": {
+            "illustrationId": "weather_generic"
+        }
+    }
+}

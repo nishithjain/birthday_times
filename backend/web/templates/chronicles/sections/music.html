@@ -1,0 +1,15 @@
+<article class="chronicle-section chronicle-music article-music" data-section="music">
+    <div class="article-header">{% if chronicle.music and chronicle.music.available %}<h3 class="article-headline">{{
+            chronicle.music.headline }}</h3>
+        <p class="article-kicker">{{ chronicle.music.subheadline }}</p>{% else %}<h3 class="article-headline">Music,
+            Music, Music</h3>{% endif %}
+    </div>
+    <div class="image-slot image-slot--square image-slot--illustration image-slot--music-icon">{% if chronicle.music and
+        chronicle.music.illustration and chronicle.music.illustration.displayPath %}<img
+            src="{{ url_for('static', filename=chronicle.music.illustration.displayPath) }}" alt="">{% else %}<div
+            class="image-placeholder">JUKEBOX / MUSIC</div>{% endif %}</div>{% if chronicle.music and
+    chronicle.music.available %}<div class="music-content" data-music-fit-content>
+        <p class="article-body music-body">{{ chronicle.music.bodyText }}</p>
+    </div>{% else %}<p class="article-body placeholder-text">Music history from {{ chronicle.person.birth_date|year }}
+        will appear here as the archive grows.</p>{% endif %}
+</article>

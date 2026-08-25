@@ -1,0 +1,671 @@
+{
+  "schemaVersion": 1,
+  "illustrations": [
+    {
+      "id": "eagle",
+      "category": "masthead",
+      "path": "images/illustrations/originals/masthead/eagle.png",
+      "yearFrom": 1950,
+      "yearTo": 1969,
+      "contexts": [
+        "masthead"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "globe",
+      "category": "world",
+      "path": "images/illustrations/originals/world/globe.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "world",
+        "world_news",
+        "international",
+        "global"
+      ],
+      "priority": 10,
+      "evergreen": true
+    },
+    {
+      "id": "weather_generic",
+      "category": "weather",
+      "path": "images/illustrations/originals/weather/weather.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "weather",
+        "weather_generic"
+      ],
+      "priority": 10,
+      "evergreen": true
+    },
+    {
+      "id": "weather_sunny",
+      "category": "weather",
+      "path": "images/illustrations/originals/weather/sunny.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "weather",
+        "weather_sunny"
+      ],
+      "priority": 10,
+      "evergreen": true
+    },
+    {
+      "id": "weather_partly_cloudy",
+      "category": "weather",
+      "path": "images/illustrations/originals/weather/partly-cloudy.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "weather",
+        "weather_partly_cloudy"
+      ],
+      "priority": 10,
+      "evergreen": true
+    },
+    {
+      "id": "weather_cloudy",
+      "category": "weather",
+      "path": "images/illustrations/originals/weather/cloudy.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "weather",
+        "weather_cloudy"
+      ],
+      "priority": 10,
+      "evergreen": true
+    },
+    {
+      "id": "weather_showers",
+      "category": "weather",
+      "path": "images/illustrations/originals/weather/showers.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "weather",
+        "weather_showers"
+      ],
+      "priority": 10,
+      "evergreen": true
+    },
+    {
+      "id": "weather_rain",
+      "category": "weather",
+      "path": "images/illustrations/originals/weather/rain.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "weather",
+        "weather_rain"
+      ],
+      "priority": 10,
+      "evergreen": true
+    },
+    {
+      "id": "weather_thunderstorm",
+      "category": "weather",
+      "path": "images/illustrations/originals/weather/thunderstorm.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "weather",
+        "weather_thunderstorm"
+      ],
+      "priority": 10,
+      "evergreen": true
+    },
+    {
+      "id": "weather_snow",
+      "category": "weather",
+      "path": "images/illustrations/originals/weather/snow.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "weather",
+        "weather_snow"
+      ],
+      "priority": 10,
+      "evergreen": true
+    },
+    {
+      "id": "weather_fog",
+      "category": "weather",
+      "path": "images/illustrations/originals/weather/fog.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "weather",
+        "weather_fog"
+      ],
+      "priority": 10,
+      "evergreen": true
+    },
+    {
+      "id": "weather_windy",
+      "category": "weather",
+      "path": "images/illustrations/originals/weather/windy.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "weather",
+        "weather_windy"
+      ],
+      "priority": 10,
+      "evergreen": true
+    },
+    {
+      "id": "capitol",
+      "category": "government",
+      "path": "images/illustrations/originals/government/capitol.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "government",
+        "congress",
+        "legislation",
+        "washington",
+        "politics"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "white-house",
+      "category": "government",
+      "path": "images/illustrations/originals/government/white-house.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "president",
+        "white_house",
+        "government",
+        "politics"
+      ],
+      "priority": 9
+    },
+    {
+      "id": "parliament",
+      "category": "government",
+      "path": "images/illustrations/originals/government/parliament.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "parliament",
+        "uk",
+        "government",
+        "politics"
+      ],
+      "priority": 9
+    },
+    {
+      "id": "film-strip",
+      "category": "movies",
+      "path": "images/illustrations/originals/movies/film-strip.png",
+      "yearFrom": 1950,
+      "yearTo": 1999,
+      "contexts": [
+        "movies",
+        "cinema",
+        "film"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "movie-camera",
+      "category": "movies",
+      "path": "images/illustrations/originals/movies/movie-camera.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "movies",
+        "cinema",
+        "film"
+      ],
+      "priority": 8
+    },
+    {
+      "id": "gramophone",
+      "category": "music",
+      "path": "images/illustrations/originals/music/gramophone.png",
+      "yearFrom": 1950,
+      "yearTo": 1959,
+      "contexts": [
+        "music"
+      ],
+      "priority": 8
+    },
+    {
+      "id": "jukebox",
+      "category": "music",
+      "path": "images/illustrations/originals/music/jukebox.png",
+      "yearFrom": 1950,
+      "yearTo": 1969,
+      "contexts": [
+        "music",
+        "pop_culture"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "microphone",
+      "category": "music",
+      "path": "images/illustrations/originals/music/microphone.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "music",
+        "radio",
+        "entertainment"
+      ],
+      "priority": 7
+    },
+    {
+      "id": "cassette",
+      "category": "music",
+      "path": "images/illustrations/originals/music/cassette.png",
+      "yearFrom": 1970,
+      "yearTo": 1994,
+      "contexts": [
+        "music",
+        "technology",
+        "pop_culture"
+      ],
+      "priority": 9
+    },
+    {
+      "id": "boombox",
+      "category": "music",
+      "path": "images/illustrations/originals/music/boombox.png",
+      "yearFrom": 1980,
+      "yearTo": 1994,
+      "contexts": [
+        "music",
+        "pop_culture",
+        "technology"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "airplane",
+      "category": "science",
+      "path": "images/illustrations/originals/science/airplane.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "aviation",
+        "travel",
+        "science",
+        "world"
+      ],
+      "priority": 7
+    },
+    {
+      "id": "atom",
+      "category": "science",
+      "path": "images/illustrations/originals/science/atom.png",
+      "yearFrom": 1950,
+      "yearTo": 1989,
+      "contexts": [
+        "science",
+        "nuclear",
+        "atomic"
+      ],
+      "priority": 9
+    },
+    {
+      "id": "rocket",
+      "category": "science",
+      "path": "images/illustrations/originals/science/rocket.png",
+      "yearFrom": 1957,
+      "yearTo": 1989,
+      "contexts": [
+        "science",
+        "space",
+        "space_race",
+        "nasa"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "satellite",
+      "category": "science",
+      "path": "images/illustrations/originals/science/satellite.png",
+      "yearFrom": 1957,
+      "yearTo": null,
+      "contexts": [
+        "science",
+        "space",
+        "technology",
+        "satellite"
+      ],
+      "priority": 9
+    },
+    {
+      "id": "telescope",
+      "category": "science",
+      "path": "images/illustrations/originals/science/telescope.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "science",
+        "astronomy",
+        "space"
+      ],
+      "priority": 7
+    },
+    {
+      "id": "baseball",
+      "category": "sports",
+      "path": "images/illustrations/originals/sports/baseball.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "sports",
+        "baseball"
+      ],
+      "priority": 9
+    },
+    {
+      "id": "football",
+      "category": "sports",
+      "path": "images/illustrations/originals/sports/football.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "sports",
+        "football"
+      ],
+      "priority": 9
+    },
+    {
+      "id": "cricket",
+      "category": "sports",
+      "path": "images/illustrations/originals/sports/cricket.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "sports",
+        "cricket"
+      ],
+      "priority": 9
+    },
+    {
+      "id": "olympic-torch",
+      "category": "sports",
+      "path": "images/illustrations/originals/sports/olympic-torch.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "sports",
+        "olympics"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "radio",
+      "category": "technology",
+      "path": "images/illustrations/originals/technology/radio.png",
+      "yearFrom": 1950,
+      "yearTo": 1979,
+      "contexts": [
+        "technology",
+        "radio",
+        "music",
+        "news"
+      ],
+      "priority": 8
+    },
+    {
+      "id": "rotary-phone",
+      "category": "technology",
+      "path": "images/illustrations/originals/technology/rotary-phone.png",
+      "yearFrom": 1950,
+      "yearTo": 1979,
+      "contexts": [
+        "technology",
+        "telephone",
+        "communications"
+      ],
+      "priority": 8
+    },
+    {
+      "id": "television",
+      "category": "technology",
+      "path": "images/illustrations/originals/technology/television.png",
+      "yearFrom": 1950,
+      "yearTo": 1989,
+      "contexts": [
+        "technology",
+        "television",
+        "entertainment"
+      ],
+      "priority": 9
+    },
+    {
+      "id": "computer",
+      "category": "technology",
+      "path": "images/illustrations/originals/technology/computer.png",
+      "yearFrom": 1980,
+      "yearTo": 2009,
+      "contexts": [
+        "technology",
+        "computer",
+        "computing"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "mobile-phone",
+      "category": "technology",
+      "path": "images/illustrations/originals/technology/mobile-phone.png",
+      "yearFrom": 1990,
+      "yearTo": 2009,
+      "contexts": [
+        "technology",
+        "mobile",
+        "communications",
+        "telephone"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "mp3-player",
+      "category": "technology",
+      "path": "images/illustrations/originals/technology/mp3-player.png",
+      "yearFrom": 2000,
+      "yearTo": 2014,
+      "contexts": [
+        "technology",
+        "music",
+        "mp3",
+        "digital_music"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "smartphone",
+      "category": "technology",
+      "path": "images/illustrations/originals/technology/smartphone.png",
+      "yearFrom": 2010,
+      "yearTo": null,
+      "contexts": [
+        "technology",
+        "smartphone",
+        "mobile",
+        "communications"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "chinese-zodiac",
+      "category": "zodiac",
+      "path": "images/illustrations/originals/zodiac/chinese-zodiac.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "zodiac",
+        "chinese_zodiac"
+      ],
+      "priority": 5
+    },
+    {
+      "id": "zodiac_rat",
+      "category": "zodiac",
+      "path": "images/illustrations/originals/zodiac/rat.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "zodiac",
+        "chinese_zodiac",
+        "rat"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "zodiac_ox",
+      "category": "zodiac",
+      "path": "images/illustrations/originals/zodiac/ox.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "zodiac",
+        "chinese_zodiac",
+        "ox"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "zodiac_tiger",
+      "category": "zodiac",
+      "path": "images/illustrations/originals/zodiac/tiger.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "zodiac",
+        "chinese_zodiac",
+        "tiger"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "zodiac_rabbit",
+      "category": "zodiac",
+      "path": "images/illustrations/originals/zodiac/rabbit.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "zodiac",
+        "chinese_zodiac",
+        "rabbit"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "zodiac_dragon",
+      "category": "zodiac",
+      "path": "images/illustrations/originals/zodiac/dragon.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "zodiac",
+        "chinese_zodiac",
+        "dragon"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "zodiac_snake",
+      "category": "zodiac",
+      "path": "images/illustrations/originals/zodiac/snake.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "zodiac",
+        "chinese_zodiac",
+        "snake"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "zodiac_horse",
+      "category": "zodiac",
+      "path": "images/illustrations/originals/zodiac/horse.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "zodiac",
+        "chinese_zodiac",
+        "horse"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "zodiac_goat",
+      "category": "zodiac",
+      "path": "images/illustrations/originals/zodiac/goat.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "zodiac",
+        "chinese_zodiac",
+        "goat"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "zodiac_monkey",
+      "category": "zodiac",
+      "path": "images/illustrations/originals/zodiac/monkey.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "zodiac",
+        "chinese_zodiac",
+        "monkey"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "zodiac_rooster",
+      "category": "zodiac",
+      "path": "images/illustrations/originals/zodiac/rooster.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "zodiac",
+        "chinese_zodiac",
+        "rooster"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "zodiac_dog",
+      "category": "zodiac",
+      "path": "images/illustrations/originals/zodiac/dog.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "zodiac",
+        "chinese_zodiac",
+        "dog"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "zodiac_pig",
+      "category": "zodiac",
+      "path": "images/illustrations/originals/zodiac/pig.png",
+      "yearFrom": 1950,
+      "yearTo": null,
+      "contexts": [
+        "zodiac",
+        "chinese_zodiac",
+        "pig"
+      ],
+      "priority": 10
+    }
+  ]
+}

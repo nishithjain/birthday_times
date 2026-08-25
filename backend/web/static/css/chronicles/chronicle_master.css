@@ -1,0 +1,12 @@
+/* Development-only assembly foundation. Final page dimensions and layout are intentionally undefined. */
+.chronicle-master {
+    display: block;
+}
+
+.chronicle-section-development {
+    padding: 24px;
+}
+
+.chronicle-section-development>[data-section] {
+    margin-bottom: 24px;
+}

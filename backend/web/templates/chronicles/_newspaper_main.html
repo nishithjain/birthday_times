@@ -1,0 +1,381 @@
+{% macro newspaper_illustration(slot_name, placeholder) -%}
+{% set item = (chronicle.illustrations or {}).get(slot_name) %}
+{% if item and item.displayPath %}
+<img src="{{ url_for('static', filename=item.displayPath) }}" alt="" class="newspaper-illustration">
+{% else %}
+<div class="image-placeholder">{{ placeholder }}</div>
+{% endif %}
+{%- endmacro %}
+
+<main class="newspaper newspaper-page" data-era="{{ chronicle.newspaper_style.id }}" style="
+                --newspaper-bg: url('{{ url_for('static', filename=chronicle.newspaper_style.backgroundImage) }}');
+                --masthead-font: {{ chronicle.newspaper_style.mastheadFont }};
+                --headline-font: {{ chronicle.newspaper_style.headlineFont }};
+                --body-font: {{ chronicle.newspaper_style.bodyFont }};
+            ">
+    <header class="newspaper-header">
+        <div class="top-strip">
+            <section class="weather-box">
+                <span class="weather-label">TODAY'S WEATHER</span>
+                {% set weather_illustration = (chronicle.weather or {}).get("illustration") or (chronicle.illustrations
+                or {}).get("weather") %}
+                {% if weather_illustration and weather_illustration.displayPath %}
+                <img src="{{ url_for('static', filename=weather_illustration.displayPath) }}" alt=""
+                    class="newspaper-illustration weather-illustration">
+                {% else %}
+                <div class="weather-icon weather-illustration" aria-hidden="true">☀</div>
+                {% endif %}
+                {% if chronicle.weather and chronicle.weather.available %}
+                <span class="weather-text">{{ chronicle.weather.conditionText }}</span>
+                {% if chronicle.weather.windText %}<span class="weather-secondary">{{ chronicle.weather.windText
+                    }}</span>{% endif %}
+                {% else %}
+                <span class="weather-text">Weather unavailable</span>
+                {% endif %}
+                <span class="weather-date">{{ (chronicle.weather.dateText if chronicle.weather else
+                    chronicle.person.birth_date|format_date)|upper }}</span>
+            </section>
+
+            <div class="masthead-eagle image-slot image-slot--eagle image-slot--illustration">
+                {{ newspaper_illustration("masthead", "EAGLE / LOGO") }}
+            </div>
+
+            <div class="extra-box">
+                <span class="extra-label">EXTRA!</span>
+                <span class="extra-sub">Special Edition</span>
+            </div>
+        </div>
+
+        <h1 class="masthead-title">The Birthday Chronicle</h1>
+
+        <div class="tagline-row">
+            <span class="tagline-left">"Your Page of History in Print"</span>
+            <span class="tagline-center">Personalized Edition</span>
+            <span class="tagline-right">★★★★★</span>
+        </div>
+
+        <div class="dateline-row">
+            <span class="dateline-left">VOL. {{ chronicle.calendar.age|default(1) }}</span>
+            <span class="dateline-center">{{ chronicle.person.birth_date_display|upper }}</span>
+            <span class="dateline-right">SPECIAL EDITION</span>
+        </div>
+    </header>
+
+    <section class="year-headline">
+        <p class="year-headline-kicker">THE WORLD IN {{ chronicle.person.birth_date|year }}</p>
+        <h2 class="year-headline-title">{{ chronicle.lead_story.headline }}</h2>
+    </section>
+
+    <section class="chronicle-grid">
+        <article class="article-arrival arrival-fit--normal arrival-fit-pending" data-arrival-fit-container
+            data-arrival-template-id="{{ chronicle.arrival.templateId }}"
+            data-arrival-length-class="{{ chronicle.arrival.lengthClass }}" data-arrival-fit-result="server-estimate">
+            <div class="article-header">
+                <h3 class="article-headline"><span data-arrival-headline>{{ chronicle.arrival.headline }}</span></h3>
+            </div>
+            <div class="arrival-content">
+                <div class="arrival-portrait-block">
+                    <div class="image-slot image-slot--portrait image-slot--photo image-slot--arrival-portrait">
+                        {% if chronicle.president and chronicle.president.displayPath %}
+                        <img src="{{ url_for('static', filename=chronicle.president.displayPath) }}"
+                            alt="{{ chronicle.president.displayName }}"
+                            class="president-portrait{% if chronicle.president.usingVariant %} newspaper-photo{% endif %}">
+                        {% else %}
+                        <div class="image-placeholder">PRESIDENT / LEADER</div>
+                        {% endif %}
+                    </div>
+                    {% if chronicle.president %}
+                    <div class="president-caption">
+                        <p class="president-caption-kicker">President of the United States</p>
+                        <p class="president-caption-name">{{ chronicle.president.name|upper }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="arrival-text">
+                    <p class="article-kicker">{{ chronicle.arrival.kicker }}</p>
+                    {% if chronicle.arrival.presidentWishText %}
+                    <p class="article-body arrival-president-wish" data-arrival-president-wish>{{
+                        chronicle.arrival.presidentWishText }}</p>
+                    {% endif %}
+                    <p class="article-body arrival-body" data-arrival-body>{{ chronicle.arrival.bodyText }}</p>
+                </div>
+            </div>
+            <script type="application/json" data-arrival-candidates>{{ chronicle.arrival.candidates|tojson }}</script>
+        </article>
+
+        <article class="article-world world-news-fit-pending" data-world-news-container>
+            <div class="article-header">
+                <p class="article-kicker">NEWS AROUND THE WORLD</p>
+                {% if chronicle.world_news %}
+                <h3 class="article-headline">{{ chronicle.world_news.headlineTitle }}</h3>
+                {% else %}
+                <h3 class="article-headline">Making Headlines in {{ chronicle.person.birth_date|year }}</h3>
+                {% endif %}
+            </div>
+
+            <div class="world-content">
+                <div class="image-slot image-slot--square image-slot--illustration image-slot--globe">
+                    {{ newspaper_illustration("world", "GLOBE") }}
+                </div>
+                <div class="world-headlines" data-world-news-content>
+                    {% if chronicle.world_news and chronicle.world_news.headlines %}
+                    <ul class="headline-list">
+                        {% for story in chronicle.world_news.headlines %}
+                        <li class="world-news-item" data-world-news-item>
+                            <span class="world-news-bullet" aria-hidden="true">&bull;</span>
+                            <span class="world-news-copy">
+                                <span class="world-story-title">{{ story.displayText }}</span>
+                                {% if story.description %}<span class="world-story-description">{{ story.description
+                                    }}</span>{% endif %}
+                            </span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p class="article-body placeholder-text">
+                        Historical headlines from {{ chronicle.person.birth_date|year }}
+                        will appear here as the archive grows.
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+            {% if chronicle.world_news and chronicle.world_news.candidates %}
+            <script type="application/json"
+                data-world-news-candidates>{{ chronicle.world_news.candidates|tojson }}</script>
+            {% endif %}
+        </article>
+
+        <article class="article-celebrity">
+            <div class="article-header">
+                {% if chronicle.famous_birthdays %}
+                <h3 class="article-headline">{{ chronicle.famous_birthdays.headline }}</h3>
+                {% else %}
+                <h3 class="article-headline">Celebrities Share<br>Your Birthday</h3>
+                {% endif %}
+            </div>
+
+            <div class="image-slot image-slot--portrait image-slot--photo image-slot--celebrity-portrait">
+                <div class="image-placeholder">CELEBRITY / ACTOR</div>
+            </div>
+
+            <div class="celebrity-content">
+                {% if chronicle.famous_birthdays and chronicle.famous_birthdays.people %}
+                <p class="article-body">{{ chronicle.famous_birthdays.introText }}</p>
+                {% if chronicle.famous_birthdays.daysAliveText %}
+                <p class="article-body">{{ chronicle.famous_birthdays.daysAliveText }}</p>
+                {% endif %}
+                {% else %}
+                <p class="article-body placeholder-text">
+                    Famous birthdays from this day will appear here
+                    as the archive grows.
+                </p>
+                {% endif %}
+            </div>
+        </article>
+
+        <article class="article-around">
+            <div class="article-header">
+                <h3 class="article-headline">Around This Time</h3>
+            </div>
+            {% set around = chronicle.around_this_time %}
+            {% if around and around.available %}
+            <div class="around-content around-fit-pending" data-around-container>
+                <div class="around-feature">
+                    <div class="around-illustration">
+                        {% if around.illustration and around.illustration.displayPath %}
+                        <img src="{{ url_for('static', filename=around.illustration.displayPath) }}" alt="">
+                        {% endif %}
+                    </div>
+                    <div class="around-feature-copy">
+                        <span class="around-feature-label">FEATURED EVENT</span>
+                        <span class="around-feature-date">{{ around.featuredEvent.dateDisplay }}</span>
+                        <strong class="around-feature-title">{{ around.featuredEvent.title }}</strong>
+                        {% if around.featuredEvent.description %}<span class="around-feature-description">{{
+                            around.featuredEvent.description }}</span>{% endif %}
+                    </div>
+                </div>
+                <div class="around-divider"></div>
+                <span class="around-secondary-heading">ALSO AROUND THIS TIME</span>
+                <ul class="around-secondary-list">
+                    {% for event in around.secondaryEvents %}
+                    <li data-around-item><span class="around-bullet" aria-hidden="true">&bull;</span><span>{{
+                            event.dateDisplay }} - {{ event.title }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <script type="application/json" data-around-candidates>{{ around.candidates|tojson }}</script>
+            {% else %}
+            <div class="around-content">
+                <p class="article-body placeholder-text">Historical stories from around this date are not available.</p>
+            </div>
+            {% endif %}
+        </article>
+
+        <article class="article-movies" data-movies-fit-container>
+            <div class="article-header">
+                <p class="article-kicker">AT THE MOVIES</p>
+                <h3 class="article-headline">{{ chronicle.movies.headline }}</h3>
+            </div>
+            {% if chronicle.movies.available %}
+            <div class="movies-content movies-fit-pending" data-movies-fit-content>
+                <div class="movie-feature">
+                    <div class="movie-illustration">
+                        {% if chronicle.movies.illustration and chronicle.movies.illustration.displayPath %}
+                        <img src="{{ url_for('static', filename=chronicle.movies.illustration.displayPath) }}" alt="">
+                        {% endif %}
+                    </div>
+                    <div class="movie-feature-copy">
+                        <span class="movie-feature-label">FEATURED FILM</span>
+                        <strong class="movie-feature-title">{{ chronicle.movies.featuredMovie.title }}</strong>
+                        {% if chronicle.movies.featuredMovie.credit %}<span class="movie-feature-credit">{{
+                            chronicle.movies.featuredMovie.credit }}</span>{% endif %}
+                        {% if chronicle.movies.featuredMovie.description %}<span class="movie-feature-description">{{
+                            chronicle.movies.featuredMovie.description }}</span>{% endif %}
+                    </div>
+                </div>
+                <div class="movie-divider"></div>
+                <span class="movie-secondary-heading">ALSO AT THE MOVIES</span>
+                <ul class="movie-secondary-list">
+                    {% for movie in chronicle.movies.secondaryMovies %}
+                    <li data-movie-item><span class="movie-bullet" aria-hidden="true">&bull;</span><span>{{ movie.title
+                            }}{% if movie.credit %} - {{ movie.credit }}{% endif %}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <script type="application/json" data-movie-candidates>{{ chronicle.movies.candidates|tojson }}</script>
+            {% else %}
+            <div class="movies-content">
+                <p class="article-body placeholder-text">Historical movie data not available for this year.</p>
+            </div>
+            {% endif %}
+        </article>
+
+        <article class="article-music">
+            <div class="article-header">
+                {% if chronicle.music and chronicle.music.available %}
+                <h3 class="article-headline">{{ chronicle.music.headline }}</h3>
+                <p class="article-kicker">{{ chronicle.music.subheadline }}</p>
+                {% else %}
+                <h3 class="article-headline">Music, Music, Music</h3>
+                {% endif %}
+            </div>
+
+            <div class="image-slot image-slot--square image-slot--illustration image-slot--music-icon">
+                {% if chronicle.music and chronicle.music.available and chronicle.music.illustration and
+                chronicle.music.illustration.displayPath %}
+                <img src="{{ url_for('static', filename=chronicle.music.illustration.displayPath) }}" alt=""
+                    class="newspaper-illustration music-illustration">
+                {% else %}
+                {{ newspaper_illustration("music", "JUKEBOX / MUSIC") }}
+                {% endif %}
+            </div>
+
+            {% if chronicle.music and chronicle.music.available %}
+            <div class="music-content music-fit-pending" data-music-fit-content>
+                <p class="article-body music-body" data-music-body>{{ chronicle.music.bodyText }}</p>
+            </div>
+            <script type="application/json" data-music-candidates>{{ chronicle.music.bodyCandidates|tojson }}</script>
+            {% else %}
+            <p class="article-kicker">Music of {{ chronicle.person.birth_date|year }}</p>
+            <p class="article-body placeholder-text">
+                Music history from {{ chronicle.person.birth_date|year }}
+                will appear here as the archive grows.
+            </p>
+            {% endif %}
+        </article>
+
+        <article class="article-sports">
+            <div class="article-header">
+                <h3 class="article-headline">Sporting Memories</h3>
+            </div>
+
+            <div class="image-slot image-slot--portrait image-slot--photo image-slot--sports-portrait">
+                <div class="image-placeholder">SPORTS PLAYER</div>
+            </div>
+
+            <p class="article-kicker">Sports of {{ chronicle.person.birth_date|year }}</p>
+            <p class="article-body placeholder-text">
+                Sports history from {{ chronicle.person.birth_date|year }}
+                will appear here as the archive grows.
+            </p>
+        </article>
+
+        <article class="article-zodiac zodiac-fit-pending" data-zodiac-fit-container>
+            <div class="article-header">
+                <h3 class="article-headline">{{ chronicle.chinese_zodiac.headline if chronicle.chinese_zodiac and
+                    chronicle.chinese_zodiac.available else 'Chinese Zodiac' }}</h3>
+            </div>
+
+            <div class="zodiac-content" data-zodiac-fit-content>
+                <div class="zodiac-text zodiac-copy">
+                    {% if chronicle.chinese_zodiac and chronicle.chinese_zodiac.available %}
+                    <p class="article-body">
+                        <span data-zodiac-intro>{{ chronicle.chinese_zodiac.introText }}</span>
+                    </p>
+                    <p class="article-body"><span data-zodiac-fortune>{{ chronicle.chinese_zodiac.fortuneText }}</span>
+                    </p>
+                    {% else %}
+                    <p class="article-body placeholder-text">Chinese zodiac information is unavailable for this date.
+                    </p>
+                    {% endif %}
+                    <p class="article-body">
+                        Western zodiac: {{ chronicle.calendar.western_zodiac }} •
+                        Birthstone: {{ chronicle.calendar.birthstone }} •
+                        Generation: {{ chronicle.calendar.generation }}
+                    </p>
+                    {% if chronicle.fun_facts %}
+                    <p class="article-body">
+                        {{ chronicle.fun_facts[0] }}
+                    </p>
+                    {% endif %}
+                    {% if chronicle.chinese_zodiac and chronicle.chinese_zodiac.optionalSentences %}
+                    {% for sentence in chronicle.chinese_zodiac.optionalSentences %}
+                    <p class="article-body zodiac-optional" data-zodiac-optional>{{ sentence }}</p>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div class="zodiac-illustration-box" data-zodiac-image-box>
+                    {% if chronicle.chinese_zodiac and chronicle.chinese_zodiac.illustration and
+                    chronicle.chinese_zodiac.illustration.displayPath %}
+                    <img src="{{ url_for('static', filename=chronicle.chinese_zodiac.illustration.displayPath) }}"
+                        alt="{{ chronicle.chinese_zodiac.animal }} - Chinese zodiac illustration"
+                        class="newspaper-illustration zodiac-illustration">
+                    {% else %}
+                    {{ newspaper_illustration("zodiac", "CHINESE ZODIAC") }}
+                    {% endif %}
+                </div>
+            </div>
+        </article>
+        {% if chronicle.chinese_zodiac and chronicle.chinese_zodiac.candidates %}
+        <script type="application/json" data-zodiac-candidates>{{ chronicle.chinese_zodiac.candidates|tojson }}</script>
+        {% endif %}
+    </section>
+
+    <section class="prices-section">
+        {% if chronicle.what_things_cost %}
+        <h3 class="prices-title">{{ chronicle.what_things_cost.headline }}</h3>
+        {% else %}
+        <h3 class="prices-title">WHAT THINGS COST IN {{ chronicle.person.birth_date|year }}</h3>
+        {% endif %}
+        <div class="prices-grid">
+            {% set price_data = chronicle.what_things_cost or {} %}
+            {% if price_data['hasAnyData'] %}
+            {% for item in price_data['items'] %}
+            <div class="price-item">
+                <span class="price-label">{{ item.label }}</span>
+                <span class="price-value">{{ item.detail or item.displayValue or '-' }}</span>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p class="placeholder-text cost-data-unavailable">Historical price data not available for this year.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <footer class="newspaper-footer">
+        <p class="footer-text">
+            THE BIRTHDAY CHRONICLE • PERSONALIZED EDITION
+        </p>
+    </footer>
+</main>

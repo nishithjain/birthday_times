@@ -1,0 +1,21 @@
+<article class="chronicle-section chronicle-world-news article-world world-news-fit-pending" data-section="world-news"
+    data-world-news-container>
+    <div class="article-header">
+        <p class="article-kicker">NEWS AROUND THE WORLD</p>
+        <h3 class="article-headline">{{ chronicle.world_news.headlineTitle if chronicle.world_news else 'Making
+            Headlines In ' ~ chronicle.person.birth_date|year }}</h3>
+    </div>
+    <div class="world-content">
+        <div class="image-slot image-slot--square image-slot--illustration image-slot--globe">{% from
+            "chronicles/sections/_macros.html" import newspaper_illustration with context %}{{
+            newspaper_illustration("world", "GLOBE") }}</div>
+        <div class="world-headlines" data-world-news-content>{% if chronicle.world_news and
+            chronicle.world_news.headlines %}<ul class="headline-list">{% for story in chronicle.world_news.headlines %}
+                <li class="world-news-item" data-world-news-item><span class="world-news-bullet"
+                        aria-hidden="true">&bull;</span><span class="world-news-copy"><span class="world-story-title">{{
+                            story.displayText }}</span></span></li>{% endfor %}</ul>{% endif %}</div>
+    </div>
+    {% if chronicle.world_news and chronicle.world_news.candidates %}
+    <script type="application/json" data-world-news-candidates>{{ chronicle.world_news.candidates|tojson }}</script>{%
+    endif %}
+</article>

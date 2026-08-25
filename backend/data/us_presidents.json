@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 1,
+  "imagePolicy": {
+    "sourceWidth": 600,
+    "sourceHeight": 750,
+    "aspectRatio": "4:5",
+    "originalRoot": "images/people/presidents/originals",
+    "variantRoot": "images/people/presidents/variants",
+    "variantPathPattern": "images/people/presidents/variants/{era}/{presidentId}.png"
+  },
+  "presidents": [
+    {
+      "id": "harry_s_truman",
+      "name": "Harry S. Truman",
+      "presidentNumbers": [33],
+      "originalImage": "images/people/presidents/originals/harry_s_truman.png",
+      "imageSource": "",
+      "sourceUrl": "",
+      "license": "",
+      "attribution": ""
+    },
+    {
+      "id": "dwight_eisenhower",
+      "name": "Dwight D. Eisenhower",
+      "presidentNumbers": [34],
+      "originalImage": "images/people/presidents/originals/dwight_eisenhower.png",
+      "imageSource": "",
+      "sourceUrl": "",
+      "license": "",
+      "attribution": ""
+    },
+    {
+      "id": "john_f_kennedy",
+      "name": "John F. Kennedy",
+      "presidentNumbers": [35],
+      "originalImage": "images/people/presidents/originals/john_f_kennedy.png",
+      "imageSource": "",
+      "sourceUrl": "",
+      "license": "",
+      "attribution": ""
+    },
+    {
+      "id": "lyndon_b_johnson",
+      "name": "Lyndon B. Johnson",
+      "presidentNumbers": [36],
+      "originalImage": "images/people/presidents/originals/lyndon_b_johnson.png",
+      "imageSource": "",
+      "sourceUrl": "",
+      "license": "",
+      "attribution": ""
+    },
+    {
+      "id": "richard_nixon",
+      "name": "Richard Nixon",
+      "presidentNumbers": [37],
+      "originalImage": "images/people/presidents/originals/richard_nixon.png",
+      "imageSource": "",
+      "sourceUrl": "",
+      "license": "",
+      "attribution": ""
+    },
+    {
+      "id": "gerald_ford",
+      "name": "Gerald Ford",
+      "presidentNumbers": [38],
+      "originalImage": "images/people/presidents/originals/gerald_ford.png",
+      "imageSource": "",
+      "sourceUrl": "",
+      "license": "",
+      "attribution": ""
+    },
+    {
+      "id": "jimmy_carter",
+      "name": "Jimmy Carter",
+      "presidentNumbers": [39],
+      "originalImage": "images/people/presidents/originals/jimmy_carter.png",
+      "imageSource": "",
+      "sourceUrl": "",
+      "license": "",
+      "attribution": ""
+    },
+    {
+      "id": "ronald_reagan",
+      "name": "Ronald Reagan",
+      "presidentNumbers": [40],
+      "originalImage": "images/people/presidents/originals/ronald_reagan.png",
+      "imageSource": "",
+      "sourceUrl": "",
+      "license": "",
+      "attribution": ""
+    },
+    {
+      "id": "george_hw_bush",
+      "name": "George H. W. Bush",
+      "presidentNumbers": [41],
+      "originalImage": "images/people/presidents/originals/george_hw_bush.png",
+      "imageSource": "",
+      "sourceUrl": "",
+      "license": "",
+      "attribution": ""
+    },
+    {
+      "id": "bill_clinton",
+      "name": "Bill Clinton",
+      "presidentNumbers": [42],
+      "originalImage": "images/people/presidents/originals/bill_clinton.png",
+      "imageSource": "",
+      "sourceUrl": "",
+      "license": "",
+      "attribution": ""
+    },
+    {
+      "id": "george_w_bush",
+      "name": "George W. Bush",
+      "presidentNumbers": [43],
+      "originalImage": "images/people/presidents/originals/george_w_bush.png",
+      "imageSource": "",
+      "sourceUrl": "",
+      "license": "",
+      "attribution": ""
+    },
+    {
+      "id": "barack_obama",
+      "name": "Barack Obama",
+      "presidentNumbers": [44],
+      "originalImage": "images/people/presidents/originals/barack_obama.png",
+      "imageSource": "",
+      "sourceUrl": "",
+      "license": "",
+      "attribution": ""
+    },
+    {
+      "id": "donald_trump",
+      "name": "Donald Trump",
+      "presidentNumbers": [45, 47],
+      "originalImage": "images/people/presidents/originals/donald_trump.png",
+      "imageSource": "",
+      "sourceUrl": "",
+      "license": "",
+      "attribution": ""
+    },
+    {
+      "id": "joe_biden",
+      "name": "Joe Biden",
+      "presidentNumbers": [46],
+      "originalImage": "images/people/presidents/originals/joe_biden.png",
+      "imageSource": "",
+      "sourceUrl": "",
+      "license": "",
+      "attribution": ""
+    }
+  ],
+  "terms": [
+    {
+      "presidentId": "harry_s_truman",
+      "dateFrom": "1950-01-01",
+      "dateTo": "1953-01-19"
+    },
+    {
+      "presidentId": "dwight_eisenhower",
+      "dateFrom": "1953-01-20",
+      "dateTo": "1961-01-19"
+    },
+    {
+      "presidentId": "john_f_kennedy",
+      "dateFrom": "1961-01-20",
+      "dateTo": "1963-11-21"
+    },
+    {
+      "presidentId": "lyndon_b_johnson",
+      "dateFrom": "1963-11-22",
+      "dateTo": "1969-01-19"
+    },
+    {
+      "presidentId": "richard_nixon",
+      "dateFrom": "1969-01-20",
+      "dateTo": "1974-08-08"
+    },
+    {
+      "presidentId": "gerald_ford",
+      "dateFrom": "1974-08-09",
+      "dateTo": "1977-01-19"
+    },
+    {
+      "presidentId": "jimmy_carter",
+      "dateFrom": "1977-01-20",
+      "dateTo": "1981-01-19"
+    },
+    {
+      "presidentId": "ronald_reagan",
+      "dateFrom": "1981-01-20",
+      "dateTo": "1989-01-19"
+    },
+    {
+      "presidentId": "george_hw_bush",
+      "dateFrom": "1989-01-20",
+      "dateTo": "1993-01-19"
+    },
+    {
+      "presidentId": "bill_clinton",
+      "dateFrom": "1993-01-20",
+      "dateTo": "2001-01-19"
+    },
+    {
+      "presidentId": "george_w_bush",
+      "dateFrom": "2001-01-20",
+      "dateTo": "2009-01-19"
+    },
+    {
+      "presidentId": "barack_obama",
+      "dateFrom": "2009-01-20",
+      "dateTo": "2017-01-19"
+    },
+    {
+      "presidentId": "donald_trump",
+      "dateFrom": "2017-01-20",
+      "dateTo": "2021-01-19"
+    },
+    {
+      "presidentId": "joe_biden",
+      "dateFrom": "2021-01-20",
+      "dateTo": "2025-01-19"
+    },
+    {
+      "presidentId": "donald_trump",
+      "dateFrom": "2025-01-20",
+      "dateTo": null
+    }
+  ]
+}

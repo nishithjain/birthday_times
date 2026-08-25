@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Masthead - 920 x 150{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chronicles/chronicle_common.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chronicles/sections/masthead.css') }}">
+{% endblock %}
+{% block content %}
+<div class="section-test-page">
+    <div class="section-test-label">Masthead - 920 x 150</div>
+    <div class="section-test-frame section-test-frame-masthead">
+        {% include "chronicles/sections/masthead.html" %}
+    </div>
+</div>
+{% endblock %}

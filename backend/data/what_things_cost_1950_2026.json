@@ -1,0 +1,3182 @@
+{
+  "schemaVersion": 1,
+  "title": "What Things Cost",
+  "country": "US",
+  "currency": "USD",
+  "accuracyType": "year",
+  "yearFrom": 1950,
+  "yearTo": 2026,
+  "units": {
+    "gasoline": "USD per gallon",
+    "movieTicket": "USD per ticket",
+    "gold": "USD per troy ounce",
+    "popularCar": "USD new-car price",
+    "salary": "USD per year"
+  },
+  "displayOrder": [
+    "gasoline",
+    "movieTicket",
+    "gold",
+    "popularCar",
+    "salary"
+  ],
+  "years": [
+    {
+      "year": 1950,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1951,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1952,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1953,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1954,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1955,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1956,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1957,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1958,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1959,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1960,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1961,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1962,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1963,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1964,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1965,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1966,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1967,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1968,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1969,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1970,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1971,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1972,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1973,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1974,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1975,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1976,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1977,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1978,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1979,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1980,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1981,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1982,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1983,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1984,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1985,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1986,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1987,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1988,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1989,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1990,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1991,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1992,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1993,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1994,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1995,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1996,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1997,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1998,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 1999,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2000,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2001,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2002,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2003,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2004,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2005,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2006,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2007,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2008,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2009,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2010,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2011,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2012,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2013,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2014,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2015,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2016,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2017,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2018,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2019,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2020,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2021,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2022,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2023,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2024,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2025,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    },
+    {
+      "year": 2026,
+      "gasoline": {
+        "valueUsd": null,
+        "unit": "per_gallon",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "movieTicket": {
+        "valueUsd": null,
+        "unit": "per_ticket",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "gold": {
+        "valueUsd": null,
+        "unit": "per_troy_ounce",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "popularCar": {
+        "model": null,
+        "manufacturer": null,
+        "priceUsd": null,
+        "unit": "new_vehicle",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      },
+      "salary": {
+        "valueUsd": null,
+        "unit": "per_year",
+        "metric": "average_annual_wage",
+        "source": null,
+        "sourceUrl": null,
+        "notes": null
+      }
+    }
+  ]
+}

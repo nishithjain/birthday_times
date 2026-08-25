@@ -1,0 +1,70 @@
+<article class="chronicle-section chronicle-arrival arrival-fit-pending" data-section="arrival"
+    data-arrival-fit-container data-birth-story>
+    <header class="arrival-feature-header">
+        <h2 class="arrival-feature-headline">{{ chronicle.arrival.birthStoryHeadline }}</h2>
+        <p class="arrival-feature-deck">{{ chronicle.calendar.day_of_week }}, {{ chronicle.person.birth_date_display
+            }}{% if chronicle.arrival.dispatchCity %} &bull; {{ chronicle.arrival.dispatchCity }}{% endif %}</p>
+    </header>
+    <div class="arrival-body">
+        <aside class="arrival-dispatch">
+            <h3 class="arrival-column-heading">News Dispatch</h3>
+            <div class="arrival-column-rule" aria-hidden="true"></div>
+            <div class="arrival-dispatch-label">{{ chronicle.arrival.dispatchLabel|default("Telegram") }}</div>
+            <div class="arrival-dispatch-art">
+                {% if chronicle.arrival.dispatchArtwork and chronicle.arrival.dispatchArtwork.displayPath %}<img
+                    class="arrival-dispatch-image"
+                    src="{{ url_for('static', filename=chronicle.arrival.dispatchArtwork.displayPath) }}"
+                    alt="{{ chronicle.arrival.dispatchArtwork.alt }}">{% else %}<span aria-hidden="true">NEWS</span>{%
+                endif %}
+            </div>
+            {% if chronicle.arrival.dispatchCity %}<div class="arrival-dispatch-city">From {{
+                chronicle.arrival.dispatchCity
+                }}</div>{% endif %}
+            {% if chronicle.arrival.dispatchCountry %}<div class="arrival-dispatch-country">{{
+                chronicle.arrival.dispatchCountry }}</div>{% endif %}
+            <div class="arrival-dispatch-status"><span>New Arrival</span><span>Reported</span></div>
+        </aside>
+        <section class="arrival-story">
+            <h3 class="arrival-column-heading">Birth Story</h3>
+            <div class="arrival-column-rule" aria-hidden="true"></div>
+            {% for paragraph in chronicle.arrival.birthStoryParagraphs %}<p>{{ paragraph }}</p>{% endfor %}
+        </section>
+        <aside class="arrival-white-house">
+            <h3 class="arrival-column-heading">From The White House</h3>
+            <div class="arrival-column-rule" aria-hidden="true"></div>
+            <div class="arrival-white-house-content">
+                <div class="arrival-president-column">
+                    <div class="arrival-president-photo-box">
+                        {% if chronicle.president and chronicle.president.displayPath %}<img
+                            src="{{ url_for('static', filename=chronicle.president.displayPath) }}"
+                            alt="Portrait of {{ chronicle.president.displayName }}" class="arrival-president-photo">{%
+                        endif %}
+                    </div>
+                </div>
+                {% set context = chronicle.arrival.presidentContext %}
+                {% set selected_context = context.estimatedSelectedText if context and context.available else
+                chronicle.arrival.presidentContextText %}
+                <div class="arrival-president-info">
+                    {% if chronicle.president %}<div class="arrival-president-identity">
+                        <div class="arrival-president-name">{{ chronicle.president.displayName }}</div>
+                        <div class="arrival-president-role">President</div>
+                    </div>{% endif %}
+                    <div class="arrival-president-info-rule" aria-hidden="true"></div>
+                    <div class="arrival-president-context" data-president-context-fit
+                        data-president-context-estimated-id="{{ context.estimatedSelectedId if context else '' }}"
+                        data-president-context-estimated-capacity="{{ context.estimatedCapacity if context and context.estimatedCapacity is not none else '' }}"
+                        data-president-context-safe-estimated-capacity="{{ context.safeEstimatedCapacity if context and context.safeEstimatedCapacity is not none else '' }}"
+                        {% if context and context.estimatedSelectedId
+                        %}data-president-context-id="{{ context.estimatedSelectedId }}" {% endif %} {% if context and
+                        context.estimatedSelectedCharacterCount is not none
+                        %}data-president-context-character-count="{{ context.estimatedSelectedCharacterCount }}" {%
+                        endif %}>
+                        {{ selected_context }}
+                    </div>
+                </div>
+                <script type="application/json"
+                    data-president-context-candidates>{{ context.candidates|default([], true)|tojson }}</script>
+            </div>
+        </aside>
+    </div>
+</article>

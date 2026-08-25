@@ -1,0 +1,81 @@
+<!-- backend/web/templates/index.html -->
+{% extends "base.html" %}
+
+{% block title %}Birthday Chronicles - Your Personal Newspaper{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/newspaper.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="app-container">
+    <div class="form-container">
+        <div class="form-header">
+            <div class="form-ornament">✦ ✦ ✦</div>
+            <h1 class="form-masthead">The Birthday Chronicle</h1>
+            <p class="form-tagline">A personalized newspaper for your special day</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('generate_chronicle') }}" class="chronicle-form">
+            <div class="form-group">
+                <label for="name">Your Name <span class="optional">(optional)</span></label>
+                <input type="text" id="name" name="name" placeholder="e.g., Nishith"
+                    value="{{ request.form.name if request.form else '' }}">
+            </div>
+
+            <div class="form-group">
+                <label for="birth_date">Date of Birth <span class="required">*</span></label>
+                <input type="text" id="birth_date" name="birth_date" placeholder="DD-MM-YYYY or YYYY-MM-DD"
+                    value="{{ request.form.birth_date if request.form else '' }}" required>
+                <small>e.g., 26-08-1982 or 1982-08-26</small>
+            </div>
+
+            <div class="form-group">
+                <label for="country">Country</label>
+                <select id="country" name="country">
+                    <option value="India" selected>India</option>
+                    <option value="Israel">Israel</option>
+                    <option value="United States">United States</option>
+                    <option value="United Kingdom">United Kingdom</option>
+                    <option value="Australia">Australia</option>
+                    <option value="Canada">Canada</option>
+                    <option value="Germany">Germany</option>
+                    <option value="France">France</option>
+                    <option value="Japan">Japan</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="birth_state">State / Region <span class="optional">(optional)</span></label>
+                <input type="text" id="birth_state" name="birth_state" placeholder="e.g., Karnataka">
+            </div>
+
+            <div class="form-group">
+                <label for="birth_city">Birth City <span class="optional">(optional)</span></label>
+                <input type="text" id="birth_city" name="birth_city" placeholder="e.g., Bengaluru">
+            </div>
+
+            <button type="submit" class="btn-primary">
+                <span class="btn-icon">📰</span>
+                Generate My Chronicle
+            </button>
+        </form>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="form-messages">
+            {% for category, message in messages %}
+            <div class="flash-message flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <div class="form-footer">
+            <p>Covering historical events from <strong>1950</strong> to present</p>
+            <p class="form-credit">✧ A keepsake for generations ✧</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

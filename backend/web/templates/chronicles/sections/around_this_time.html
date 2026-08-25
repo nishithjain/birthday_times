@@ -1,0 +1,25 @@
+<article class="chronicle-section chronicle-around-this-time article-around" data-section="around-this-time">
+    <div class="article-header">
+        <h3 class="article-headline">Around This Time</h3>
+    </div>
+    {% set around = chronicle.around_this_time %}{% if around and around.available %}<div class="around-content"
+        data-around-container>
+        <div class="around-feature">
+            <div class="around-illustration">{% if around.illustration and around.illustration.displayPath %}<img
+                    src="{{ url_for('static', filename=around.illustration.displayPath) }}" alt="">{% endif %}</div>
+            <div class="around-feature-copy"><span class="around-feature-label">FEATURED EVENT</span><span
+                    class="around-feature-date">{{ around.featuredEvent.dateDisplay }}</span><strong
+                    class="around-feature-title">{{ around.featuredEvent.title }}</strong>{% if
+                around.featuredEvent.description %}<span class="around-feature-description">{{
+                    around.featuredEvent.description }}</span>{% endif %}</div>
+        </div>
+        <div class="around-divider"></div><span class="around-secondary-heading">ALSO AROUND THIS TIME</span>
+        <ul class="around-secondary-list">{% for event in around.secondaryEvents %}<li data-around-item><span
+                    class="around-bullet">&bull;</span><span>{{ event.dateDisplay }} - {{ event.title }}</span></li>{%
+            endfor %}</ul>
+    </div>
+    <script type="application/json" data-around-candidates>{{ around.candidates|tojson }}</script>{% else %}<div
+        class="around-content">
+        <p class="article-body placeholder-text">Historical stories from around this date are not available.</p>
+    </div>{% endif %}
+</article>

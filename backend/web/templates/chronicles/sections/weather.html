@@ -1,0 +1,60 @@
+<section class="chronicle-section chronicle-weather weather-fit-pending" data-section="weather" data-weather-component
+    data-weather-condition="{{ chronicle.weather.condition if chronicle.weather and chronicle.weather.available else 'generic' }}"
+    data-weather-temperature-character="{{ chronicle.weather.temperatureCharacter if chronicle.weather and chronicle.weather.available else 'mild' }}"
+    data-weather-copy-key="{{ chronicle.weather.weatherCopyKey if chronicle.weather and chronicle.weather.available else 'generic_seasonal' }}">
+
+    <header class="weather-heading">TODAY'S WEATHER</header>
+    <div class="weather-rule" aria-hidden="true"></div>
+
+    <div class="weather-main">
+        <div class="weather-art">
+            {% set weather_illustration = (chronicle.weather or {}).get("illustration") or (chronicle.illustrations or
+            {}).get("weather") %}
+            {% if weather_illustration and weather_illustration.displayPath %}
+            <img src="{{ url_for('static', filename=weather_illustration.displayPath) }}" alt="Weather illustration"
+                class="newspaper-illustration weather-illustration">
+            {% else %}
+            <span class="weather-art-fallback" aria-hidden="true">☀</span>
+            {% endif %}
+        </div>
+
+        <div class="weather-details">
+            {% if chronicle.weather and chronicle.weather.available %}
+            <strong class="weather-condition">{{
+                chronicle.weather.conditionLabel|default(chronicle.weather.condition|default(chronicle.weather.conditionText)|upper)
+                }}</strong>
+
+            <div class="weather-stats">
+                {% if chronicle.weather.temperature and chronicle.weather.temperature.minC is not none and
+                chronicle.weather.temperature.maxC is not none %}
+                <span class="weather-temp-range">
+                    <span class="weather-temp-label">LOW</span>
+                    <span class="weather-temp-value">{{ chronicle.weather.temperature.minC|round(0)|int }}°C</span>
+                    <span class="weather-temp-separator">•</span>
+                    <span class="weather-temp-label">HIGH</span>
+                    <span class="weather-temp-value">{{ chronicle.weather.temperature.maxC|round(0)|int }}°C</span>
+                </span>
+                {% elif chronicle.weather.temperature and chronicle.weather.temperature.meanC is not none %}
+                <span class="weather-temp-range">
+                    <span class="weather-temp-label">MEAN</span>
+                    <span class="weather-temp-value">{{ chronicle.weather.temperature.meanC|round(0)|int }}°C</span>
+                </span>
+                {% endif %}
+
+                {% if chronicle.weather.wind and chronicle.weather.wind.maxKmh is not none %}
+                <span class="weather-wind">
+                    <span class="weather-wind-label">WIND</span>
+                    <span class="weather-wind-value">{{ chronicle.weather.wind.maxKmh|round(0)|int }} KM/H</span>
+                </span>
+                {% endif %}
+            </div>
+            {% else %}
+            <strong class="weather-condition">WEATHER UNAVAILABLE</strong>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="weather-summary" data-weather-summary></div>
+    <div class="weather-date">{{ (chronicle.weather.dateText if chronicle.weather else
+        chronicle.person.birth_date|format_date)|upper }}</div>
+</section>

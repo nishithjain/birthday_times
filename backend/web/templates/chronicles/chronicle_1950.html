@@ -1,0 +1,22 @@
+<!-- Era 1950–1969 Chronicle presentation template -->
+{% extends "base.html" %}
+
+{% block title %}The Birthday Chronicle - {{ chronicle.person.birth_date_display }}{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chronicles/chronicle_common.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename=chronicle.newspaper_style.stylesheet) }}">
+{% endblock %}
+
+{% block content %}
+<div class="app-container">
+    <div class="controls">
+        <button onclick="window.print()" class="btn-print">Print Chronicle</button>
+        <a href="{{ url_for('index') }}" class="btn-new">Create Another</a>
+    </div>
+
+    <div class="newspaper-wrapper">
+        {% include "chronicles/_newspaper_main.html" %}
+    </div>
+</div>
+{% endblock %}

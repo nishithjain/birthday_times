@@ -1,0 +1,798 @@
+/* backend/web/static/css/newspaper.css */
+/*
+ * Birthday Chronicle — Frozen Master Layout
+ * Canonical design size: 1000 × 1596 px (aspect ratio 1 : 1.596)
+ * Outer page margin: 40 px (usable inner width: 920 px)
+ *
+ * Image source standard (future asset library):
+ *   PORTRAIT   600 × 750   (4:5)
+ *   LANDSCAPE  900 × 600   (3:2)
+ *   SQUARE     500 × 500   (1:1)
+ *   EAGLE      900 × 300   (3:1)
+ *   ZODIAC     750 × 500   (3:2)
+ */
+
+:root {
+    --paper: #d7bb7d;
+    --paper-light: #e5cc94;
+    --paper-dark: #c4a86a;
+    --ink: #17120c;
+    --ink-headline: #100d09;
+    --ink-muted: #3d3228;
+    --ink-light: #6b5d4f;
+    --rule: rgba(30, 20, 10, 0.65);
+    --rule-light: rgba(30, 20, 10, 0.25);
+    --rule-thin: rgba(30, 20, 10, 0.15);
+    --font-masthead: "Old English Text MT", "UnifrakturCook", "Cloister Black", serif;
+    --font-headline: "Oswald", "Roboto Condensed", "Arial Narrow", sans-serif;
+    --font-subhead: "Libre Franklin", "Helvetica", sans-serif;
+    --font-body: Georgia, "Times New Roman", serif;
+    --page-width: 1000px;
+    --page-height: 1596px;
+    --page-margin: 40px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ============================================================
+   App Container & Controls
+   ============================================================ */
+
+.app-container {
+    min-height: 100vh;
+    background: #1a1510;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn-print,
+.btn-new {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 4px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.btn-print {
+    background: var(--ink);
+    color: var(--paper-light);
+}
+
+.btn-print:hover {
+    background: #2a2018;
+}
+
+.btn-new {
+    background: var(--paper-light);
+    color: var(--ink);
+}
+
+.btn-new:hover {
+    background: var(--paper);
+}
+
+/* ============================================================
+   Newspaper Wrapper & Page
+   ============================================================ */
+
+.newspaper-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.newspaper {
+    width: min(var(--page-width), calc(100vw - 40px));
+    aspect-ratio: 1000 / 1596;
+    height: auto;
+    padding: var(--page-margin);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    color: var(--ink);
+    background-color: #d3b477;
+    background-image: var(
+        --newspaper-bg,
+        url("../images/aged-newspaper-paper.png")
+    );
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    box-shadow:
+        inset 0 0 26px rgba(62, 35, 11, 0.16),
+        inset 0 0 78px rgba(75, 43, 14, 0.08),
+        0 18px 48px rgba(0, 0, 0, 0.52);
+    font-family: var(--body-font, var(--font-body));
+}
+
+.newspaper::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 0 0, rgba(71, 40, 13, 0.13), transparent 22%),
+        radial-gradient(circle at 100% 0, rgba(75, 42, 13, 0.09), transparent 18%),
+        radial-gradient(circle at 0 100%, rgba(65, 36, 11, 0.14), transparent 24%),
+        radial-gradient(circle at 100% 100%, rgba(62, 34, 10, 0.11), transparent 20%);
+    mix-blend-mode: multiply;
+}
+
+.newspaper > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* ============================================================
+   Vertical Zones (approximate proportions of 1596 px)
+   ============================================================ */
+
+.newspaper-header {
+    flex: 0 0 19.5%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.year-headline {
+    flex: 0 0 6.9%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border-bottom: 3px double var(--rule);
+    padding: 4px 0;
+}
+
+.chronicle-grid {
+    flex: 1 1 52.6%;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.prices-section {
+    flex: 0 0 9.7%;
+    min-height: 0;
+    border-top: 2px solid var(--rule);
+    padding-top: 6px;
+}
+
+.newspaper-footer {
+    flex: 0 0 6.3%;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 2px solid var(--rule);
+}
+
+/* ============================================================
+   Top Strip — Weather | Eagle | EXTRA
+   ============================================================ */
+
+.top-strip {
+    display: grid;
+    grid-template-columns: 170px 1fr 150px;
+    align-items: start;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.weather-box {
+    width: 170px;
+    height: 100px;
+    border: 2px solid var(--ink);
+    padding: 6px 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.weather-label {
+    font-family: var(--font-subhead);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+}
+
+.weather-icon {
+    font-size: 44px;
+    line-height: 1;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weather-text {
+    font-family: var(--body-font, var(--font-body));
+    font-size: 10px;
+    color: var(--ink);
+}
+
+.weather-date {
+    font-family: var(--body-font, var(--font-body));
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--ink-muted);
+}
+
+.masthead-eagle {
+    width: 100%;
+    max-width: 300px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.extra-box {
+    width: 150px;
+    height: 100px;
+    border: 3px solid var(--ink);
+    padding: 4px 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.extra-label {
+    font-family: var(--headline-font, var(--font-headline));
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--ink-headline);
+    line-height: 1;
+}
+
+.extra-sub {
+    font-family: var(--font-subhead);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+}
+
+/* ============================================================
+   Masthead, Tagline, Dateline
+   ============================================================ */
+
+.masthead-title {
+    font-family: var(--masthead-font, var(--font-masthead)) !important;
+    font-size: 78px;
+    font-weight: 700;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    color: var(--ink-headline);
+    text-align: center;
+    padding: 2px 0;
+    border-bottom: 3px double var(--rule);
+}
+
+.tagline-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    padding: 2px 0;
+    font-family: var(--font-subhead);
+    font-size: 10px;
+    color: var(--ink-muted);
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--rule-light);
+}
+
+.tagline-center {
+    text-align: center;
+}
+
+.tagline-right {
+    text-align: right;
+}
+
+.dateline-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    padding: 2px 0 3px;
+    font-family: var(--font-subhead);
+    font-size: 10px;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--rule);
+}
+
+.dateline-center {
+    text-align: center;
+    font-weight: 600;
+}
+
+.dateline-right {
+    text-align: right;
+}
+
+/* ============================================================
+   Year Headline
+   ============================================================ */
+
+.year-headline-kicker {
+    font-family: var(--headline-font, var(--font-headline));
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 3px;
+}
+
+.year-headline-title {
+    font-family: var(--headline-font, var(--font-headline));
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--ink-headline);
+    line-height: 1.05;
+    text-transform: uppercase;
+}
+
+/* ============================================================
+   Four-Column Article Grid
+   ============================================================ */
+
+.chronicle-grid {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 22fr)
+        minmax(0, 27fr)
+        minmax(0, 26fr)
+        minmax(0, 25fr);
+    grid-template-areas:
+        "arrival arrival world world"
+        "celebrity around movies music"
+        "sports around zodiac zodiac";
+    gap: 0;
+    padding: 4px 0 2px;
+}
+
+.article-arrival { grid-area: arrival; }
+.article-world { grid-area: world; }
+.article-celebrity { grid-area: celebrity; }
+.article-around { grid-area: around; }
+.article-movies { grid-area: movies; }
+.article-music { grid-area: music; }
+.article-sports { grid-area: sports; }
+.article-zodiac { grid-area: zodiac; }
+
+.chronicle-grid article {
+    border-right: 1px solid var(--rule-light);
+    border-bottom: 1px solid var(--rule-light);
+    padding: 8px 10px 6px 0;
+    break-inside: avoid;
+    overflow: hidden;
+}
+
+.article-around {
+    border-right: 1px solid var(--rule-light);
+}
+
+/* ============================================================
+   Article Typography
+   ============================================================ */
+
+.article-header {
+    margin-bottom: 5px;
+}
+
+.article-kicker {
+    font-family: var(--font-subhead);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    display: block;
+    margin-bottom: 3px;
+}
+
+.article-headline {
+    font-family: var(--headline-font, var(--font-headline));
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink-headline);
+    line-height: 1.05;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+/* Primary upper articles */
+.article-arrival .article-headline {
+    font-size: 24px;
+}
+
+.article-world .article-headline {
+    font-size: 22px;
+}
+
+/* Year-scoped section headlines */
+.article-movies .article-headline {
+    font-size: 21px;
+}
+
+.article-body {
+    font-family: var(--body-font, var(--font-body));
+    font-size: 14px;
+    line-height: 1.26;
+    text-align: justify;
+    color: #17120c;
+    margin: 4px 0;
+}
+
+.article-body strong {
+    color: var(--ink-headline);
+}
+
+.dropcap::first-letter {
+    float: left;
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 0.85;
+    margin-right: 3px;
+    color: var(--ink-headline);
+    font-family: var(--headline-font, var(--font-headline));
+}
+
+.placeholder-text {
+    font-style: italic;
+    font-size: 12px;
+    line-height: 1.25;
+    color: var(--ink-light);
+}
+
+/* ============================================================
+   Image Slots
+   ============================================================ */
+
+.image-slot {
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--rule-light);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.image-slot img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.image-slot--portrait {
+    aspect-ratio: 4 / 5;
+}
+
+.image-slot--landscape {
+    aspect-ratio: 3 / 2;
+}
+
+.image-slot--square {
+    aspect-ratio: 1 / 1;
+}
+
+.image-slot--eagle {
+    aspect-ratio: 3 / 1;
+}
+
+.image-slot--illustration img {
+    object-fit: contain;
+}
+
+.image-slot--photo img {
+    object-fit: cover;
+}
+
+.image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4px;
+    font-family: var(--font-subhead);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    line-height: 1.2;
+}
+
+/* Slot display sizes */
+.image-slot--arrival-portrait {
+    width: 145px;
+}
+
+.image-slot--celebrity-portrait,
+.image-slot--sports-portrait {
+    width: 140px;
+    margin-bottom: 5px;
+}
+
+.image-slot--movie-poster {
+    width: 135px;
+    margin-bottom: 5px;
+}
+
+.image-slot--globe {
+    width: 110px;
+}
+
+.image-slot--around-image {
+    width: 220px;
+    margin-bottom: 5px;
+}
+
+.image-slot--music-icon {
+    width: 125px;
+    margin-bottom: 5px;
+}
+
+.image-slot--zodiac-art {
+    width: 175px;
+}
+
+/* ============================================================
+   Article Layouts
+   ============================================================ */
+
+.arrival-content {
+    display: grid;
+    grid-template-columns: 145px 1fr;
+    gap: 10px;
+    align-items: start;
+}
+
+.world-content {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 10px;
+    align-items: start;
+}
+
+.headline-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.headline-list li {
+    font-family: var(--body-font, var(--font-body));
+    font-size: 12px;
+    line-height: 1.25;
+    padding: 3px 0 3px 12px;
+    position: relative;
+    color: #17120c;
+    border-bottom: 1px dotted var(--rule-light);
+}
+
+.headline-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--ink-light);
+}
+
+.headline-list li:last-child {
+    border-bottom: none;
+}
+
+.celebrity-list,
+.movie-list {
+    list-style: none;
+    padding: 0;
+    margin: 2px 0 0;
+}
+
+.celebrity-list li,
+.movie-list li {
+    font-family: var(--body-font, var(--font-body));
+    font-size: 12px;
+    line-height: 1.25;
+    padding: 3px 0;
+    border-bottom: 1px dotted var(--rule-light);
+    color: #17120c;
+}
+
+.celebrity-list li:last-child,
+.movie-list li:last-child {
+    border-bottom: none;
+}
+
+.celebrity-name,
+.movie-title {
+    font-family: var(--headline-font, var(--font-headline));
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--ink-headline);
+    display: block;
+}
+
+.celebrity-occupation {
+    font-style: italic;
+    color: var(--ink-light);
+    font-size: 11px;
+}
+
+.movie-genres {
+    font-size: 10px;
+    color: var(--ink-light);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.zodiac-content {
+    display: grid;
+    grid-template-columns: 1fr 175px;
+    gap: 10px;
+    align-items: end;
+}
+
+/* ============================================================
+   Prices Section
+   ============================================================ */
+
+.prices-title {
+    font-family: var(--headline-font, var(--font-headline));
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 0.08em;
+    color: var(--ink-headline);
+    margin-bottom: 5px;
+}
+
+.prices-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    border-top: 1px solid var(--rule-light);
+    padding-top: 4px;
+}
+
+.price-item {
+    text-align: center;
+    border-right: 1px solid var(--rule-light);
+    padding: 2px 4px;
+}
+
+.price-item:last-child {
+    border-right: none;
+}
+
+.price-label {
+    display: block;
+    font-family: var(--font-subhead);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-muted);
+    margin-bottom: 2px;
+}
+
+.price-value {
+    display: block;
+    font-family: var(--body-font, var(--font-body));
+    font-size: 12px;
+    color: var(--ink);
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+
+.footer-text {
+    font-family: var(--body-font, var(--font-body));
+    font-size: 10px;
+    color: var(--ink-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+/* ============================================================
+   Print
+   ============================================================ */
+
+@media print {
+    @page {
+        size: 210mm 335.16mm;
+        margin: 6mm;
+    }
+
+    .app-container {
+        padding: 0;
+        background: white;
+        display: block;
+    }
+
+    .controls {
+        display: none !important;
+    }
+
+    .newspaper-wrapper {
+        width: 100%;
+        margin: 0;
+    }
+
+    .newspaper {
+        width: 100%;
+        aspect-ratio: 1000 / 1596;
+        box-shadow: none;
+        padding: var(--page-margin);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .chronicle-grid {
+        grid-template-columns:
+            minmax(0, 22fr)
+            minmax(0, 27fr)
+            minmax(0, 26fr)
+            minmax(0, 25fr);
+        grid-template-areas:
+            "arrival arrival world world"
+            "celebrity around movies music"
+            "sports around zodiac zodiac";
+    }
+
+    .weather-box,
+    .extra-box {
+        border-color: black;
+    }
+
+    .masthead-title,
+    .dateline-row,
+    .year-headline,
+    .prices-section,
+    .newspaper-footer {
+        border-color: black;
+    }
+
+    .chronicle-grid article,
+    .price-item {
+        border-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .image-slot {
+        border-color: rgba(0, 0, 0, 0.2);
+    }
+}

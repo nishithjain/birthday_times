@@ -1,0 +1,464 @@
+{
+    "schemaVersion": 1,
+    "description": "Personalized presidential birth-announcement copy for Birthday Chronicles. President identity is supplied dynamically from us_presidents.json and birthday/calendar values are supplied dynamically by ChronicleService and CalendarService.",
+    "accuracyType": "personalized",
+    "fictionalized": true,
+    "presidentSource": "backend/data/us_presidents.json",
+    "selection": {
+        "source": "newspaperStyleId",
+        "fallbackTemplateId": "classic_1950",
+        "styleTemplateMap": {
+            "1950": "classic_1950",
+            "1960": "classic_1960",
+            "1970": "vintage_1970",
+            "1980": "vintage_1980",
+            "1990": "modern_1990",
+            "1995": "modern_1995",
+            "2000": "modern_2000",
+            "2005": "modern_2005",
+            "2010": "contemporary_2010",
+            "2015": "contemporary_2015"
+        }
+    },
+    "placeholders": {
+        "personName": "Full name entered by the user",
+        "personFirstName": "First name derived from the user's entered name",
+        "personNameUpper": "Full user name converted to uppercase",
+        "personFirstNameUpper": "First name converted to uppercase",
+        "presidentName": "Full president name returned by PresidentService",
+        "presidentLastName": "Surname of the selected president",
+        "presidentLastNameUpper": "President surname converted to uppercase",
+        "presidentNumber": "President number for the applicable term",
+        "birthDateLong": "Example: Sunday, May 9, 1982",
+        "birthDateMedium": "Example: May 9, 1982",
+        "birthDateShortUpper": "Example: MAY 9, 1982",
+        "dayOfWeek": "Example: Sunday",
+        "dayOfWeekUpper": "Example: SUNDAY",
+        "birthYear": "Example: 1982",
+        "birthMonthName": "Example: May",
+        "birthMonthNameUpper": "Example: MAY",
+        "birthDay": "Example: 9",
+        "westernZodiac": "Example: Taurus",
+        "chineseZodiac": "Example: Dog",
+        "birthstone": "Example: Emerald",
+        "birthFlower": "Example: Lily of the Valley",
+        "birthFlowerPlural": "Display-ready plural or natural flower name"
+    },
+    "commonLabels": {
+        "presidentCaption": "PRESIDENT OF THE UNITED STATES",
+        "personalizedNotice": "PERSONALIZED BIRTHDAY EDITION"
+    },
+    "templates": [
+        {
+            "id": "classic_1950",
+            "newspaperStyleId": "1950",
+            "style": "classic",
+            "tone": "formal_vintage",
+            "headlineTemplate": "PRESIDENT {presidentLastNameUpper} NOTES BIRTH OF",
+            "nameTemplate": "{personNameUpper}",
+            "subheadlineTemplate": "NEWS OF ARRIVAL REACHES WHITE HOUSE",
+            "datelineTemplate": "WASHINGTON —",
+            "paragraphs": [
+                {
+                    "id": "arrival",
+                    "template": "The President of the United States, {presidentName}, was serving in the White House when {personName} was born on {birthDateLong}. The happy arrival adds a personal headline to the memorable events of {birthYear}.",
+                    "requires": [
+                        "presidentName",
+                        "personName",
+                        "birthDateLong",
+                        "birthYear"
+                    ]
+                },
+                {
+                    "id": "birthday_symbols",
+                    "template": "Born under the sign of {westernZodiac}, {personFirstName} arrived on a {dayOfWeek}, with {birthstone} traditionally associated with birthdays in {birthMonthName}.",
+                    "requires": [
+                        "personFirstName",
+                        "westernZodiac",
+                        "dayOfWeek",
+                        "birthstone",
+                        "birthMonthName"
+                    ]
+                },
+                {
+                    "id": "birth_flower",
+                    "template": "A bouquet of {birthFlowerPlural}, the traditional flower associated with {birthMonthName}, would make a fitting welcome for the newest arrival.",
+                    "requires": [
+                        "birthFlowerPlural",
+                        "birthMonthName"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "classic_1960",
+            "newspaperStyleId": "1960",
+            "style": "classic",
+            "tone": "formal_vintage",
+            "headlineTemplate": "PRESIDENT {presidentLastNameUpper} WELCOMES",
+            "nameTemplate": "{personNameUpper}",
+            "subheadlineTemplate": "HAPPY NEWS REPORTED IN WASHINGTON",
+            "datelineTemplate": "WASHINGTON —",
+            "paragraphs": [
+                {
+                    "id": "arrival",
+                    "template": "{personName} entered the world on {birthDateLong}, while {presidentName} was serving as President of the United States. The birth gives {birthYear} another date worth remembering.",
+                    "requires": [
+                        "personName",
+                        "birthDateLong",
+                        "presidentName",
+                        "birthYear"
+                    ]
+                },
+                {
+                    "id": "birthday_symbols",
+                    "template": "The newest arrival was born under {westernZodiac}. {birthstone} is the traditional birthstone for {birthMonthName}, adding another touch of birthday tradition to the occasion.",
+                    "requires": [
+                        "westernZodiac",
+                        "birthstone",
+                        "birthMonthName"
+                    ]
+                },
+                {
+                    "id": "birth_flower",
+                    "template": "{birthFlowerPlural}, traditionally associated with {birthMonthName}, provide a fitting floral symbol for {personFirstName}'s birthday.",
+                    "requires": [
+                        "birthFlowerPlural",
+                        "birthMonthName",
+                        "personFirstName"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "vintage_1970",
+            "newspaperStyleId": "1970",
+            "style": "vintage",
+            "tone": "newspaper_feature",
+            "headlineTemplate": "PRESIDENT {presidentLastNameUpper} HEARS THE NEWS",
+            "nameTemplate": "{personNameUpper} ARRIVES!",
+            "subheadlineTemplate": "A SPECIAL ARRIVAL MAKES TODAY'S NEWS",
+            "datelineTemplate": "WASHINGTON —",
+            "paragraphs": [
+                {
+                    "id": "arrival",
+                    "template": "{personName} was born on {birthDateLong}, during the presidency of {presidentName}. The occasion adds a very personal milestone to the story of {birthYear}.",
+                    "requires": [
+                        "personName",
+                        "birthDateLong",
+                        "presidentName",
+                        "birthYear"
+                    ]
+                },
+                {
+                    "id": "birthday_symbols",
+                    "template": "Born on a {dayOfWeek} under the sign of {westernZodiac}, {personFirstName} shares the traditional {birthMonthName} birthstone, {birthstone}.",
+                    "requires": [
+                        "dayOfWeek",
+                        "westernZodiac",
+                        "personFirstName",
+                        "birthMonthName",
+                        "birthstone"
+                    ]
+                },
+                {
+                    "id": "birth_flower",
+                    "template": "{birthFlowerPlural} are traditionally associated with the month of {birthMonthName} and complete the birthday picture.",
+                    "requires": [
+                        "birthFlowerPlural",
+                        "birthMonthName"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "vintage_1980",
+            "newspaperStyleId": "1980",
+            "style": "vintage",
+            "tone": "newspaper_feature",
+            "headlineTemplate": "{personNameUpper} MAKES THE HEADLINES",
+            "nameTemplate": "A NEW ARRIVAL IN THE {presidentLastNameUpper} YEARS",
+            "subheadlineTemplate": "NEWS OF A VERY SPECIAL BIRTHDAY",
+            "datelineTemplate": "WASHINGTON —",
+            "paragraphs": [
+                {
+                    "id": "arrival",
+                    "template": "A new chapter began on {birthDateLong} with the arrival of {personName}. At the time, {presidentName} was President of the United States.",
+                    "requires": [
+                        "birthDateLong",
+                        "personName",
+                        "presidentName"
+                    ]
+                },
+                {
+                    "id": "birthday_symbols",
+                    "template": "Born under the sign of {westernZodiac}, {personFirstName} entered the world in {birthYear} with {birthstone} as the traditional birthstone for {birthMonthName}.",
+                    "requires": [
+                        "westernZodiac",
+                        "personFirstName",
+                        "birthYear",
+                        "birthstone",
+                        "birthMonthName"
+                    ]
+                },
+                {
+                    "id": "chinese_zodiac",
+                    "template": "In the Chinese zodiac, {birthYear} is associated with the {chineseZodiac}.",
+                    "requires": [
+                        "birthYear",
+                        "chineseZodiac"
+                    ]
+                },
+                {
+                    "id": "birth_flower",
+                    "template": "The traditional flower for {birthMonthName}, {birthFlowerPlural}, adds one more symbol to this memorable birthday.",
+                    "requires": [
+                        "birthMonthName",
+                        "birthFlowerPlural"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "modern_1990",
+            "newspaperStyleId": "1990",
+            "style": "modern",
+            "tone": "editorial",
+            "headlineTemplate": "A NEW ARRIVAL DURING THE {presidentLastNameUpper} YEARS",
+            "nameTemplate": "{personNameUpper}",
+            "subheadlineTemplate": "{birthDateShortUpper} BECOMES A DAY TO REMEMBER",
+            "datelineTemplate": "WASHINGTON —",
+            "paragraphs": [
+                {
+                    "id": "arrival",
+                    "template": "{personName} was born on {birthDateLong}, while {presidentName} was serving as President of the United States. For one family, it became the biggest headline of {birthYear}.",
+                    "requires": [
+                        "personName",
+                        "birthDateLong",
+                        "presidentName",
+                        "birthYear"
+                    ]
+                },
+                {
+                    "id": "birthday_symbols",
+                    "template": "The birthday falls under the zodiac sign {westernZodiac}. {birthstone} is traditionally associated with {birthMonthName}.",
+                    "requires": [
+                        "westernZodiac",
+                        "birthstone",
+                        "birthMonthName"
+                    ]
+                },
+                {
+                    "id": "chinese_zodiac",
+                    "template": "The Chinese zodiac marks {birthYear} as a Year of the {chineseZodiac}.",
+                    "requires": [
+                        "birthYear",
+                        "chineseZodiac"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "modern_1995",
+            "newspaperStyleId": "1995",
+            "style": "modern",
+            "tone": "editorial",
+            "headlineTemplate": "{personNameUpper} ARRIVES!",
+            "nameTemplate": "BORN DURING THE {presidentLastNameUpper} PRESIDENCY",
+            "subheadlineTemplate": "A PERSONAL HEADLINE FOR {birthYear}",
+            "datelineTemplate": "WASHINGTON —",
+            "paragraphs": [
+                {
+                    "id": "arrival",
+                    "template": "{birthDateLong} became a memorable date with the birth of {personName}. {presidentName} occupied the White House when the new arrival made headlines at home.",
+                    "requires": [
+                        "birthDateLong",
+                        "personName",
+                        "presidentName"
+                    ]
+                },
+                {
+                    "id": "birthday_symbols",
+                    "template": "{personFirstName} was born under {westernZodiac}, with {birthstone} traditionally representing birthdays in {birthMonthName}.",
+                    "requires": [
+                        "personFirstName",
+                        "westernZodiac",
+                        "birthstone",
+                        "birthMonthName"
+                    ]
+                },
+                {
+                    "id": "birth_flower",
+                    "template": "{birthFlowerPlural} are the traditional flowers associated with {birthMonthName}.",
+                    "requires": [
+                        "birthFlowerPlural",
+                        "birthMonthName"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "modern_2000",
+            "newspaperStyleId": "2000",
+            "style": "modern",
+            "tone": "editorial",
+            "headlineTemplate": "{personNameUpper} IS THE BIG NEWS",
+            "nameTemplate": "A SPECIAL ARRIVAL IN {birthYear}",
+            "subheadlineTemplate": "BORN DURING THE {presidentLastNameUpper} YEARS",
+            "datelineTemplate": "WASHINGTON —",
+            "paragraphs": [
+                {
+                    "id": "arrival",
+                    "template": "{personName} arrived on {birthDateLong}. At the time, {presidentName} was serving as President of the United States.",
+                    "requires": [
+                        "personName",
+                        "birthDateLong",
+                        "presidentName"
+                    ]
+                },
+                {
+                    "id": "birthday_symbols",
+                    "template": "The new arrival was born under {westernZodiac}. The traditional birthstone for {birthMonthName} is {birthstone}.",
+                    "requires": [
+                        "westernZodiac",
+                        "birthMonthName",
+                        "birthstone"
+                    ]
+                },
+                {
+                    "id": "chinese_zodiac",
+                    "template": "According to the Chinese zodiac, {birthYear} is associated with the {chineseZodiac}.",
+                    "requires": [
+                        "birthYear",
+                        "chineseZodiac"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "modern_2005",
+            "newspaperStyleId": "2005",
+            "style": "modern",
+            "tone": "editorial",
+            "headlineTemplate": "{personNameUpper} MAKES TODAY'S HEADLINES",
+            "nameTemplate": "A BIRTHDAY TO REMEMBER",
+            "subheadlineTemplate": "A NEW ARRIVAL DURING THE {presidentLastNameUpper} PRESIDENCY",
+            "datelineTemplate": "WASHINGTON —",
+            "paragraphs": [
+                {
+                    "id": "arrival",
+                    "template": "On {birthDateLong}, {personName} entered the world while {presidentName} was President of the United States.",
+                    "requires": [
+                        "birthDateLong",
+                        "personName",
+                        "presidentName"
+                    ]
+                },
+                {
+                    "id": "birthday_symbols",
+                    "template": "{personFirstName}'s birthday falls under the sign of {westernZodiac}, with {birthstone} traditionally linked to {birthMonthName}.",
+                    "requires": [
+                        "personFirstName",
+                        "westernZodiac",
+                        "birthstone",
+                        "birthMonthName"
+                    ]
+                },
+                {
+                    "id": "birth_flower",
+                    "template": "{birthFlowerPlural} are traditionally associated with birthdays in {birthMonthName}.",
+                    "requires": [
+                        "birthFlowerPlural",
+                        "birthMonthName"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "contemporary_2010",
+            "newspaperStyleId": "2010",
+            "style": "contemporary",
+            "tone": "commemorative",
+            "headlineTemplate": "{personNameUpper} MAKES THE HEADLINES",
+            "nameTemplate": "BORN {birthDateShortUpper}",
+            "subheadlineTemplate": "A PERSONAL MILESTONE IN THE {presidentLastNameUpper} ERA",
+            "datelineTemplate": "WASHINGTON —",
+            "paragraphs": [
+                {
+                    "id": "arrival",
+                    "template": "{personName} was born on {birthDateLong}, during the presidency of {presidentName}. The day became a personal milestone in the story of {birthYear}.",
+                    "requires": [
+                        "personName",
+                        "birthDateLong",
+                        "presidentName",
+                        "birthYear"
+                    ]
+                },
+                {
+                    "id": "birthday_symbols",
+                    "template": "Born under {westernZodiac}, {personFirstName}'s birthday is traditionally associated with {birthstone} and {birthFlowerPlural}.",
+                    "requires": [
+                        "westernZodiac",
+                        "personFirstName",
+                        "birthstone",
+                        "birthFlowerPlural"
+                    ]
+                },
+                {
+                    "id": "chinese_zodiac",
+                    "template": "The Chinese zodiac associates {birthYear} with the {chineseZodiac}.",
+                    "requires": [
+                        "birthYear",
+                        "chineseZodiac"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "contemporary_2015",
+            "newspaperStyleId": "2015",
+            "style": "contemporary",
+            "tone": "commemorative",
+            "headlineTemplate": "WELCOME TO THE WORLD, {personFirstNameUpper}!",
+            "nameTemplate": "{personNameUpper}",
+            "subheadlineTemplate": "THE BIGGEST PERSONAL HEADLINE OF {birthYear}",
+            "datelineTemplate": "WASHINGTON —",
+            "paragraphs": [
+                {
+                    "id": "arrival",
+                    "template": "{personName} was born on {birthDateLong}, while {presidentName} was serving as President of the United States.",
+                    "requires": [
+                        "personName",
+                        "birthDateLong",
+                        "presidentName"
+                    ]
+                },
+                {
+                    "id": "birthday_symbols",
+                    "template": "The birthday falls under {westernZodiac}. {birthstone} is traditionally associated with {birthMonthName}, along with {birthFlowerPlural}.",
+                    "requires": [
+                        "westernZodiac",
+                        "birthstone",
+                        "birthMonthName",
+                        "birthFlowerPlural"
+                    ]
+                },
+                {
+                    "id": "chinese_zodiac",
+                    "template": "In the Chinese zodiac, {birthYear} is represented by the {chineseZodiac}.",
+                    "requires": [
+                        "birthYear",
+                        "chineseZodiac"
+                    ]
+                },
+                {
+                    "id": "weekday",
+                    "template": "And for the record, it was a {dayOfWeek}.",
+                    "requires": [
+                        "dayOfWeek"
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,105 @@
+{
+    "schemaVersion": 1,
+    "presidentContextTemplates": [
+        {
+            "id": "president_context_01",
+            "template": "{presidentName} was President when {personName} entered the world."
+        },
+        {
+            "id": "president_context_02",
+            "template": "{presidentName} was serving as President when {personName} entered the world."
+        },
+        {
+            "id": "president_context_03",
+            "template": "{presidentName} was serving as President of the United States when {personName} entered the world."
+        },
+        {
+            "id": "president_context_04",
+            "template": "{presidentName} was serving as President of the United States when {personName} entered the world on {weekday}, {monthName} {day}, {year}."
+        },
+        {
+            "id": "president_context_05",
+            "template": "{presidentName} was serving as President of the United States when {personName} entered the world on {weekday}, {monthName} {day}, {year}. The date became one small personal milestone within the larger story of its time."
+        },
+        {
+            "id": "president_context_06",
+            "template": "{presidentName} was serving as President of the United States when {personName} entered the world on {weekday}, {monthName} {day}, {year}. Beyond this new arrival, the wider world was already moving through the headlines, events and changes that would define its time."
+        },
+        {
+            "id": "president_context_07",
+            "template": "{presidentName} was serving as President of the United States when {personName} entered the world on {weekday}, {monthName} {day}, {year}. It was a day set against the wider events, headlines and changes already shaping the world. While history continued to unfold beyond the White House, a much more personal story was just beginning."
+        }
+    ],
+    "templates": [
+        {
+            "id": "1950_classic_01",
+            "headlineTemplate": "PRESIDENT {presidentLastNameUpper} HAILS ARRIVAL OF {personNameUpper}.",
+            "era": "1950",
+            "bodyTemplate": "A joyful announcement is made on {weekday}, {monthName} {day}, {year}, as {personNameUpper} makes a grand arrival in {country}. Born under the sign of {zodiac}, with {birthstone} as the birthstone, the newest member of the {generation} generation begins a story all their own.",
+            "presidentWishTemplate": "WASHINGTON (SPECIAL) -- Word of {personNameUpper}'s arrival has reached the White House, where President {presidentName} was said to have greeted the bulletin with great enthusiasm. In the playful spirit of this special edition, the President proclaimed the day worthy of celebration and welcomed the newest little headline-maker to the world."
+        },
+        {
+            "id": "1960_classic_01",
+            "headlineTemplate": "PRESIDENT {presidentLastNameUpper} NOTES BIRTH OF {personNameUpper}.",
+            "era": "1960",
+            "bodyTemplate": "The news is in! On {weekday}, {monthName} {day}, {year}, {personNameUpper} arrived in {country}. With {zodiac} in the stars and {birthstone} as the birthstone, a brand-new member of the {generation} generation has joined the world.",
+            "presidentWishTemplate": "WASHINGTON (SPECIAL) -- The news has reached Washington! President {presidentName} was reportedly delighted to learn of {personNameUpper}'s arrival. In the cheerful spirit of this special edition, the White House declared the day one for celebration, heralding the birth of a promising new citizen of the world."
+        },
+        {
+            "id": "1970_classic_01",
+            "headlineTemplate": "WHITE HOUSE WELCOMES NEWS OF {personNameUpper}'S ARRIVAL.",
+            "era": "1970",
+            "bodyTemplate": "A special bulletin marks {personNameUpper}'s arrival on {weekday}, {monthName} {day}, {year}, in {country}. Born beneath {zodiac}, and paired with the traditional {birthstone}, this {generation} arrival steps into a changing world.",
+            "presidentWishTemplate": "WASHINGTON (SPECIAL) -- A special bulletin concerning {personNameUpper} has reached the nation's capital. President {presidentName} reportedly welcomed the news with enthusiasm, suggesting that the day's ordinary business take second place to such an important new arrival."
+        },
+        {
+            "id": "1980_classic_01",
+            "headlineTemplate": "PRESIDENT {presidentLastNameUpper} GREETS NEW ARRIVAL {personNameUpper}.",
+            "era": "1980",
+            "bodyTemplate": "It's official — {personNameUpper} arrived on {weekday}, {monthName} {day}, {year}, in {country}. Born beneath the sign of {zodiac}, with {birthstone} as the birthstone, this newest member of the {generation} generation enters a fast-changing world.",
+            "presidentWishTemplate": "WASHINGTON (SPECIAL) -- President {presidentName} has reportedly set aside the affairs of state for a moment after hearing the news of {personNameUpper}'s arrival. In this special-edition telling, the White House declared the occasion worthy of national celebration and welcomed a brand-new headline-maker to the world."
+        },
+        {
+            "id": "1990_classic_01",
+            "headlineTemplate": "WASHINGTON TAKES NOTE: {personNameUpper} HAS ARRIVED!",
+            "era": "1990",
+            "bodyTemplate": "The day's personal headline reads: {personNameUpper} arrived in {country} on {weekday}, {monthName} {day}, {year}. The {zodiac} newcomer carries {birthstone} as the birthstone and joins the {generation} generation.",
+            "presidentWishTemplate": "WASHINGTON (SPECIAL) -- News of {personNameUpper}'s arrival made its way to Washington today, where President {presidentName} reportedly called it the sort of headline capable of brightening even the busiest day at the White House."
+        },
+        {
+            "id": "1995_classic_01",
+            "headlineTemplate": "PRESIDENT {presidentLastNameUpper} WELCOMES BIRTH OF {personNameUpper}.",
+            "era": "1995",
+            "bodyTemplate": "A new name has entered the story of {year}: {personNameUpper}, born on {weekday}, {monthName} {day}, in {country}. A {zodiac} with {birthstone} as the birthstone, this new arrival joins the {generation} generation.",
+            "presidentWishTemplate": "WASHINGTON (SPECIAL) -- The White House has received today's most important personal headline: {personNameUpper} has arrived. President {presidentName} reportedly welcomed the news and, in the spirit of this special edition, declared the occasion well worth celebrating."
+        },
+        {
+            "id": "2000_classic_01",
+            "headlineTemplate": "WHITE HOUSE HEARS THE NEWS: {personNameUpper} IS HERE!",
+            "era": "2000",
+            "bodyTemplate": "A new chapter opens in {year} as {personNameUpper} arrives on {weekday}, {monthName} {day}, in {country}. Under {zodiac}, with {birthstone} as the birthstone, this member of the {generation} generation begins a bright story.",
+            "presidentWishTemplate": "WASHINGTON (SPECIAL) -- News of {personNameUpper}'s arrival reached Washington today, prompting President {presidentName} to put the usual headlines aside for something considerably more cheerful. The White House, at least in this special edition, is celebrating."
+        },
+        {
+            "id": "2005_classic_01",
+            "headlineTemplate": "PRESIDENT {presidentLastNameUpper} MARKS ARRIVAL OF {personNameUpper}.",
+            "era": "2005",
+            "bodyTemplate": "Welcome news from {country}: {personNameUpper} was born on {weekday}, {monthName} {day}, {year}. The {zodiac} arrival carries {birthstone} as the birthstone and becomes part of the {generation} generation.",
+            "presidentWishTemplate": "WASHINGTON (SPECIAL) -- President {presidentName} has received word of a major new arrival: {personNameUpper}. BirthdayChronicles sources report that the White House considers the occasion an excellent reason to interrupt business as usual and celebrate."
+        },
+        {
+            "id": "2010_classic_01",
+            "headlineTemplate": "WASHINGTON WELCOMES {personNameUpper} TO THE WORLD.",
+            "era": "2010",
+            "bodyTemplate": "On {weekday}, {monthName} {day}, {year}, {personNameUpper} began a new story in {country}. Born under {zodiac}, with {birthstone} as the birthstone, this latest member of the {generation} generation makes the day's news.",
+            "presidentWishTemplate": "WASHINGTON (SPECIAL) -- The day's happiest bulletin has reportedly reached President {presidentName}: {personNameUpper} has arrived. In the playful spirit of this edition, Washington has placed the usual political headlines on hold for a little celebration."
+        },
+        {
+            "id": "2015_classic_01",
+            "headlineTemplate": "WHITE HOUSE NOTES A NEW ARRIVAL: {personNameUpper}.",
+            "era": "2015",
+            "bodyTemplate": "Today's personal edition welcomes {personNameUpper}, born on {weekday}, {monthName} {day}, {year}, in {country}. With {zodiac} in the stars and {birthstone} as the birthstone, a new member of the {generation} generation has arrived.",
+            "presidentWishTemplate": "WASHINGTON (SPECIAL) -- News travels fast, and word of {personNameUpper}'s arrival has already reached the White House. President {presidentName} reportedly welcomed the headline with a smile while this special edition declared the day officially worth celebrating."
+        }
+    ]
+}

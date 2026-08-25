@@ -1,0 +1,73 @@
+{
+    "schemaVersion": 1,
+    "defaultTemplateId": "classic_01",
+    "selection": {
+        "mode": "deterministic",
+        "seedFields": [
+            "personName",
+            "birthDate"
+        ]
+    },
+    "templates": [
+        {
+            "id": "classic_01",
+            "headlineTemplate": "MUSIC, MUSIC, MUSIC",
+            "subheadlineTemplate": "The Top Hits of '{yearShort}",
+            "bodyTemplate": "What a year it was for music! With hit songs like {songList}, the sounds of {year} filled radios and record players everywhere. These memorable tunes helped provide the soundtrack to a remarkable year."
+        },
+        {
+            "id": "classic_02",
+            "headlineTemplate": "THE YEAR IN MUSIC",
+            "subheadlineTemplate": "Songs Everyone Remembered from '{yearShort}",
+            "bodyTemplate": "The sounds of {year} carried far and wide. Favorites such as {songList} gave the year a memorable musical character."
+        },
+        {
+            "id": "classic_03",
+            "headlineTemplate": "SONGS EVERYONE WAS SINGING",
+            "subheadlineTemplate": "The Top Hits of '{yearShort}",
+            "bodyTemplate": "Radios were alive with songs like {songList}. Together, these popular sounds helped tell the musical story of {year}."
+        },
+        {
+            "id": "classic_04",
+            "headlineTemplate": "THE HITS KEEP COMING",
+            "subheadlineTemplate": "Music from the Year {year}",
+            "bodyTemplate": "From one memorable tune to the next, {songList} kept listeners company throughout {year}."
+        },
+        {
+            "id": "classic_05",
+            "headlineTemplate": "TUNES OF THE YEAR",
+            "subheadlineTemplate": "The Soundtrack of '{yearShort}",
+            "bodyTemplate": "The musical year brought plenty to remember, including {songList}. Their sounds remain part of the story of {year}."
+        },
+        {
+            "id": "classic_06",
+            "headlineTemplate": "TOP SONGS ON THE AIRWAVES",
+            "subheadlineTemplate": "Favorite Sounds of {year}",
+            "bodyTemplate": "Listeners heard {songList} among the year's most memorable selections. They helped make {year} a year to remember."
+        },
+        {
+            "id": "classic_07",
+            "headlineTemplate": "RADIO FAVORITES OF '{yearShort}",
+            "subheadlineTemplate": "A Musical Look at {year}",
+            "bodyTemplate": "Songs such as {songList} filled the air and gave {year} its own distinctive soundtrack."
+        },
+        {
+            "id": "classic_08",
+            "headlineTemplate": "THE SOUND OF {year}",
+            "subheadlineTemplate": "Five Memorable Musical Favorites",
+            "bodyTemplate": "The year's musical page included {songList}, a lively collection of sounds remembered from {year}."
+        },
+        {
+            "id": "classic_09",
+            "headlineTemplate": "A YEAR OF MUSICAL FAVORITES",
+            "subheadlineTemplate": "Top Songs from '{yearShort}",
+            "bodyTemplate": "With {songList} in the mix, {year} offered a memorable selection for radios and record players."
+        },
+        {
+            "id": "classic_10",
+            "headlineTemplate": "MUSIC MAKES THE YEAR",
+            "subheadlineTemplate": "The Popular Sounds of {year}",
+            "bodyTemplate": "The musical mood of {year} can still be heard in favorites such as {songList}."
+        }
+    ]
+}

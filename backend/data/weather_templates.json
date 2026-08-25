@@ -1,0 +1,13 @@
+{
+    "schemaVersion": 1,
+    "defaultTemplateId": "classic",
+    "templates": [
+        {
+            "id": "classic",
+            "title": "TODAY'S WEATHER",
+            "primaryTemplate": "{conditionText}",
+            "secondaryTemplate": "{windText}",
+            "dateTemplate": "{dayOfWeekUpper}, {monthNameUpper} {day}"
+        }
+    ]
+}
