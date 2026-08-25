@@ -1,6 +1,7 @@
 """Era-specific, deterministic wording for the NEWS OF ARRIVAL article."""
 
 import json
+import random
 import re
 import string
 from datetime import date
@@ -96,6 +97,27 @@ class ArrivalMessageService:
         normalized, _diagnostics = normalize_president_context_templates(payload.get("presidentContextTemplates"))
         return normalized
 
+    def _load_president_wish_pool(self) -> list[Dict[str, str]]:
+        """Pool every era's legacy presidentWishTemplate into one era-independent
+        candidate set, selected the same way as presidentContextTemplates (by
+        expanded character length), rather than by the Chronicle's own era."""
+        templates = self._load_templates()
+        raw_candidates = [
+            {"id": f"president_wish_{template['era']}", "template": template["presidentWishTemplate"]}
+            for template in templates
+            if template.get("presidentWishTemplate")
+        ]
+        # Every pooled wish template is a full "WASHINGTON (SPECIAL) --" sentence,
+        # so very long names can overflow all of them. Guarantee one compact,
+        # era-independent candidate as a real last resort before the plain
+        # neutral fallback sentence.
+        raw_candidates.append({
+            "id": "president_wish_compact",
+            "template": "{presidentName} was President when {personName} entered the world.",
+        })
+        normalized, _diagnostics = normalize_president_context_templates(raw_candidates)
+        return normalized
+
     def _load_templates(self) -> list[Dict[str, str]]:
         try:
             payload = json.loads(self.data_file.read_text(encoding="utf-8"))
@@ -142,16 +164,20 @@ class ArrivalMessageService:
                 expanded.append(result)
             else:
                 diagnostics.append(f"malformed template: {candidate['id']}")
-        # Longest candidate first; final DOM fit still governs the browser's actual pick.
-        expanded.sort(key=lambda item: item["characterCount"], reverse=True)
+        # Randomize the attempt order rather than ranking by length; the
+        # browser DOM fit walks this same order and steps to the next
+        # candidate on overflow, falling back to neutral text if all overflow.
+        # The compact candidate is a deliberate last resort: shuffling it in
+        # with the full wish templates let it "win" purely by draw luck even
+        # when a richer template would also have fit, so it's always tried
+        # last instead of being shuffled with the rest.
+        primary = [item for item in expanded if item["id"] != "president_wish_compact"]
+        compact = [item for item in expanded if item["id"] == "president_wish_compact"]
+        random.shuffle(primary)
+        expanded = primary + compact
         capacity = PRESIDENT_CONTEXT_ESTIMATED_CAPACITY
         safe_capacity = president_context_safe_capacity(capacity)
-        if safe_capacity is None:
-            selected = expanded[0] if expanded else None
-        else:
-            selected = next((item for item in expanded if item["characterCount"] <= safe_capacity), None)
-            if selected is None and expanded:
-                selected = min(expanded, key=lambda item: item["characterCount"])
+        selected = expanded[0] if expanded else None
         return {
             "available": bool(expanded),
             "diagnostics": diagnostics,
@@ -323,9 +349,9 @@ class ArrivalMessageService:
             "presidentLastName": president_last_name,
             "presidentLastNameUpper": president_last_name.upper(),
         }
-        global_context_templates = self._load_global_president_context_templates()
+        wish_pool = self._load_president_wish_pool()
         president_context = (
-            self._expand_president_context_candidates(global_context_templates, values)
+            self._expand_president_context_candidates(wish_pool, values)
             if president_name
             else {
                 "available": False,

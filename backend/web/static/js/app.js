@@ -276,6 +276,8 @@ async function fitWorldNews() {
 
 async function fitPresidentContext(container) {
     const message = container.querySelector('[data-president-context-fit]');
+    const flow = container.querySelector('[data-white-house-flow]') || message;
+    const budgetBox = container.querySelector('[data-white-house-budget]') || flow;
     const data = container.querySelector('[data-president-context-candidates]');
     const finish = (result, details = {}) => {
         Object.entries({
@@ -300,11 +302,10 @@ async function fitPresidentContext(container) {
         finish('no_candidates', { attemptCount: 0 });
         return;
     }
-    // Candidates arrive sorted longest -> shortest; start at the server-selected
-    // candidate and only step to shorter ones, never above the server budget.
-    const estimatedId = message.dataset.presidentContextEstimatedId;
-    const startIndex = Math.max(0, candidates.findIndex(candidate => candidate.id === estimatedId));
-    const order = candidates.slice(startIndex);
+    // Candidates arrive in a randomized attempt order (not ranked by length or
+    // era); step through them as-is and fall back to neutral text if every
+    // one overflows.
+    const order = candidates;
     if (!order.length) {
         finish('no_candidates', { attemptCount: 0 });
         return;
@@ -312,31 +313,49 @@ async function fitPresidentContext(container) {
     if (container.dataset.presidentContextFitComplete === 'true') return;
     if (document.fonts && document.fonts.ready) await document.fonts.ready;
     await new Promise(requestAnimationFrame);
+    // The photo now floats inside the White House flow region, so the
+    // available line width narrows near the top and widens once text passes
+    // below the portrait. The flow region itself is auto-height (so its
+    // scrollHeight reflects the candidate's true content extent); compare
+    // that against the fixed budget box's clientHeight, which never changes.
+    const budgetWidth = budgetBox.clientWidth;
+    const budgetHeight = budgetBox.clientHeight;
     const attempts = [];
     let selected = null;
     for (const candidate of order) {
         message.textContent = candidate.text;
         await new Promise(requestAnimationFrame);
-        const clientWidth = message.clientWidth;
-        const scrollWidth = message.scrollWidth;
-        const clientHeight = message.clientHeight;
-        const scrollHeight = message.scrollHeight;
-        const heightUtilization = clientHeight > 0 ? scrollHeight / clientHeight : null;
-        const widthFits = scrollWidth <= clientWidth + 1;
-        const heightFits = scrollHeight <= clientHeight + 1;
+        const naturalWidth = flow.scrollWidth;
+        const naturalHeight = flow.scrollHeight;
+        const heightUtilization = budgetHeight > 0 ? naturalHeight / budgetHeight : null;
+        const widthFits = naturalWidth <= budgetWidth + 1;
+        const heightFits = naturalHeight <= budgetHeight + 1;
         const safeHeight = heightUtilization !== null && heightUtilization <= 0.97;
-        const attempt = { candidate, clientWidth, scrollWidth, clientHeight, scrollHeight, heightUtilization, fits: widthFits && heightFits && safeHeight };
+        const attempt = { candidate, clientWidth: budgetWidth, scrollWidth: naturalWidth, clientHeight: budgetHeight, scrollHeight: naturalHeight, heightUtilization, fits: widthFits && heightFits && safeHeight };
         attempts.push(attempt);
         if (attempt.fits) {
             selected = attempt;
             break;
         }
     }
+    await new Promise(requestAnimationFrame);
     const finalAttempt = selected || attempts[attempts.length - 1];
-    const result = selected ? 'fit' : 'overflow';
+    let result = selected ? 'fit' : 'overflow';
+    let browserSelectedId = finalAttempt.candidate.id;
+    let browserSelectedCharacterCount = finalAttempt.candidate.characterCount;
+    if (!selected) {
+        // Every wish-template candidate overflowed; drop to the neutral,
+        // guaranteed-safe sentence rather than showing clipped/oversized text.
+        const fallbackText = message.dataset.presidentContextFallbackText || '';
+        message.textContent = fallbackText;
+        await new Promise(requestAnimationFrame);
+        result = 'fallback';
+        browserSelectedId = 'fallback';
+        browserSelectedCharacterCount = fallbackText.length;
+    }
     finish(result, {
-        browserSelectedId: finalAttempt.candidate.id,
-        browserSelectedCharacterCount: finalAttempt.candidate.characterCount,
+        browserSelectedId,
+        browserSelectedCharacterCount,
         attemptCount: attempts.length,
         clientWidth: finalAttempt.clientWidth,
         scrollWidth: finalAttempt.scrollWidth,

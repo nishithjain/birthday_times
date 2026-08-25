@@ -72,7 +72,7 @@ def test_selects_rendered_candidate_that_fits_article_space(tmp_path):
     assert result["bodyText"] == "A concise arrival note for NISHITH."
 
 
-def test_president_context_candidates_expand_and_rank_by_character_length():
+def test_president_context_candidates_come_from_wish_pool_in_random_order():
     result = ArrivalMessageService().get_arrival(
         date(1982, 5, 9),
         "Ava Lee",
@@ -82,34 +82,36 @@ def test_president_context_candidates_expand_and_rank_by_character_length():
         "Jimmy Carter",
     )
     context = result["presidentContext"]
-    counts = [candidate["characterCount"] for candidate in context["candidates"]]
-    assert counts == sorted(counts, reverse=True)
-    assert len(context["candidates"]) == 7
+    # One candidate per era's legacy presidentWishTemplate, plus one compact
+    # era-independent fallback candidate, pooled together.
+    assert len(context["candidates"]) == 11
     assert context["estimatedCapacity"] is None
     assert context["safeEstimatedCapacity"] is None
+    # The server's estimated pick is always the first entry of the (randomized) list.
     assert context["estimatedSelectedId"] == context["candidates"][0]["id"]
     assert context["estimatedSelectedCharacterCount"] == context["candidates"][0]["characterCount"]
-    assert context["candidates"][0]["text"].startswith("Jimmy Carter was serving")
-    assert "Ava Lee" in context["candidates"][0]["text"]
+    for candidate in context["candidates"]:
+        assert "Jimmy Carter" in candidate["text"]
+        assert "ava lee" in candidate["text"].lower()
 
 
-def test_president_context_is_independent_of_era():
+def test_president_context_pool_is_independent_of_era():
     service = ArrivalMessageService()
     by_era = {
         era: service.get_arrival(date(1982, 5, 9), "Ava Lee", "India", CALENDAR, era, "Jimmy Carter")["presidentContext"]
         for era in ("1950", "1980", "2015")
     }
-    ids = {context["estimatedSelectedId"] for context in by_era.values()}
-    counts = {context["estimatedSelectedCharacterCount"] for context in by_era.values()}
-    assert len(ids) == 1
-    assert len(counts) == 1
+    # Era must not filter which wish templates are available, only randomness may vary the pick.
+    id_sets = {frozenset(candidate["id"] for candidate in context["candidates"]) for context in by_era.values()}
+    assert len(id_sets) == 1
 
 
 def test_president_context_counts_change_for_long_names():
     service = ArrivalMessageService()
     short = service.get_arrival(date(1978, 5, 9), "Ava Lee", "India", {**CALENDAR, "day_of_week": "Friday"}, "1970", "Jimmy Carter")["presidentContext"]["candidates"]
     long = service.get_arrival(date(1959, 9, 30), "Christopher Alexander Montgomery", "India", {**CALENDAR, "day_of_week": "Wednesday"}, "1950", "Dwight D. Eisenhower")["presidentContext"]["candidates"]
-    assert [item["characterCount"] for item in long] > [item["characterCount"] for item in short]
+    # Candidate order is randomized per call, so compare aggregate length rather than positionally.
+    assert sum(item["characterCount"] for item in long) > sum(item["characterCount"] for item in short)
 
 
 def test_president_context_safe_capacity_uses_ninety_percent():
@@ -117,12 +119,13 @@ def test_president_context_safe_capacity_uses_ninety_percent():
     assert president_context_safe_capacity(None) is None
 
 
-def test_missing_president_context_templates_are_safe(tmp_path):
+def test_missing_president_wish_templates_still_get_compact_candidate(tmp_path):
     data_file = tmp_path / "arrival.json"
-    data_file.write_text('{"templates": [{"id":"1980","era":"1980","headlineTemplate":"H","bodyTemplate":"B","presidentWishTemplate":"W"}]}', encoding="utf-8")
+    data_file.write_text('{"templates": [{"id":"1980","era":"1980","headlineTemplate":"H","bodyTemplate":"B"}]}', encoding="utf-8")
     result = ArrivalMessageService(data_file).get_arrival(date(1982, 5, 9), "Ava Lee", "India", CALENDAR, "1980", "Jimmy Carter")
-    assert result["presidentContext"]["candidates"] == []
-    assert result["presidentContext"]["estimatedSelectedId"] is None
+    # No era presidentWishTemplate exists, but the guaranteed compact candidate remains.
+    assert [candidate["id"] for candidate in result["presidentContext"]["candidates"]] == ["president_wish_compact"]
+    assert result["presidentContext"]["estimatedSelectedId"] == "president_wish_compact"
 
 
 def test_missing_president_does_not_expand_empty_name_context():
@@ -130,15 +133,10 @@ def test_missing_president_does_not_expand_empty_name_context():
     assert result["presidentContext"]["candidates"] == []
 
 
-def test_malformed_president_context_placeholder_is_skipped(tmp_path):
-    data_file = tmp_path / "arrival.json"
-    data_file.write_text(
-        '{"presidentContextTemplates":[{"id":"bad","template":"{presedentName} entered."}],'
-        '"templates": [{"id":"1980","era":"1980","headlineTemplate":"H","bodyTemplate":"B","presidentWishTemplate":"W"}]}',
-        encoding="utf-8",
-    )
-    result = ArrivalMessageService(data_file).get_arrival(date(1982, 5, 9), "Ava Lee", "India", CALENDAR, "1980", "Jimmy Carter")
-    assert result["presidentContext"]["candidates"] == []
+def test_malformed_wish_template_placeholder_is_skipped():
+    values = {"presidentName": "Jimmy Carter", "personNameUpper": "AVA LEE"}
+    candidate = {"id": "bad", "template": "{presedentName} entered."}
+    assert ArrivalMessageService._expand_president_context_candidate(candidate, values) is None
 
 
 def test_context_normalization_accepts_global_pool_and_rejects_invalid_shapes():
@@ -159,13 +157,15 @@ def test_context_normalization_accepts_global_pool_and_rejects_invalid_shapes():
     assert any("duplicate candidate id" in item for item in diagnostics)
 
 
-def test_new_only_record_has_context_without_legacy_wish(tmp_path):
+def test_president_context_sourced_from_president_wish_template(tmp_path):
     data_file = tmp_path / "arrival.json"
     data_file.write_text(
-        '{"presidentContextTemplates":[{"id":"short","template":"{presidentName} served when {personName} arrived."}],'
-        '"templates": [{"id":"1980","era":"1980","headlineTemplate":"H","bodyTemplate":"B"}]}',
+        '{"templates": [{"id":"1980","era":"1980","headlineTemplate":"H","bodyTemplate":"B",'
+        '"presidentWishTemplate":"{presidentName} welcomed {personNameUpper}."}]}',
         encoding="utf-8",
     )
     result = ArrivalMessageService(data_file).get_arrival(date(1982, 5, 9), "Ava Lee", "India", CALENDAR, "1980", "Jimmy Carter")
-    assert result["presidentWishText"] == ""
     assert result["presidentContext"]["available"] is True
+    texts = {candidate["id"]: candidate["text"] for candidate in result["presidentContext"]["candidates"]}
+    assert texts["president_wish_1980"] == "Jimmy Carter welcomed AVA LEE."
+    assert texts["president_wish_compact"] == "Jimmy Carter was President when Ava Lee entered the world."

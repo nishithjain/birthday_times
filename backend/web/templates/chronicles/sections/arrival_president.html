@@ -32,19 +32,16 @@
         <aside class="arrival-white-house">
             <h3 class="arrival-column-heading">From The White House</h3>
             <div class="arrival-column-rule" aria-hidden="true"></div>
-            <div class="arrival-white-house-content">
-                <div class="arrival-president-column">
-                    <div class="arrival-president-photo-box">
-                        {% if chronicle.president and chronicle.president.displayPath %}<img
-                            src="{{ url_for('static', filename=chronicle.president.displayPath) }}"
-                            alt="Portrait of {{ chronicle.president.displayName }}" class="arrival-president-photo">{%
-                        endif %}
-                    </div>
-                </div>
-                {% set context = chronicle.arrival.presidentContext %}
-                {% set selected_context = context.estimatedSelectedText if context and context.available else
-                chronicle.arrival.presidentContextText %}
-                <div class="arrival-president-info">
+            {% set context = chronicle.arrival.presidentContext %}
+            {% set selected_context = context.estimatedSelectedText if context and context.available else
+            chronicle.arrival.presidentContextText %}
+            <div class="arrival-white-house-content" data-white-house-budget>
+                <div class="arrival-white-house-flow{% if chronicle.president and chronicle.president.displayPath %} has-photo{% endif %}"
+                    data-white-house-flow>
+                    {% if chronicle.president and chronicle.president.displayPath %}<img
+                        src="{{ url_for('static', filename=chronicle.president.displayPath) }}"
+                        alt="Portrait of {{ chronicle.president.displayName }}" class="arrival-president-photo">{%
+                    endif %}
                     {% if chronicle.president %}<div class="arrival-president-identity">
                         <div class="arrival-president-name">{{ chronicle.president.displayName }}</div>
                         <div class="arrival-president-role">President</div>
@@ -54,16 +51,17 @@
                         data-president-context-estimated-id="{{ context.estimatedSelectedId if context else '' }}"
                         data-president-context-estimated-capacity="{{ context.estimatedCapacity if context and context.estimatedCapacity is not none else '' }}"
                         data-president-context-safe-estimated-capacity="{{ context.safeEstimatedCapacity if context and context.safeEstimatedCapacity is not none else '' }}"
-                        {% if context and context.estimatedSelectedId
+                        data-president-context-fallback-text="{{ chronicle.arrival.presidentContextText }}" {% if
+                        context and context.estimatedSelectedId
                         %}data-president-context-id="{{ context.estimatedSelectedId }}" {% endif %} {% if context and
                         context.estimatedSelectedCharacterCount is not none
                         %}data-president-context-character-count="{{ context.estimatedSelectedCharacterCount }}" {%
                         endif %}>
                         {{ selected_context }}
                     </div>
+                    <script type="application/json"
+                        data-president-context-candidates>{{ context.candidates|default([], true)|tojson }}</script>
                 </div>
-                <script type="application/json"
-                    data-president-context-candidates>{{ context.candidates|default([], true)|tojson }}</script>
             </div>
         </aside>
     </div>

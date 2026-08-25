@@ -206,10 +206,12 @@
         <div><strong data-arrival-review-context-character-count>-</strong><span>Browser Selected Characters</span>
         </div>
         <div><strong data-arrival-review-context-attempts>-</strong><span>Attempt Count</span></div>
-        <div><strong data-arrival-review-context-width>-</strong><span>Message Client Width</span></div>
-        <div><strong data-arrival-review-context-scroll-width>-</strong><span>Message Scroll Width</span></div>
-        <div><strong data-arrival-review-context-height>-</strong><span>Message Client Height</span></div>
-        <div><strong data-arrival-review-context-scroll-height>-</strong><span>Message Scroll Height</span></div>
+        <div><strong data-arrival-review-context-font-size>-</strong><span>Context Font Size</span></div>
+        <div><strong data-arrival-review-context-width>-</strong><span>White House Flow Client Width</span></div>
+        <div><strong data-arrival-review-context-scroll-width>-</strong><span>White House Flow Scroll Width</span></div>
+        <div><strong data-arrival-review-context-height>-</strong><span>White House Flow Client Height</span></div>
+        <div><strong data-arrival-review-context-scroll-height>-</strong><span>White House Flow Scroll Height</span>
+        </div>
         <div><strong data-arrival-review-context-utilization>-</strong><span>Height Utilization</span></div>
         <div><strong data-arrival-review-context-result>-</strong><span>Fit Result</span></div>
     </div>
@@ -258,6 +260,7 @@
     const contextEstimatedCharacterCount = runner.querySelector('[data-arrival-review-context-estimated-character-count]');
     const contextSelectedId = runner.querySelector('[data-arrival-review-context-selected-id]');
     const contextAttempts = runner.querySelector('[data-arrival-review-context-attempts]');
+    const contextFontSize = runner.querySelector('[data-arrival-review-context-font-size]');
     const contextCharacterCount = runner.querySelector('[data-arrival-review-context-character-count]');
     const contextWidth = runner.querySelector('[data-arrival-review-context-width]');
     const contextScrollWidth = runner.querySelector('[data-arrival-review-context-scroll-width]');
@@ -269,7 +272,7 @@
     const urlInput = runner.querySelector('[data-arrival-review-url]');
     const progress = runner.querySelector('[data-arrival-review-progress]');
     const toggleButton = runner.querySelector('[data-arrival-review-action="toggle"]');
-    const contextFields = [contextPresident, contextCapacity, contextSafeCapacity, contextCount, contextEstimatedId, contextEstimatedCharacterCount, contextSelectedId, contextAttempts, contextCharacterCount, contextWidth, contextScrollWidth, contextHeight, contextScrollHeight, contextUtilization, contextResult];
+    const contextFields = [contextPresident, contextCapacity, contextSafeCapacity, contextCount, contextEstimatedId, contextEstimatedCharacterCount, contextSelectedId, contextAttempts, contextFontSize, contextCharacterCount, contextWidth, contextScrollWidth, contextHeight, contextScrollHeight, contextUtilization, contextResult];
     let index = 0, paused = false, finished = false, timer = null, loadToken = 0;
     const tests = cases.map(test => ({ ...test, url: `/dev/sections/arrival?date=${encodeURIComponent(test.date)}&name=${encodeURIComponent(test.name)}&city=${encodeURIComponent(test.city)}&country=${encodeURIComponent(test.country)}` }));
     function setStatus(text, state = '') { status.textContent = text; status.className = `arrival-review-status ${state}`; }
@@ -300,6 +303,7 @@
         contextSafeCapacity.textContent = message.dataset.presidentContextSafeEstimatedCapacity || 'none';
         contextSelectedId.textContent = message.dataset.presidentContextBrowserSelectedId || '-';
         contextAttempts.textContent = message.dataset.presidentContextAttemptCount || '-';
+        contextFontSize.textContent = frame.contentWindow ? frame.contentWindow.getComputedStyle(message).fontSize : '-';
         contextCharacterCount.textContent = message.dataset.presidentContextBrowserSelectedCharacterCount || '-';
         contextWidth.textContent = message.dataset.presidentContextClientWidth || '-';
         contextScrollWidth.textContent = message.dataset.presidentContextScrollWidth || '-';
