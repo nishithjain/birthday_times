@@ -283,10 +283,9 @@ def test_modular_decorative_art_uses_shared_era_class_and_president_is_a_photo()
 def test_famous_birthdays_fit_reserves_space_for_occupation_icons():
     app_source = Path("backend/web/static/js/app.js").read_text(encoding="utf-8")
 
-    assert "hasIconForSelection" in app_source
-    assert "iconReserve" in app_source
-    assert "result.scrollHeight + iconReserve" in app_source
-    assert "selectedPersonIndices" in app_source
+    assert "result.scrollHeight <= result.clientHeight" in app_source
+    assert "actualAvailableHeight >= requiredHeight" in app_source
+    assert "icons.hidden = true" in app_source
 
 
 def test_famous_birthdays_content_starts_40px_lower():
@@ -304,4 +303,38 @@ def test_world_famous_divider_moves_with_famous_birthdays_content():
 
     assert ".master-world-famous .master-divider" in css
     assert "margin-top: 40px" in css
+
+
+def test_famous_birthdays_extends_80px_into_following_master_row():
+    section_css = Path(
+        "backend/web/static/css/chronicles/sections/famous_birthdays.css"
+    ).read_text(encoding="utf-8")
+    master_css = Path(
+        "backend/web/static/css/chronicles/chronicle_master.css"
+    ).read_text(encoding="utf-8")
+
+    assert "height: 380px" in section_css
+    assert "overflow: visible" in master_css
+    assert "z-index: 2" in master_css
+
+
+def test_world_famous_divider_extends_50px_into_following_row():
+    css = Path("backend/web/static/css/chronicles/chronicle_master.css").read_text(
+        encoding="utf-8"
+    )
+
+    assert "height: 270px" in css
+
+
+def test_famous_birthdays_contains_its_overflow():
+    section_css = Path(
+        "backend/web/static/css/chronicles/sections/famous_birthdays.css"
+    ).read_text(encoding="utf-8")
+    master_css = Path(
+        "backend/web/static/css/chronicles/chronicle_master.css"
+    ).read_text(encoding="utf-8")
+
+    assert "overflow: hidden" in section_css
+    assert "z-index: 3" in section_css
+    assert ".master-world-famous .chronicle-famous-birthdays" in master_css
 

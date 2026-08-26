@@ -1,9 +1,11 @@
 .chronicle-famous-birthdays {
     width: 350px;
-    height: 300px;
+    height: 380px;
     box-sizing: border-box;
     margin: 0;
     overflow: hidden;
+    position: relative;
+    z-index: 3;
     background: transparent;
     color: var(--ink, #17120c);
     display: flex;

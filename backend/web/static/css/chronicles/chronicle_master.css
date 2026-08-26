@@ -81,6 +81,7 @@
 
 .master-world-famous .master-divider {
     margin-top: 40px;
+    height: 270px;
 }
 
 .master-top {
@@ -97,6 +98,9 @@
 
 .master-world-famous {
     grid-template-columns: 568px 2px 350px;
+    overflow: visible;
+    position: relative;
+    z-index: 2;
 }
 
 .master-around-movies {
@@ -133,7 +137,8 @@
 
 .master-world-famous .chronicle-famous-birthdays {
     width: 350px;
-    height: 300px;
+    height: 380px;
+    overflow: hidden;
 }
 
 .master-around-movies .chronicle-around-this-time {
@@ -181,7 +186,6 @@
 .master-masthead .chronicle-masthead,
 .master-arrival .chronicle-arrival,
 .master-world-famous .chronicle-world-news,
-.master-world-famous .chronicle-famous-birthdays,
 .master-around-movies .chronicle-around-this-time,
 .master-around-movies .chronicle-movies,
 .master-music-zodiac .chronicle-music,
