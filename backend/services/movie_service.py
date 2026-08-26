@@ -8,6 +8,8 @@ from backend.repositories.movie_repository import MovieRepository
 from backend.services.accuracy import YEAR
 from backend.services.illustration_service import illustration_service
 
+MAX_CANDIDATES = 6
+
 
 def short_description(value: Optional[str]) -> Optional[str]:
     text = " ".join((value or "").split())
@@ -17,13 +19,12 @@ def short_description(value: Optional[str]) -> Optional[str]:
 
 
 def credit_for(movie) -> Optional[str]:
-    if getattr(movie, "lead_actor", None) and getattr(movie, "director", None):
-        return f"Starring {movie.lead_actor} - Directed by {movie.director}"
+    credits = []
     if getattr(movie, "lead_actor", None):
-        return f"Starring {movie.lead_actor}"
+        credits.append(f"Starring {movie.lead_actor}")
     if getattr(movie, "director", None):
-        return f"Directed by {movie.director}"
-    return None
+        credits.append(f"Directed by {movie.director}")
+    return " • ".join(credits) or None
 
 
 class MovieService:
@@ -35,7 +36,7 @@ class MovieService:
 
     def get_movies_for_year(self, year: int, newspaper_style_id: Optional[str] = None) -> Dict[str, Any]:
         year = int(year)
-        movies = self.repository.get_by_year(year, limit=None)
+        movies = self.repository.get_by_year(year, limit=MAX_CANDIDATES)
         headline = f"MOVIES OF {year}"
         if not movies:
             return {"available": False, "year": year, "headline": headline, "featuredMovie": None, "secondaryMovies": [], "illustrationId": None, "illustration": None, "accuracyType": YEAR, "reason": "movie_data_unavailable"}
@@ -46,7 +47,6 @@ class MovieService:
                 "id": movie.id,
                 "title": movie.title,
                 "year": movie.release_date.year if movie.release_date else year,
-                "description": short_description(movie.overview),
                 "credit": credit_for(movie),
                 "genres": movie.genres,
                 "source": movie.source,

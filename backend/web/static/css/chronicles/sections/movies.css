@@ -1,3 +1,55 @@
 .chronicle-movies {
-    display: block;
+    width: 580px;
+    height: 260px;
+    box-sizing: border-box;
+    padding: 15px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    color: var(--ink, #17120c);
+    font-family: var(--body-font, var(--font-body));
+}
+
+.chronicle-movies .article-header {
+    flex: 0 0 auto;
+    padding-bottom: 7px;
+    border-bottom: 1px solid var(--rule-light, rgba(30, 20, 10, .25));
+}
+
+.chronicle-movies .article-headline {
+    margin: 0;
+    font-family: var(--font-headline, Georgia, serif);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.05;
+}
+
+.chronicle-movies .movies-content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.chronicle-movies .movie-secondary-list,
+.chronicle-movies .movie-list {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+    min-height: 0;
+    margin: 3px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.chronicle-movies .movie-secondary-list li,
+.chronicle-movies .movie-item {
+    flex: 0 0 auto;
+    font-size: 11px;
+    line-height: 1.25;
+    text-align: justify;
+    hyphens: auto;
 }

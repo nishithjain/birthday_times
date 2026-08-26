@@ -499,6 +499,32 @@ def development_famous_birthdays_review():
     )
 
 
+@app.route("/dev/sections/movies-review")
+def development_movies_review():
+    try:
+        interval = min(max(int(request.args.get("interval", 1000)), 500), 10000)
+    except ValueError:
+        interval = 1000
+    return render_template(
+        "chronicles/test_pages/movies_review_runner.html",
+        review_years=[1950, 1960, 1970, 1982, 1990, 2000, 2010, 2020, 2025],
+        interval=interval,
+    )
+
+
+@app.route("/dev/sections/music-review")
+def development_music_review():
+    try:
+        interval = min(max(int(request.args.get("interval", 1000)), 500), 10000)
+    except ValueError:
+        interval = 1000
+    return render_template(
+        "chronicles/test_pages/music_review_runner.html",
+        review_years=[1950, 1960, 1970, 1982, 1990, 2000, 2010, 2015, 2020, 2025],
+        interval=interval,
+    )
+
+
 @app.route("/dev/sections/<section_name>")
 def development_section(section_name):
     template_names = {

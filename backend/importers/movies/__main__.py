@@ -1,8 +1,10 @@
-"""CLI entry point for the local movie CSV importer."""
+"""CLI entry point for movie database status."""
 
-import runpy
-from pathlib import Path
+from backend.database import initialize_database
+from backend.repositories.movie_repository import MovieRepository
 
 
 if __name__ == "__main__":
-    runpy.run_path(str(Path(__file__).resolve().parents[1] / "movies.py"), run_name="__main__")
+    initialize_database()
+    total = sum(MovieRepository.count_for_year(year) for year in range(1950, 2027))
+    print("Movie rows:", total)

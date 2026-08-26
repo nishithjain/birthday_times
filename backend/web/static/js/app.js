@@ -42,6 +42,10 @@ document.addEventListener('DOMContentLoaded', function () {
     fitMoviesSection();
     fitMusicSection();
     fitWeatherCopy();
+    window.addEventListener('resize', function () {
+        const events = document.querySelector('[data-around-events]');
+        if (events) autoFitEvents(events);
+    });
 });
 
 function checkWeatherDimensions() {
@@ -71,59 +75,146 @@ async function fitMeasuredCandidates({ candidates, targetFill, minFill, maxFill,
 }
 
 async function fitMusicSection() {
-    const article = document.querySelector('.article-music');
-    const content = article && article.querySelector('[data-music-fit-content]');
-    const data = article && article.querySelector('[data-music-candidates]');
-    const body = content && content.querySelector('[data-music-body]');
-    if (!article || !content || !data || !body) return;
-    const candidates = JSON.parse(data.textContent);
+    const articles = [...document.querySelectorAll('.chronicle-music')];
+    if (!articles.length) return;
     if (document.fonts && document.fonts.ready) await document.fonts.ready;
-    const image = article.querySelector('img');
-    if (image && !image.complete) await new Promise(resolve => { image.addEventListener('load', resolve, { once: true }); image.addEventListener('error', resolve, { once: true }); });
-    await new Promise(requestAnimationFrame);
-    const bottom = article.getBoundingClientRect().bottom;
-    const availableHeight = Math.max(0, bottom - content.getBoundingClientRect().top - (parseFloat(getComputedStyle(article).paddingBottom) || 0));
-    const result = await fitMeasuredCandidates({
-        candidates,
-        targetFill: 0.91,
-        minFill: 0.84,
-        maxFill: 0.96,
-        maxAttempts: 3,
-        apply: candidate => { body.textContent = candidate.bodyText; },
-        measure: () => ({ contentHeight: content.scrollHeight, fillRatio: availableHeight ? content.scrollHeight / availableHeight : 1 }),
-    });
-    if (result.candidate) body.textContent = result.candidate.bodyText;
-    article.dataset.musicFit = JSON.stringify({ availableHeight, contentHeight: result.result.contentHeight, fillRatio: result.result.fillRatio, mentionLimit: result.candidate.mentionLimit, attempts: result.attempts, stoppedEarly: result.stoppedEarly });
-    content.classList.remove('music-fit-pending');
+    await Promise.all(articles.map(async article => {
+        const list = article.querySelector('.music-songs-list');
+        if (!list) return;
+
+        const image = article.querySelector('img');
+        if (image && !image.complete) {
+            await new Promise(resolve => {
+                image.addEventListener('load', resolve, { once: true });
+                image.addEventListener('error', resolve, { once: true });
+            });
+        }
+        await new Promise(requestAnimationFrame);
+
+        const styles = getComputedStyle(article);
+        const paddingTop = parseFloat(styles.paddingTop) || 0;
+        const paddingRight = parseFloat(styles.paddingRight) || 0;
+        const paddingBottom = parseFloat(styles.paddingBottom) || 0;
+        const tracks = [...article.querySelectorAll('[data-music-track]')];
+        const art = article.querySelector('.music-art');
+        const candidateCount = tracks.length;
+        const fontSize = parseFloat(getComputedStyle(list).fontSize);
+        const applyArtSize = () => {
+            if (!art) return;
+            const root = article.getBoundingClientRect();
+            const body = article.querySelector('.music-body').getBoundingClientRect();
+            const visibleTracks = tracks.filter(track => !track.hidden);
+            const secondTrack = visibleTracks[1];
+            const minimumTop = secondTrack ? secondTrack.getBoundingClientRect().bottom + 7 : body.top + 7;
+            const maximumHeight = Math.max(0, root.top + article.clientHeight - paddingBottom - minimumTop);
+            art.querySelector('img').style.maxHeight = `${maximumHeight}px`;
+        };
+        const measure = () => {
+            const root = article.getBoundingClientRect();
+            const usableRight = root.left + article.clientWidth - paddingRight;
+            const usableBottom = root.top + article.clientHeight - paddingBottom;
+            const visibleTracks = tracks.filter(track => !track.hidden);
+            const last = visibleTracks[visibleTracks.length - 1];
+            const lastRect = last?.getBoundingClientRect();
+            const artRect = art?.querySelector('img')?.getBoundingClientRect();
+            const trackOverlap = artRect && visibleTracks.some(track => {
+                const trackRect = track.getBoundingClientRect();
+                return trackRect.right > artRect.left && trackRect.left < artRect.right && trackRect.bottom > artRect.top && trackRect.top < artRect.bottom;
+            });
+            const tracksFit = !lastRect || lastRect.bottom <= usableBottom + 0.5;
+            const artFit = !artRect || (artRect.top >= root.top + paddingTop + 6 && artRect.right <= usableRight + 0.5 && artRect.bottom <= usableBottom + 0.5 && !trackOverlap);
+            return {
+                visibleTracks,
+                contentHeight: Math.max(0, (lastRect?.bottom || root.top + paddingTop) - (root.top + paddingTop)),
+                availableHeight: Math.max(0, article.clientHeight - paddingTop - paddingBottom),
+                tracksFit,
+                artFit,
+                trackOverlap: Boolean(trackOverlap),
+                overflow: article.scrollWidth > article.clientWidth || article.scrollHeight > article.clientHeight,
+                lastTrackBottom: lastRect ? lastRect.bottom - root.top : null,
+                illustrationRight: artRect ? artRect.right - root.left : null,
+                illustrationBottom: artRect ? artRect.bottom - root.top : null,
+            };
+        };
+        let selected = measure();
+        for (let count = Math.min(candidateCount, 6); count >= 1; count -= 1) {
+            tracks.forEach((track, index) => { track.hidden = index >= count; });
+            article.classList.remove('music-track-count-1', 'music-track-count-2', 'music-track-count-3', 'music-track-count-4', 'music-track-count-5', 'music-track-count-6');
+            article.classList.add(`music-track-count-${count}`);
+            applyArtSize();
+            void article.offsetHeight;
+            selected = measure();
+            if (selected.tracksFit && selected.artFit && !selected.overflow) break;
+        }
+        tracks.forEach((track, index) => { track.hidden = index >= selected.visibleTracks.length; });
+        article.classList.remove('music-track-count-1', 'music-track-count-2', 'music-track-count-3', 'music-track-count-4', 'music-track-count-5', 'music-track-count-6');
+        article.classList.add(`music-track-count-${selected.visibleTracks.length}`);
+        applyArtSize();
+        void article.offsetHeight;
+        selected = measure();
+        article.dataset.musicFit = JSON.stringify({
+            candidateCount,
+            displayedCount: selected.visibleTracks.length,
+            availableHeight: selected.availableHeight,
+            contentHeight: selected.contentHeight,
+            fontSize,
+            rootClientWidth: article.clientWidth,
+            rootScrollWidth: article.scrollWidth,
+            rootClientHeight: article.clientHeight,
+            rootScrollHeight: article.scrollHeight,
+            lastTrackBottom: selected.lastTrackBottom,
+            illustrationRight: selected.illustrationRight,
+            illustrationBottom: selected.illustrationBottom,
+            overlap: selected.trackOverlap,
+            overflow: selected.overflow,
+            fit: selected.tracksFit && selected.artFit && !selected.overflow,
+        });
+    }));
 }
 
 async function fitMoviesSection() {
-    const TARGET_FILL = 0.93;
-    const MAX_FILL = 0.97;
-    const article = document.querySelector('.article-movies');
+    const article = document.querySelector('.chronicle-movies');
     const content = article && article.querySelector('[data-movies-fit-content]');
     const data = article && article.querySelector('[data-movie-candidates]');
-    const list = content && content.querySelector('.movie-secondary-list');
-    const items = list ? [...list.querySelectorAll('[data-movie-item]')] : [];
+    const list = article && article.querySelector('.movie-list');
+    const items = list ? [...list.querySelectorAll('.movie-item[data-movie-item]')] : [];
     if (!article || !content || !data || !list) return;
     if (document.fonts && document.fonts.ready) await document.fonts.ready;
-    const image = content.querySelector('img');
-    if (image && !image.complete) await new Promise(resolve => { image.addEventListener('load', resolve, { once: true }); image.addEventListener('error', resolve, { once: true }); });
     await new Promise(requestAnimationFrame);
     const candidates = JSON.parse(data.textContent);
-    const bottom = article.getBoundingClientRect().bottom;
-    const availableHeight = Math.max(0, bottom - content.getBoundingClientRect().top - (parseFloat(getComputedStyle(article).paddingBottom) || 0));
-    const measure = () => ({ contentHeight: content.scrollHeight, fillRatio: availableHeight ? content.scrollHeight / availableHeight : 1 });
-    let best = null;
-    for (let count = 0; count <= Math.min(items.length, candidates.length - 1); count += 1) {
-        items.forEach((item, index) => { item.style.display = index < count ? '' : 'none'; });
-        void content.offsetHeight;
-        const result = measure();
-        if (result.fillRatio <= MAX_FILL && (!best || Math.abs(result.fillRatio - TARGET_FILL) < Math.abs(best.fillRatio - TARGET_FILL))) best = { count, ...result };
+    const baseFontSize = 10;
+    const maxFontSize = 12.5;
+    const lineHeight = 1.25;
+    const maxHeight = list.clientHeight;
+    let fontSize = baseFontSize;
+    const applyFontSize = size => {
+        list.style.fontSize = `${size}px`;
+        items.forEach(item => {
+            item.style.fontSize = `${size}px`;
+            item.style.lineHeight = lineHeight;
+        });
+        void list.offsetHeight;
+    };
+
+    applyFontSize(fontSize);
+    while (fontSize < maxFontSize && list.scrollHeight <= maxHeight) {
+        fontSize += 0.5;
+        applyFontSize(fontSize);
     }
-    best = best || { count: 0, ...measure() };
-    items.forEach((item, index) => { item.style.display = index < best.count ? '' : 'none'; });
-    article.dataset.movieFit = JSON.stringify({ candidateCount: candidates.length, secondaryCount: best.count, availableHeight, contentHeight: best.contentHeight, fillRatio: best.fillRatio });
+    if (list.scrollHeight > maxHeight) {
+        fontSize = Math.max(baseFontSize, fontSize - 0.5);
+        applyFontSize(fontSize);
+    }
+
+    content.classList.remove('movies-fit-pending');
+    article.dataset.movieFit = JSON.stringify({
+        candidateCount: candidates.length,
+        displayedCount: items.length,
+        fontSize,
+        clientHeight: maxHeight,
+        scrollHeight: list.scrollHeight,
+        fit: list.scrollHeight <= maxHeight,
+    });
 }
 
 async function fitZodiacSection() {
@@ -273,14 +364,52 @@ async function fitAroundThisTime() {
         best = { count, ...render(count) };
     }
     render(best.count, false);
+    autoFitEvents(events);
     const final = measure();
     article.dataset.aroundFit = JSON.stringify({ candidateCount: candidates.length, displayedCount: best.count, availableHeight, ...final, heightUtilization: availableHeight ? final.naturalContentHeight / availableHeight : 0, fitResult: attempts.find(attempt => attempt.count === best.count)?.overflow ? 'overflow' : 'fit', attempts });
     content.classList.remove('around-fit-pending');
     if (!article.dataset.aroundResizeObserved && window.ResizeObserver) {
-        const observer = new ResizeObserver(() => { void fitAroundThisTime(); });
+        let fitting = false;
+        const observer = new ResizeObserver(() => {
+            if (fitting) return;
+            fitting = true;
+            void fitAroundThisTime().finally(() => { fitting = false; });
+        });
         observer.observe(article);
         article.dataset.aroundResizeObserved = 'true';
     }
+}
+
+function autoFitEvents(containerEl) {
+    const maxHeight = containerEl.clientHeight;
+    const items = [...containerEl.querySelectorAll('[data-around-item]')]
+        .filter(item => getComputedStyle(item).display !== 'none');
+    if (!maxHeight || !items.length) return;
+
+    const targetHeight = maxHeight * 0.88;
+    const baseFontSize = 11;
+    const maxFontSize = 15;
+    const getTextHeight = () => items.reduce((total, item) => total + item.getBoundingClientRect().height, 0);
+    const fits = () => containerEl.scrollHeight <= maxHeight
+        && containerEl.scrollWidth <= containerEl.clientWidth;
+
+    containerEl.style.setProperty('--around-events-height', '88%');
+    let fontSize = baseFontSize;
+    containerEl.style.setProperty('--around-event-font-size', `${fontSize}px`);
+    void containerEl.offsetHeight;
+
+    while (fontSize < maxFontSize) {
+        const nextFontSize = fontSize + 0.5;
+        containerEl.style.setProperty('--around-event-font-size', `${nextFontSize}px`);
+        void containerEl.offsetHeight;
+        if (!fits()) break;
+        fontSize = nextFontSize;
+        if (getTextHeight() >= targetHeight) break;
+    }
+
+    containerEl.style.setProperty('--around-event-font-size', `${fontSize}px`);
+    void containerEl.offsetHeight;
+    if (!fits()) containerEl.style.setProperty('--around-event-font-size', `${Math.max(baseFontSize, fontSize - 0.5)}px`);
 }
 
 async function fitWorldNews() {

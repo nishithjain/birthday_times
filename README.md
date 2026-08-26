@@ -96,6 +96,8 @@ the browser without changing production routes or saving review output.
 | News Around the World | <http://127.0.0.1:5000/dev/sections/world-news-review> | 10 dates across 1950-2026 |
 | Around This Time | <http://127.0.0.1:5000/dev/sections/around-this-time-review> | 11 dates across 1950-2026, including low-data and boundary cases |
 | Famous Birthdays | <http://127.0.0.1:5000/dev/sections/famous-birthdays-review> | Occupation preference and fallback selection |
+| At The Movies | <http://127.0.0.1:5000/dev/sections/movies-review> | 9 birth years across 1950-2025 |
+| Music | <http://127.0.0.1:5000/dev/sections/music-review> | 9 birth years across 1950-2025 |
 
 The standalone Masthead component is available at
 <http://127.0.0.1:5000/dev/sections/masthead>. It renders the publication

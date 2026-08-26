@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+{% block title %}At The Movies Visual Review{% endblock %}
+{% block extra_head %}
+<style>
+    .movies-review {
+        max-width: 920px;
+        margin: 20px auto;
+        padding: 18px;
+        color: #17120c;
+        background: #ead9ae;
+        font-family: Georgia, serif;
+    }
+
+    .movies-review h1 {
+        margin: 0 0 12px;
+        font-size: 24px;
+    }
+
+    .movies-review-status {
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .movies-review-status.warning {
+        color: #8f3d2e;
+    }
+
+    .movies-review-meta {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+
+    .movies-review-meta div {
+        border-top: 1px solid rgba(23, 18, 12, .35);
+        padding-top: 4px;
+    }
+
+    .movies-review-meta strong,
+    .movies-review-meta span {
+        display: block;
+    }
+
+    .movies-review-meta span {
+        color: #6b5d4f;
+        font-size: 12px;
+    }
+
+    .movies-review-url {
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        padding: 5px;
+        border: 1px solid rgba(23, 18, 12, .35);
+        background: transparent;
+        color: inherit;
+    }
+
+    .movies-review-frame {
+        width: 582px;
+        height: 262px;
+        overflow: visible;
+        margin: 0 auto 10px;
+        border: 1px solid rgba(23, 18, 12, .35);
+    }
+
+    .movies-review-frame iframe {
+        display: block;
+        width: 580px;
+        height: 260px;
+        border: 0;
+    }
+
+    .movies-review-progress {
+        height: 4px;
+        margin-bottom: 10px;
+        background: rgba(23, 18, 12, .15);
+    }
+
+    .movies-review-progress span {
+        display: block;
+        height: 100%;
+        background: #8f3d2e;
+    }
+
+    .movies-review-controls {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    .movies-review-controls button {
+        padding: 6px 10px;
+        border: 1px solid #17120c;
+        background: transparent;
+        color: inherit;
+        font: 700 12px Georgia, serif;
+        cursor: pointer;
+    }
+
+    @media (max-width: 640px) {
+        .movies-review {
+            margin: 0;
+        }
+
+        .movies-review-meta {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .movies-review-frame {
+            width: 100%;
+            overflow-x: auto;
+            margin-left: 0;
+        }
+    }
+</style>
+{% endblock %}
+{% block content %}
+<main class="movies-review" data-movies-review-runner>
+    <h1>At The Movies Visual Review</h1>
+    <div class="movies-review-status" data-review-status aria-live="polite">Preparing review...</div>
+    <div class="movies-review-meta">
+        <div><strong data-review-position>0 / 0</strong><span>Test</span></div>
+        <div><strong data-review-year>-</strong><span>Birth year</span></div>
+        <div><strong data-review-candidates>-</strong><span>Candidates</span></div>
+        <div><strong data-review-displayed>-</strong><span>Displayed</span></div>
+        <div><strong data-review-font-size>-</strong><span>Font size</span></div>
+        <div><strong data-review-dimensions>-</strong><span>Dimensions</span></div>
+        <div><strong data-review-overflow>-</strong><span>Overflow</span></div>
+    </div>
+    <input class="movies-review-url" data-review-url type="text" readonly aria-label="Current At The Movies URL">
+    <div class="movies-review-frame"><iframe data-review-frame title="Current At The Movies review page"></iframe></div>
+    <div class="movies-review-progress" aria-hidden="true"><span data-review-progress></span></div>
+    <div class="movies-review-controls">
+        <button type="button" data-review-action="previous">Previous</button>
+        <button type="button" data-review-action="toggle">Pause</button>
+        <button type="button" data-review-action="next">Next</button>
+        <button type="button" data-review-action="restart">Restart</button>
+    </div>
+</main>
+{% endblock %}
+{% block extra_js %}
+<script>
+    (() => {
+        const runner = document.querySelector('[data-movies-review-runner]');
+        const frame = runner.querySelector('[data-review-frame]');
+        const years = {{ review_years| tojson
+    }};
+    const intervalMs = {{ interval| tojson }} || 1000;
+    const field = name => runner.querySelector(`[data-review-${name}]`);
+    let index = 0, paused = false, timer = null, token = 0;
+    const tests = years.map(year => ({ year, url: `/dev/sections/movies?date=${year}-05-09` }));
+    const setStatus = (text, warning = false) => {
+        const item = runner.querySelector('[data-review-status]');
+        item.textContent = text;
+        item.className = `movies-review-status${warning ? ' warning' : ''}`;
+    };
+    const clearTimer = () => { if (timer) window.clearTimeout(timer); timer = null; };
+    const update = test => {
+        field('position').textContent = `${index + 1} / ${tests.length}`;
+        field('year').textContent = test?.year || '-';
+        field('url').value = test?.url || '';
+        field('progress').style.width = tests.length ? `${((index + 1) / tests.length) * 100}%` : '0%';
+    };
+    const inspect = () => {
+        const doc = frame.contentDocument;
+        const root = doc?.querySelector('.chronicle-movies');
+        const list = doc?.querySelector('.chronicle-movies .movie-list');
+        const fit = root?.dataset.movieFit ? JSON.parse(root.dataset.movieFit) : null;
+        if (!root || !list || !fit) return false;
+        const rect = root.getBoundingClientRect();
+        field('candidates').textContent = fit.candidateCount ?? '-';
+        field('displayed').textContent = fit.displayedCount ?? '-';
+        field('font-size').textContent = fit.fontSize ? `${fit.fontSize}px` : '-';
+        field('dimensions').textContent = `${Math.round(rect.width)} x ${Math.round(rect.height)}`;
+        field('overflow').textContent = fit.fit === false ? 'Yes' : 'No';
+        return true;
+    };
+    const load = () => {
+        clearTimer();
+        if (!tests.length) { setStatus('NO MOVIE REVIEW CASES FOUND', true); return; }
+        const test = tests[index];
+        update(test);
+        setStatus(`Loading ${index + 1} / ${tests.length}`);
+        const current = ++token;
+        let elapsed = 0;
+        const poll = () => {
+            if (current !== token) return;
+            if (inspect()) {
+                setStatus(paused ? 'Paused' : `Viewing ${index + 1} / ${tests.length}`);
+                if (!paused && index < tests.length - 1) timer = window.setTimeout(() => { index += 1; load(); }, intervalMs);
+                else if (!paused) setStatus('Review complete');
+                return;
+            }
+            if (elapsed >= 5000) { setStatus(`Load warning: ${test.year}`, true); return; }
+            elapsed += 100;
+            window.setTimeout(poll, 100);
+        };
+        frame.onload = poll;
+        frame.src = test.url;
+    };
+    const pause = () => { paused = true; clearTimer(); runner.querySelector('[data-review-action="toggle"]').textContent = 'Resume'; setStatus('Paused'); };
+    const resume = () => { paused = false; runner.querySelector('[data-review-action="toggle"]').textContent = 'Pause'; load(); };
+    const move = delta => { pause(); index = Math.max(0, Math.min(tests.length - 1, index + delta)); load(); pause(); };
+    const restart = () => { index = 0; paused = false; runner.querySelector('[data-review-action="toggle"]').textContent = 'Pause'; load(); };
+    runner.addEventListener('click', event => {
+        const action = event.target.closest('[data-review-action]')?.dataset.reviewAction;
+        if (action === 'toggle') paused ? resume() : pause();
+        if (action === 'previous') move(-1);
+        if (action === 'next') move(1);
+        if (action === 'restart') restart();
+    });
+    load();
+    }) ();
+</script>
+{% endblock %}

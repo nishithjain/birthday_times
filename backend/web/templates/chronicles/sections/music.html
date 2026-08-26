@@ -1,15 +1,48 @@
-<article class="chronicle-section chronicle-music article-music" data-section="music">
-    <div class="article-header">{% if chronicle.music and chronicle.music.available %}<h3 class="article-headline">{{
-            chronicle.music.headline }}</h3>
-        <p class="article-kicker">{{ chronicle.music.subheadline }}</p>{% else %}<h3 class="article-headline">Music,
-            Music, Music</h3>{% endif %}
+<article
+    class="chronicle-section chronicle-music article-music{% if chronicle.music and chronicle.music.illustration and chronicle.music.illustration.displayPath %} has-music-art{% endif %}"
+    data-section="music">
+    <header class="music-header">
+        <h2>Music</h2>
+        <p>The Sounds Of {{ chronicle.music.year if chronicle.music else chronicle.person.birth_date|year }}</p>
+    </header>
+    <div
+        class="music-body music-content{% if chronicle.music and chronicle.music.illustration and chronicle.music.illustration.displayPath %} has-music-art{% endif %}">
+        <div class="music-songs-list" data-music-fit-content>
+            <div class="music-wide-tracks">
+                {% if chronicle.music and chronicle.music.available and chronicle.music.tracks %}
+                {% for track in chronicle.music.tracks %}
+                {% if loop.index <= 2 %} <div class="music-song" data-music-track>
+                    <span class="music-rank">{{ track.rank }}.</span>
+                    <span class="music-track-copy"><strong>{{ track.title }}</strong><span class="music-dash"> —
+                        </span>{{
+                        track.artist }}</span>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="music-lower-tracks">
+            {% if chronicle.music and chronicle.music.available and chronicle.music.tracks %}
+            {% for track in chronicle.music.tracks %}
+            {% if loop.index > 2 %}
+            <div class="music-song" data-music-track>
+                <span class="music-rank">{{ track.rank }}.</span>
+                <span class="music-track-copy"><strong>{{ track.title }}</strong><span class="music-dash"> — </span>{{
+                    track.artist }}</span>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% else %}
+            <div class="music-song placeholder-text">Music history from {{ chronicle.person.birth_date|year }} is not
+                available.</div>
+            {% endif %}
+        </div>
     </div>
-    <div class="image-slot image-slot--square image-slot--illustration image-slot--music-icon">{% if chronicle.music and
-        chronicle.music.illustration and chronicle.music.illustration.displayPath %}<img
-            src="{{ url_for('static', filename=chronicle.music.illustration.displayPath) }}" alt="">{% else %}<div
-            class="image-placeholder">JUKEBOX / MUSIC</div>{% endif %}</div>{% if chronicle.music and
-    chronicle.music.available %}<div class="music-content" data-music-fit-content>
-        <p class="article-body music-body">{{ chronicle.music.bodyText }}</p>
-    </div>{% else %}<p class="article-body placeholder-text">Music history from {{ chronicle.person.birth_date|year }}
-        will appear here as the archive grows.</p>{% endif %}
+    {% if chronicle.music and chronicle.music.illustration and chronicle.music.illustration.displayPath %}
+    <div class="music-art music-art--{{ chronicle.music.illustration.id }}"
+        data-illustration-id="{{ chronicle.music.illustration.id }}">
+        <img src="{{ url_for('static', filename=chronicle.music.illustration.originalPath) }}" alt="">
+    </div>
+    {% endif %}
+    </div>
 </article>

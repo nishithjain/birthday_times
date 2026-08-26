@@ -1,25 +1,20 @@
 <article class="chronicle-section chronicle-movies article-movies" data-section="movies">
     <div class="article-header">
-        <p class="article-kicker">AT THE MOVIES</p>
-        <h3 class="article-headline">{{ chronicle.movies.headline }}</h3>
-    </div>{% if chronicle.movies.available %}<div class="movies-content" data-movies-fit-content>
-        <div class="movie-feature">
-            <div class="movie-illustration">{% if chronicle.movies.illustration and
-                chronicle.movies.illustration.displayPath %}<img
-                    src="{{ url_for('static', filename=chronicle.movies.illustration.displayPath) }}" alt="">{% endif %}
-            </div>
-            <div class="movie-feature-copy"><span class="movie-feature-label">FEATURED FILM</span><strong
-                    class="movie-feature-title">{{ chronicle.movies.featuredMovie.title }}</strong>{% if
-                chronicle.movies.featuredMovie.credit %}<span class="movie-feature-credit">{{
-                    chronicle.movies.featuredMovie.credit }}</span>{% endif %}{% if
-                chronicle.movies.featuredMovie.description %}<span class="movie-feature-description">{{
-                    chronicle.movies.featuredMovie.description }}</span>{% endif %}</div>
-        </div>
-        <div class="movie-divider"></div><span class="movie-secondary-heading">ALSO AT THE MOVIES</span>
-        <ul class="movie-secondary-list">{% for movie in chronicle.movies.secondaryMovies %}<li data-movie-item><span
-                    class="movie-bullet">&bull;</span><span>{{ movie.title }}{% if movie.credit %} - {{ movie.credit
-                    }}{% endif %}</span></li>{% endfor %}</ul>
+        <h2 class="article-headline">At The Movies</h2>
     </div>
-    <script type="application/json" data-movie-candidates>{{ chronicle.movies.candidates|tojson }}</script>{% else %}<p
-        class="article-body placeholder-text">Historical movie data not available for this year.</p>{% endif %}
+    {% if chronicle.movies.available %}
+    <div class="movies-content movies-fit-pending" data-movies-fit-content>
+        <div class="movie-list movie-secondary-list">
+            {% for movie in chronicle.movies.candidates %}
+            <div class="movie-item" data-movie-item>
+                <strong>{{ movie.title }}</strong> ({{ movie.year }}){% if movie.credit %} &mdash; {{ movie.credit }}{%
+                endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script type="application/json" data-movie-candidates>{{ chronicle.movies.candidates|tojson }}</script>
+    {% else %}
+    <p class="article-body placeholder-text">Historical movie data not available for this year.</p>
+    {% endif %}
 </article>

@@ -1,3 +1,167 @@
+.chronicle-music,
+.chronicle-music * {
+    box-sizing: border-box;
+}
+
 .chronicle-music {
+    width: 338px;
+    height: 220px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 12px 12px 10px;
+    overflow: hidden;
+    color: var(--ink, #17120c);
+    font-family: var(--body-font, Georgia, serif);
+}
+
+.music-header {
+    flex: 0 0 auto;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule-light, rgba(30, 20, 10, .25));
+}
+
+.music-header h2 {
+    margin: 0;
+    font-family: var(--headline-font, Georgia, serif);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.music-header p {
+    margin: 3px 0 0;
+    font-size: 10px;
+    font-style: italic;
+    line-height: 1.15;
+}
+
+.music-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 150px;
+    grid-template-rows: auto minmax(0, 1fr);
+    column-gap: 8px;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.music-content:not(.has-music-art) {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.music-songs-list {
+    display: contents;
+}
+
+.music-wide-tracks {
+    grid-column: 1 / -1;
+    min-width: 0;
+}
+
+.music-lower-tracks {
+    grid-column: 1;
+    min-width: 0;
+}
+
+.music-content:not(.has-music-art) .music-lower-tracks {
+    grid-column: 1 / -1;
+}
+
+.music-art {
+    grid-column: 2;
+    grid-row: 2;
+    width: 150px;
+    height: 100%;
+    min-height: 0;
+    align-self: end;
+    justify-self: end;
+    margin: 0 0 2px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.music-art img {
     display: block;
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.music-art--boombox img {
+    width: 148px;
+    height: auto;
+}
+
+.music-art--cassette img {
+    width: 130px;
+    height: auto;
+}
+
+.music-art--gramophone img {
+    width: 108px;
+    max-height: 138px;
+    height: auto;
+}
+
+.music-art--jukebox img {
+    width: 86px;
+    max-height: 142px;
+    height: auto;
+}
+
+.music-art--microphone img {
+    width: 74px;
+    max-height: 148px;
+    height: auto;
+}
+
+.music-songs-list {
+    font-size: 13px;
+    line-height: 1.25;
+}
+
+.music-song {
+    display: block;
+    min-width: 0;
+    margin: 0 0 2px;
+    overflow-wrap: break-word;
+    text-align: left;
+}
+
+.music-song[hidden] {
+    display: none;
+}
+
+.music-rank {
+    display: inline-block;
+    width: 19px;
+    font-weight: 700;
+}
+
+.music-track-copy {
+    min-width: 0;
+}
+
+.music-track-copy strong {
+    font-weight: 700;
+}
+
+.music-track-copy strong+.music-dash {
+    white-space: nowrap;
+}
+
+.placeholder-text {
+    max-width: 250px;
+}
+
+.music-track-count-4 .music-song {
+    margin-bottom: 5px;
+}
+
+.music-track-count-5 .music-song {
+    margin-bottom: 2px;
 }

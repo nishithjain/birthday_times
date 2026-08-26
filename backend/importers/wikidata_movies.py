@@ -1,7 +1,6 @@
-"""Prepare a reviewable movie CSV from Wikidata; never writes SQLite."""
+"""Import normalized movie metadata from Wikidata into SQLite."""
 
 import argparse
-import csv
 import json
 import logging
 import time
@@ -13,12 +12,13 @@ from typing import Any, Dict, Iterable, List, Optional
 import requests
 
 from backend.config import config
+from backend.database import initialize_database
+from backend.models.movie import Movie
+from backend.repositories.movie_repository import MovieRepository
 
 logger = logging.getLogger(__name__)
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_OUTPUT = PROJECT_ROOT / "backend" / "data" / "import" / "movies.csv"
 DEFAULT_CACHE = PROJECT_ROOT / "backend" / "data" / "cache" / "wikidata_movies"
-CSV_FIELDS = ["year", "release_month", "release_date", "rank", "title", "director", "lead_actor", "description", "genre", "country", "source", "source_id", "source_url"]
 
 
 def build_query(year: int) -> str:
@@ -119,30 +119,38 @@ def fetch_year(session: requests.Session, year: int, cache_dir: Path, retries: i
     return {"results": {"bindings": []}}
 
 
-def write_csv(rows: Iterable[Dict[str, Any]], output: Path, years: Iterable[int], dry_run: bool = False) -> None:
-    existing = {}
-    if output.exists():
-        with output.open("r", encoding="utf-8-sig", newline="") as handle:
-            existing = {(row.get("year"), row.get("source_id")): row for row in csv.DictReader(handle)}
+def import_movies(rows: Iterable[Dict[str, Any]], dry_run: bool = False) -> Dict[str, int]:
+    """Upsert normalized Wikidata rows into the movies table."""
+    inserted = updated = 0
     for row in rows:
-        existing[(str(row["year"]), row["source_id"])] = {field: row.get(field, "") for field in CSV_FIELDS}
-    ordered = sorted((row for (row_year, _), row in existing.items() if not years or int(row_year) not in set(years) or int(row_year) in set(years)), key=lambda row: (int(row["year"]), int(row["release_month"]), int(row["rank"]), row["title"]))
-    if dry_run:
-        return
-    output.parent.mkdir(parents=True, exist_ok=True)
-    with output.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=CSV_FIELDS)
-        writer.writeheader()
-        writer.writerows(ordered)
+        movie = Movie(
+            title=row["title"],
+            release_date=date.fromisoformat(row["release_date"]),
+            country=row.get("country"),
+            genres=row.get("genre"),
+            overview=row.get("description"),
+            imdb_id=row.get("imdb_id"),
+            source_id=row.get("source_id"),
+            director=row.get("director"),
+            lead_actor=row.get("lead_actor"),
+            source=row.get("source") or "wikidata",
+            source_url=row.get("source_url"),
+        )
+        if dry_run:
+            inserted += 1
+            continue
+        result = MovieRepository.upsert(movie)
+        inserted += result == "inserted"
+        updated += result == "updated"
+    return {"inserted": inserted, "updated": updated}
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Prepare reviewable movie CSV from Wikidata")
+    parser = argparse.ArgumentParser(description="Import movie metadata from Wikidata into SQLite")
     parser.add_argument("--year", type=int)
     parser.add_argument("--from-year", type=int)
     parser.add_argument("--to-year", type=int)
     parser.add_argument("--movies-per-month", type=int, default=2)
-    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE)
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--status", action="store_true")
@@ -153,19 +161,18 @@ def main() -> None:
     args = parser.parse_args()
     logging.basicConfig(level=logging.DEBUG if args.debug else logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     if args.status:
-        counts = Counter()
-        if args.output.exists():
-            with args.output.open("r", encoding="utf-8-sig", newline="") as handle:
-                counts.update(int(row["year"]) for row in csv.DictReader(handle))
-        print("WIKIDATA MOVIE DATASET STATUS")
-        print(f"CSV: {args.output}")
+        initialize_database()
+        counts = {year: MovieRepository.count_for_year(year) for year in range(1950, 2027)}
+        counts = {year: count for year, count in counts.items() if count}
+        print("WIKIDATA MOVIE DATABASE STATUS")
         print(f"Total movies: {sum(counts.values())}")
-        print("Coverage:", dict(sorted(counts.items())))
+        print("Coverage:", counts)
         return
     start = args.year or args.from_year
     end = args.year or args.to_year or start
     if start is None or end is None or start > end:
         parser.error("specify --year or --from-year/--to-year")
+    initialize_database()
     session = requests.Session()
     session.headers.update({"User-Agent": config.wikidata_user_agent, "Accept": "application/sparql-results+json"})
     rows = []
@@ -174,8 +181,9 @@ def main() -> None:
         selected = normalize_results(payload, year, args.movies_per_month)
         rows.extend(selected)
         print(f"{year}: selected {len(selected)} ({Counter(item['release_month'] for item in selected)})")
-    write_csv(rows, args.output, range(start, end + 1), args.dry_run)
-    print(f"Rows {'would be written' if args.dry_run else 'written'}: {len(rows)}")
+    result = import_movies(rows, args.dry_run)
+    action = "would be imported" if args.dry_run else "imported"
+    print(f"Rows {action}: {len(rows)} (inserted: {result['inserted']}, updated: {result['updated']})")
 
 
 if __name__ == "__main__":

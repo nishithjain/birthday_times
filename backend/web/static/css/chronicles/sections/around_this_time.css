@@ -48,9 +48,12 @@
 .around-this-time-events {
     display: flex;
     flex-direction: column;
-    flex: 1 1 auto;
+    flex: 0 0 var(--around-events-height, 88%);
+    height: var(--around-events-height, 88%);
+    box-sizing: border-box;
     min-height: 0;
-    gap: 7px;
+    max-height: 100%;
+    gap: clamp(4px, 1vh, 10px);
     justify-content: space-between;
 }
 
@@ -73,7 +76,7 @@
     overflow-wrap: anywhere;
     text-align: justify;
     hyphens: auto;
-    font-size: 11px;
+    font-size: var(--around-event-font-size, 11px);
     line-height: 1.2;
     font-weight: 400;
 }

@@ -1,4 +1,13 @@
 {% extends "base.html" %}{% block extra_head %}
+<style>
+    html,
+    body {
+        width: 338px;
+        height: 220px;
+        margin: 0;
+        overflow: hidden;
+    }
+</style>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/chronicles/chronicle_common.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/chronicles/sections/music.css') }}">{% endblock %}{%
 block content %}<div class="section-test-page">
