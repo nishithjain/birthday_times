@@ -23,6 +23,7 @@ from backend.services.arrival_message_service import arrival_message_service
 from backend.services.what_things_cost_service import what_things_cost_service
 from backend.services.movie_service import movie_service
 from backend.services.around_this_time_service import around_this_time_service
+from backend.services.bottom_section_service import bottom_section_service
 
 logger = logging.getLogger(__name__)
 
@@ -115,6 +116,7 @@ class ChronicleService:
         )
         music = music_data if music_data.get("available") else []
         what_things_cost = what_things_cost_service.get_costs_for_year(birth_date.year)
+        bottom_data = bottom_section_service.get_bottom_data(birth_date.year)
 
         weather = weather_service.get_weather(
             birth_date=birth_date,
@@ -209,6 +211,7 @@ class ChronicleService:
             "sports": sports,
             "prices": [],
             "what_things_cost": what_things_cost,
+            "bottom": bottom_data,
             "has_historical_events": len(events) > 0,
             "has_world_news": bool(world_news and world_news.get("headlines")),
             "has_famous_birthdays": bool(famous_birthdays and famous_birthdays.get("people")),

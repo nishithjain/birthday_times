@@ -98,6 +98,8 @@ the browser without changing production routes or saving review output.
 | Famous Birthdays | <http://127.0.0.1:5000/dev/sections/famous-birthdays-review> | Occupation preference and fallback selection |
 | At The Movies | <http://127.0.0.1:5000/dev/sections/movies-review> | 9 birth years across 1950-2025 |
 | Music | <http://127.0.0.1:5000/dev/sections/music-review> | 9 birth years across 1950-2025 |
+| Chinese Zodiac | <http://127.0.0.1:5000/dev/sections/zodiac-review> | Boundary, animal, leap-year, and long-name cases |
+| Bottom Section | <http://127.0.0.1:5000/dev/sections/bottom-review> | Database-backed Costs and 8 Fun Facts across 1950-2026 |
 
 The standalone Masthead component is available at
 <http://127.0.0.1:5000/dev/sections/masthead>. It renders the publication

@@ -1,0 +1,140 @@
+.newspaper-bottom,
+.newspaper-bottom * {
+    box-sizing: border-box;
+}
+
+.newspaper-bottom {
+    width: 920px;
+    height: 176px;
+    display: flex;
+    flex-direction: column;
+    padding: 8px 12px;
+    overflow: hidden;
+    color: var(--ink, #17120c);
+    font-family: var(--body-font, Georgia, "Times New Roman", serif);
+    border: 1px solid var(--rule-light, rgba(30, 20, 10, .25));
+}
+
+.bottom-column {
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    overflow: visible;
+}
+
+.bottom-costs {
+    flex: 0 0 70px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--rule-light, rgba(30, 20, 10, .25));
+}
+
+.bottom-heading {
+    margin: 0;
+    color: var(--ink-headline, #100d09);
+    font-family: var(--font-headline, Georgia, serif);
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.05;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.bottom-cost-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    margin-top: 5px;
+}
+
+.bottom-cost-item {
+    min-width: 0;
+    text-align: center;
+}
+
+.bottom-cost-label,
+.bottom-cost-value,
+.bottom-cost-unit {
+    display: block;
+    overflow-wrap: break-word;
+}
+
+.bottom-cost-label {
+    min-height: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.bottom-cost-value {
+    margin-top: 2px;
+    font-size: 14px;
+    line-height: 1.1;
+    white-space: nowrap;
+    transform: translateY(-10px);
+}
+
+.bottom-cost-unit {
+    margin-top: 1px;
+    font-size: 9px;
+    line-height: 1.15;
+    transform: translateY(-6px);
+}
+
+.bottom-facts {
+    flex: 1 1 auto;
+    padding-top: 2px;
+}
+
+.bottom-facts-layout {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr) 150px;
+    grid-template-rows: minmax(0, 1fr);
+    height: 67px;
+    align-items: center;
+    gap: 10px;
+    min-height: 0;
+    margin-top: 3px;
+}
+
+.bottom-facts-copy {
+    min-width: 0;
+}
+
+.bottom-floral {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    height: 100%;
+    min-height: 0;
+}
+
+.bottom-floral img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 140px;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.bottom-facts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    margin-top: 1px;
+}
+
+.bottom-fact {
+    min-width: 0;
+    margin: 0;
+    font-size: 10px;
+    line-height: 1.05;
+    text-align: center;
+    overflow-wrap: break-word;
+}
+
+.newspaper-bottom .placeholder-text {
+    color: var(--ink-light, #6b5d4f);
+    font-style: italic;
+}

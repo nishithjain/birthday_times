@@ -2,9 +2,9 @@
 """Person repository for famous people."""
 
 from datetime import date
-from typing import List, Optional, Dict, Any
+from typing import List, Optional
 
-from backend.database import fetch_all, fetch_one, execute, database_connection
+from backend.database import fetch_all, fetch_one, database_connection
 from backend.models.person import FamousPerson
 
 
@@ -61,23 +61,20 @@ class PersonRepository:
         sql = """
             INSERT INTO famous_people
             (
-                name, birth_date, death_date, occupation, country,
-                description, wikidata_id, wikipedia_url, image_url,
+                name, birth_date, occupation, wikidata_id, wikipedia_url,
                 sitelinks, notability_score, source, source_url
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT(wikidata_id)
             DO UPDATE SET
                 name = excluded.name,
                 birth_date = excluded.birth_date,
-                death_date = excluded.death_date,
                 occupation = excluded.occupation,
-                country = excluded.country,
-                description = excluded.description,
                 wikipedia_url = excluded.wikipedia_url,
-                image_url = excluded.image_url,
                 sitelinks = excluded.sitelinks,
-                notability_score = excluded.notability_score
+                notability_score = excluded.notability_score,
+                source = excluded.source,
+                source_url = excluded.source_url
         """
         
         with database_connection() as conn:
@@ -85,13 +82,9 @@ class PersonRepository:
                 conn.execute(sql, (
                     person.name,
                     person.birth_date.isoformat(),
-                    person.death_date.isoformat() if person.death_date else None,
                     person.occupation,
-                    person.country,
-                    person.description,
                     person.wikidata_id,
                     person.wikipedia_url,
-                    person.image_url,
                     person.sitelinks,
                     person.notability_score,
                     person.source,

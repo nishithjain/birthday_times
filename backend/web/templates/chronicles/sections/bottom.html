@@ -1,0 +1,36 @@
+<section class="newspaper-bottom" data-section="bottom">
+    <section class="bottom-column bottom-costs">
+        <h3 class="bottom-heading">What Things Cost In {{ chronicle.bottom.year }}</h3>
+        <div class="bottom-cost-grid">
+            {% for item in chronicle.bottom.costs %}
+            <div class="bottom-cost-item{% if item.indicator == 'Gold' %} bottom-cost-item--gold{% endif %}">
+                <span class="bottom-cost-label">{{ item.indicator }}</span>
+                <strong class="bottom-cost-value">{{ item.value }}</strong>
+                <span class="bottom-cost-unit">{{ item.unit }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    <section class="bottom-column bottom-facts">
+        <h3 class="bottom-heading">Fun Facts</h3>
+        <div class="bottom-facts-layout">
+            <div class="bottom-floral bottom-floral--left">
+                <img src="{{ url_for('static', filename=chronicle.bottom.floralArtwork) }}" alt="">
+            </div>
+            <div class="bottom-facts-copy">
+                {% if chronicle.bottom.facts %}
+                <div class="bottom-facts-list">
+                    {% for fact in chronicle.bottom.facts %}
+                    <p class="bottom-fact">* {{ fact }} *</p>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="bottom-fact placeholder-text">Fun facts are not available for this date.</p>
+                {% endif %}
+            </div>
+            <div class="bottom-floral bottom-floral--right">
+                <img src="{{ url_for('static', filename=chronicle.bottom.floralArtwork) }}" alt="">
+            </div>
+        </div>
+    </section>
+</section>

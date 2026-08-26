@@ -5,44 +5,26 @@
         <h2>Music</h2>
         <p>The Sounds Of {{ chronicle.music.year if chronicle.music else chronicle.person.birth_date|year }}</p>
     </header>
-    <div
-        class="music-body music-content{% if chronicle.music and chronicle.music.illustration and chronicle.music.illustration.displayPath %} has-music-art{% endif %}">
-        <div class="music-songs-list" data-music-fit-content>
-            <div class="music-wide-tracks">
-                {% if chronicle.music and chronicle.music.available and chronicle.music.tracks %}
-                {% for track in chronicle.music.tracks %}
-                {% if loop.index <= 2 %} <div class="music-song" data-music-track>
-                    <span class="music-rank">{{ track.rank }}.</span>
-                    <span class="music-track-copy"><strong>{{ track.title }}</strong><span class="music-dash"> —
-                        </span>{{
-                        track.artist }}</span>
-            </div>
-            {% endif %}
-            {% endfor %}
-            {% endif %}
-        </div>
-        <div class="music-lower-tracks">
+    <div class="music-body music-content">
+        <ol class="music-songs-list" data-music-fit-content>
             {% if chronicle.music and chronicle.music.available and chronicle.music.tracks %}
             {% for track in chronicle.music.tracks %}
-            {% if loop.index > 2 %}
-            <div class="music-song" data-music-track>
+            <li class="music-song" data-music-track>
                 <span class="music-rank">{{ track.rank }}.</span>
                 <span class="music-track-copy"><strong>{{ track.title }}</strong><span class="music-dash"> — </span>{{
                     track.artist }}</span>
-            </div>
-            {% endif %}
+            </li>
             {% endfor %}
             {% else %}
-            <div class="music-song placeholder-text">Music history from {{ chronicle.person.birth_date|year }} is not
-                available.</div>
+            <li class="music-song placeholder-text">Music history from {{ chronicle.person.birth_date|year }} is not
+                available.</li>
             {% endif %}
+        </ol>
+        {% if chronicle.music and chronicle.music.illustration and chronicle.music.illustration.displayPath %}
+        <div class="music-art music-art--{{ chronicle.music.illustration.id }}"
+            data-illustration-id="{{ chronicle.music.illustration.id }}">
+            <img src="{{ url_for('static', filename=chronicle.music.illustration.displayPath) }}" alt="">
         </div>
-    </div>
-    {% if chronicle.music and chronicle.music.illustration and chronicle.music.illustration.displayPath %}
-    <div class="music-art music-art--{{ chronicle.music.illustration.id }}"
-        data-illustration-id="{{ chronicle.music.illustration.id }}">
-        <img src="{{ url_for('static', filename=chronicle.music.illustration.originalPath) }}" alt="">
-    </div>
-    {% endif %}
+        {% endif %}
     </div>
 </article>

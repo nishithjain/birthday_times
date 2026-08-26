@@ -99,19 +99,9 @@ async function fitMusicSection() {
         const art = article.querySelector('.music-art');
         const candidateCount = tracks.length;
         const fontSize = parseFloat(getComputedStyle(list).fontSize);
-        const applyArtSize = () => {
-            if (!art) return;
-            const root = article.getBoundingClientRect();
-            const body = article.querySelector('.music-body').getBoundingClientRect();
-            const visibleTracks = tracks.filter(track => !track.hidden);
-            const secondTrack = visibleTracks[1];
-            const minimumTop = secondTrack ? secondTrack.getBoundingClientRect().bottom + 7 : body.top + 7;
-            const maximumHeight = Math.max(0, root.top + article.clientHeight - paddingBottom - minimumTop);
-            art.querySelector('img').style.maxHeight = `${maximumHeight}px`;
-        };
         const measure = () => {
             const root = article.getBoundingClientRect();
-            const usableRight = root.left + article.clientWidth - paddingRight;
+            const usableRight = root.left + article.clientWidth;
             const usableBottom = root.top + article.clientHeight - paddingBottom;
             const visibleTracks = tracks.filter(track => !track.hidden);
             const last = visibleTracks[visibleTracks.length - 1];
@@ -122,7 +112,7 @@ async function fitMusicSection() {
                 return trackRect.right > artRect.left && trackRect.left < artRect.right && trackRect.bottom > artRect.top && trackRect.top < artRect.bottom;
             });
             const tracksFit = !lastRect || lastRect.bottom <= usableBottom + 0.5;
-            const artFit = !artRect || (artRect.top >= root.top + paddingTop + 6 && artRect.right <= usableRight + 0.5 && artRect.bottom <= usableBottom + 0.5 && !trackOverlap);
+            const artFit = !artRect || (artRect.top >= root.top + paddingTop + 6 && artRect.right <= usableRight + 0.5 && artRect.bottom <= usableBottom + 0.5);
             return {
                 visibleTracks,
                 contentHeight: Math.max(0, (lastRect?.bottom || root.top + paddingTop) - (root.top + paddingTop)),
@@ -136,22 +126,9 @@ async function fitMusicSection() {
                 illustrationBottom: artRect ? artRect.bottom - root.top : null,
             };
         };
-        let selected = measure();
-        for (let count = Math.min(candidateCount, 6); count >= 1; count -= 1) {
-            tracks.forEach((track, index) => { track.hidden = index >= count; });
-            article.classList.remove('music-track-count-1', 'music-track-count-2', 'music-track-count-3', 'music-track-count-4', 'music-track-count-5', 'music-track-count-6');
-            article.classList.add(`music-track-count-${count}`);
-            applyArtSize();
-            void article.offsetHeight;
-            selected = measure();
-            if (selected.tracksFit && selected.artFit && !selected.overflow) break;
-        }
-        tracks.forEach((track, index) => { track.hidden = index >= selected.visibleTracks.length; });
-        article.classList.remove('music-track-count-1', 'music-track-count-2', 'music-track-count-3', 'music-track-count-4', 'music-track-count-5', 'music-track-count-6');
-        article.classList.add(`music-track-count-${selected.visibleTracks.length}`);
-        applyArtSize();
+        tracks.forEach(track => { track.hidden = false; });
         void article.offsetHeight;
-        selected = measure();
+        const selected = measure();
         article.dataset.musicFit = JSON.stringify({
             candidateCount,
             displayedCount: selected.visibleTracks.length,

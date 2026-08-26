@@ -28,20 +28,17 @@ class FamousPerson:
     @classmethod
     def from_db_row(cls, row: sqlite3.Row) -> "FamousPerson":
         """Create from database row."""
+        columns = set(row.keys())
         return cls(
             name=row["name"],
             birth_date=date.fromisoformat(row["birth_date"]),
-            death_date=date.fromisoformat(row["death_date"]) if row["death_date"] else None,
-            occupation=row["occupation"],
-            country=row["country"],
-            description=row["description"],
+            occupation=row["occupation"] if "occupation" in columns else None,
             wikidata_id=row["wikidata_id"],
-            wikipedia_url=row["wikipedia_url"],
-            image_url=row["image_url"],
-            sitelinks=row["sitelinks"] or 0,
-            notability_score=row["notability_score"] or 5,
-            source=row["source"],
-            source_url=row["source_url"],
+            wikipedia_url=row["wikipedia_url"] if "wikipedia_url" in columns else None,
+            sitelinks=row["sitelinks"] or 0 if "sitelinks" in columns else 0,
+            notability_score=row["notability_score"] or 5 if "notability_score" in columns else 5,
+            source=row["source"] if "source" in columns else "Wikidata",
+            source_url=row["source_url"] if "source_url" in columns else None,
         )
     
     def to_dict(self) -> dict:

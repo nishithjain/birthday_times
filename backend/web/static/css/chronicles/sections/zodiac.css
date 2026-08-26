@@ -1,3 +1,118 @@
 .chronicle-chinese-zodiac {
+    width: 580px;
+    height: 220px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 12px 8px;
+    overflow: hidden;
+    color: var(--ink, #17120c);
+    background: var(--paper-light, #e5cc94);
+    border: 1px solid var(--rule-light, rgba(30, 20, 10, .25));
+    border-radius: 6px;
+    font-family: var(--body-font, Georgia, "Times New Roman", serif);
+}
+
+.chronicle-chinese-zodiac,
+.chronicle-chinese-zodiac * {
+    box-sizing: border-box;
+}
+
+.zodiac-header {
+    flex: 0 0 auto;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--rule-light, rgba(30, 20, 10, .25));
+}
+
+.zodiac-title {
+    margin: 0;
+    color: var(--ink-headline, #100d09);
+    font-family: var(--font-headline, Georgia, "Times New Roman", serif);
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.05;
+    text-align: left;
+}
+
+.zodiac-subtitle {
+    margin: 3px 0 0;
+    color: var(--ink-muted, #3d3228);
+    font-family: var(--font-body, Georgia, "Times New Roman", serif);
+    font-size: 11px;
+    font-style: italic;
+    line-height: 1.1;
+    text-align: left;
+}
+
+.zodiac-content {
+    display: flex;
+    flex: 1 1 auto;
+    min-height: 0;
+    gap: 14px;
+    overflow: hidden;
+}
+
+.zodiac-copy {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    font-family: var(--font-body, Georgia, "Times New Roman", serif);
+}
+
+.zodiac-body {
+    margin: 0 0 3px;
+    font-family: var(--body-font, Georgia, "Times New Roman", serif);
+    font-size: 13px;
+    line-height: 1.22;
+    text-align: justify;
+    text-align-last: left;
+    hyphens: auto;
+    overflow-wrap: break-word;
+}
+
+.zodiac-body:last-child {
+    margin-bottom: 0;
+}
+
+.zodiac-metadata {
+    margin-top: auto;
+    align-self: stretch;
+    font-size: 10.5px;
+    line-height: 1.1;
+    text-align: left;
+    text-align: center;
+    text-align-last: center;
+}
+
+.zodiac-illustration-box {
+    flex: 0 0 155px;
+    width: 155px;
+    min-height: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 0;
+}
+
+.zodiac-illustration-box img {
     display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.placeholder-text {
+    color: var(--ink-light, #6b5d4f);
+    font-style: italic;
+    text-align: left;
 }

@@ -1,19 +1,32 @@
-<article class="chronicle-section chronicle-chinese-zodiac article-zodiac" data-section="chinese-zodiac">
-    <div class="article-header">
-        <h3 class="article-headline">{{ chronicle.chinese_zodiac.headline if chronicle.chinese_zodiac and
-            chronicle.chinese_zodiac.available else 'Chinese Zodiac' }}</h3>
-    </div>
+<article
+    class="chronicle-section chronicle-chinese-zodiac article-zodiac{% if chronicle.chinese_zodiac and chronicle.chinese_zodiac.illustration and chronicle.chinese_zodiac.illustration.displayPath %} has-zodiac-art{% endif %}"
+    data-section="chinese-zodiac">
+    <header class="zodiac-header">
+        <h2 class="zodiac-title">CHINESE ZODIAC</h2>
+        {% if chronicle.chinese_zodiac and chronicle.chinese_zodiac.available %}
+        <p class="zodiac-subtitle">Year Of The {{ chronicle.chinese_zodiac.animal }}</p>
+        {% endif %}
+    </header>
     <div class="zodiac-content">
-        <div class="zodiac-text zodiac-copy">{% if chronicle.chinese_zodiac and chronicle.chinese_zodiac.available %}<p
-                class="article-body">{{ chronicle.chinese_zodiac.introText }}</p>
-            <p class="article-body">{{ chronicle.chinese_zodiac.fortuneText }}</p>{% else %}<p
-                class="article-body placeholder-text">Chinese zodiac information is unavailable for this date.</p>{%
-            endif %}<p class="article-body">Western zodiac: {{ chronicle.calendar.western_zodiac }} &bull; Birthstone:
-                {{ chronicle.calendar.birthstone }} &bull; Generation: {{ chronicle.calendar.generation }}</p>
+        <div class="zodiac-text zodiac-copy">
+            {% if chronicle.chinese_zodiac and chronicle.chinese_zodiac.available %}
+            <p class="zodiac-body">{{ chronicle.chinese_zodiac.introText }}</p>
+            <p class="zodiac-body">{{ chronicle.chinese_zodiac.fortuneText }}</p>
+            {% for sentence in chronicle.chinese_zodiac.optionalSentences %}
+            <p class="zodiac-body zodiac-additional">{{ sentence }}</p>
+            {% endfor %}
+            {% else %}
+            <p class="zodiac-body placeholder-text">Chinese zodiac information is unavailable for this date.</p>
+            {% endif %}
+            <p class="zodiac-body zodiac-metadata">Western zodiac: {{ chronicle.calendar.western_zodiac }} &bull;
+                Birthstone: {{ chronicle.calendar.birthstone }}</p>
         </div>
-        <div class="zodiac-illustration-box">{% if chronicle.chinese_zodiac and chronicle.chinese_zodiac.illustration
-            and chronicle.chinese_zodiac.illustration.displayPath %}<img
-                src="{{ url_for('static', filename=chronicle.chinese_zodiac.illustration.displayPath) }}"
-                alt="{{ chronicle.chinese_zodiac.animal }} - Chinese zodiac illustration">{% endif %}</div>
+        {% if chronicle.chinese_zodiac and chronicle.chinese_zodiac.illustration and
+        chronicle.chinese_zodiac.illustration.displayPath %}
+        <div class="zodiac-illustration-box">
+            <img src="{{ url_for('static', filename=chronicle.chinese_zodiac.illustration.displayPath) }}"
+                alt="{{ chronicle.chinese_zodiac.animal }} - Chinese zodiac illustration">
+        </div>
+        {% endif %}
     </div>
 </article>

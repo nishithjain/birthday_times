@@ -525,6 +525,57 @@ def development_music_review():
     )
 
 
+@app.route("/dev/sections/zodiac-review")
+def development_zodiac_review():
+    try:
+        interval = min(max(int(request.args.get("interval", 1000)), 500), 10000)
+    except ValueError:
+        interval = 1000
+    review_cases = [
+        {"label": "Rat", "date": "1984-08-26", "name": "Rat Case"},
+        {"label": "Ox", "date": "1985-08-26", "name": "Ox Case"},
+        {"label": "Tiger", "date": "1986-08-26", "name": "Tiger Case"},
+        {"label": "Rabbit", "date": "1987-08-26", "name": "Rabbit Case"},
+        {"label": "Dragon", "date": "1988-08-26", "name": "Dragon Case"},
+        {"label": "Snake", "date": "1989-08-26", "name": "Snake Case"},
+        {"label": "Horse", "date": "1990-08-26", "name": "Horse Case"},
+        {"label": "Goat", "date": "1991-08-26", "name": "Goat Case"},
+        {"label": "Monkey", "date": "1992-08-26", "name": "Monkey Case"},
+        {"label": "Rooster", "date": "1993-08-26", "name": "Rooster Case"},
+        {"label": "Dog", "date": "1994-08-26", "name": "Dog Case"},
+        {"label": "Pig", "date": "1995-08-26", "name": "Pig Case"},
+        {"label": "Before Chinese New Year", "date": "1982-01-24", "name": "Boundary Case"},
+        {"label": "On Chinese New Year", "date": "1982-01-25", "name": "Boundary Case"},
+        {"label": "Leap-year birthday", "date": "2000-02-29", "name": "Leap Day Case"},
+        {"label": "Long person name", "date": "1982-08-26", "name": "Alexandria Maximilian Penelope Wellington"},
+    ]
+    for case in review_cases:
+        case["url"] = f"/dev/sections/zodiac?date={case['date']}&name={case['name'].replace(' ', '%20')}"
+    return render_template(
+        "chronicles/test_pages/zodiac_review_runner.html",
+        review_cases=review_cases,
+        interval=interval,
+    )
+
+
+@app.route("/dev/sections/bottom")
+def development_bottom():
+    return render_template("chronicles/test_pages/test_bottom.html", chronicle=_development_chronicle())
+
+
+@app.route("/dev/sections/bottom-review")
+def development_bottom_review():
+    try:
+        interval = min(max(int(request.args.get("interval", 1000)), 500), 10000)
+    except ValueError:
+        interval = 1000
+    return render_template(
+        "chronicles/test_pages/bottom_review_runner.html",
+        review_years=[1950, 1955, 1960, 1975, 1980, 1988, 1990, 2005, 2015, 2020, 2026],
+        interval=interval,
+    )
+
+
 @app.route("/dev/sections/<section_name>")
 def development_section(section_name):
     template_names = {

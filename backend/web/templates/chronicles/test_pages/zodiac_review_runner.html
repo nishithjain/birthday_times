@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+{% block title %}Chinese Zodiac Visual Review{% endblock %}
+{% block extra_head %}
+<style>
+    .zodiac-review {
+        max-width: 920px;
+        margin: 20px auto;
+        padding: 18px;
+        color: #17120c;
+        background: #d9e2d1;
+        font-family: Georgia, serif;
+    }
+
+    .zodiac-review h1 {
+        margin: 0 0 12px;
+        font-size: 24px;
+    }
+
+    .zodiac-review-status {
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .zodiac-review-status.warning {
+        color: #8f3d2e;
+    }
+
+    .zodiac-review-meta {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+
+    .zodiac-review-meta div {
+        border-top: 1px solid rgba(23, 18, 12, .35);
+        padding-top: 4px;
+    }
+
+    .zodiac-review-meta strong,
+    .zodiac-review-meta span {
+        display: block;
+    }
+
+    .zodiac-review-meta span {
+        color: #5d6958;
+        font-size: 12px;
+    }
+
+    .zodiac-review-url {
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        padding: 5px;
+        border: 1px solid rgba(23, 18, 12, .35);
+        background: transparent;
+        color: inherit;
+    }
+
+    .zodiac-review-frame {
+        width: 582px;
+        height: 222px;
+        overflow: visible;
+        margin: 0 auto 10px;
+        border: 1px solid rgba(23, 18, 12, .35);
+    }
+
+    .zodiac-review-frame iframe {
+        display: block;
+        width: 580px;
+        height: 220px;
+        border: 0;
+    }
+
+    .zodiac-review-progress {
+        height: 4px;
+        margin-bottom: 10px;
+        background: rgba(23, 18, 12, .15);
+    }
+
+    .zodiac-review-progress span {
+        display: block;
+        height: 100%;
+        background: #526c4c;
+    }
+
+    .zodiac-review-controls {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    .zodiac-review-controls button {
+        padding: 6px 10px;
+        border: 1px solid #17120c;
+        background: transparent;
+        color: inherit;
+        font: 700 12px Georgia, serif;
+        cursor: pointer;
+    }
+
+    @media (max-width: 640px) {
+        .zodiac-review {
+            margin: 0;
+        }
+
+        .zodiac-review-meta {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .zodiac-review-frame {
+            width: 100%;
+            overflow-x: auto;
+            margin-left: 0;
+        }
+    }
+</style>
+{% endblock %}
+{% block content %}
+<main class="zodiac-review" data-zodiac-review-runner>
+    <h1>Chinese Zodiac Visual Review</h1>
+    <div class="zodiac-review-status" data-review-status aria-live="polite">Preparing review...</div>
+    <div class="zodiac-review-meta">
+        <div><strong data-review-position>0 / 0</strong><span>Test</span></div>
+        <div><strong data-review-case>-</strong><span>Case</span></div>
+        <div><strong data-review-animal>-</strong><span>Animal</span></div>
+        <div><strong data-review-dimensions>-</strong><span>Dimensions</span></div>
+        <div><strong data-review-image>-</strong><span>Image size</span></div>
+        <div><strong data-review-overlap>-</strong><span>Overlap</span></div>
+        <div><strong data-review-scroll>-</strong><span>Client / scroll</span></div>
+        <div><strong data-review-overflow>-</strong><span>Overflow</span></div>
+    </div>
+    <input class="zodiac-review-url" data-review-url type="text" readonly
+        aria-label="Current Chinese Zodiac review URL">
+    <div class="zodiac-review-frame"><iframe data-review-frame title="Current Chinese Zodiac review page"></iframe>
+    </div>
+    <div class="zodiac-review-progress" aria-hidden="true"><span data-review-progress></span></div>
+    <div class="zodiac-review-controls">
+        <button type="button" data-review-action="previous">Previous</button>
+        <button type="button" data-review-action="toggle">Pause</button>
+        <button type="button" data-review-action="next">Next</button>
+        <button type="button" data-review-action="restart">Restart</button>
+    </div>
+</main>
+{% endblock %}
+{% block extra_js %}
+<script>
+    (() => {
+        const runner = document.querySelector('[data-zodiac-review-runner]');
+        const frame = runner.querySelector('[data-review-frame]');
+        const cases = {{ review_cases| tojson
+    }};
+    const intervalMs = {{ interval| tojson }} || 1000;
+    const field = name => runner.querySelector(`[data-review-${name}]`);
+    let index = 0, paused = false, timer = null, token = 0;
+    const setStatus = (text, warning = false) => {
+        const item = runner.querySelector('[data-review-status]');
+        item.textContent = text;
+        item.className = `zodiac-review-status${warning ? ' warning' : ''}`;
+    };
+    const clearTimer = () => { if (timer) window.clearTimeout(timer); timer = null; };
+    const update = test => {
+        field('position').textContent = `${index + 1} / ${cases.length}`;
+        field('case').textContent = test?.label || '-';
+        field('url').value = test?.url || '';
+        field('progress').style.width = cases.length ? `${((index + 1) / cases.length) * 100}%` : '0%';
+    };
+    const inspect = () => {
+        const doc = frame.contentDocument;
+        const root = doc?.querySelector('.chronicle-chinese-zodiac');
+        const copy = root?.querySelector('.zodiac-copy');
+        const image = root?.querySelector('.zodiac-illustration-box img');
+        if (!root || !copy) return false;
+        const rootRect = root.getBoundingClientRect();
+        const copyRect = copy.getBoundingClientRect();
+        const imageRect = image?.getBoundingClientRect();
+        const imageOverlap = imageRect && copyRect.left < imageRect.right && copyRect.right > imageRect.left && copyRect.top < imageRect.bottom && copyRect.bottom > imageRect.top;
+        const overflow = root.scrollWidth > root.clientWidth || root.scrollHeight > root.clientHeight;
+        field('animal').textContent = image?.alt?.replace(' - Chinese zodiac illustration', '') || 'None';
+        field('dimensions').textContent = `${Math.round(rootRect.width)} x ${Math.round(rootRect.height)}`;
+        field('image').textContent = image ? `${image.naturalWidth} x ${image.naturalHeight} -> ${Math.round(imageRect.width)} x ${Math.round(imageRect.height)}` : 'None';
+        field('overlap').textContent = imageOverlap ? 'Yes' : 'No';
+        field('scroll').textContent = `${root.clientWidth}/${root.scrollWidth} x ${root.clientHeight}/${root.scrollHeight}`;
+        field('overflow').textContent = overflow ? 'Yes' : 'No';
+        return true;
+    };
+    const load = () => {
+        clearTimer();
+        if (!cases.length) { setStatus('NO ZODIAC REVIEW CASES FOUND', true); return; }
+        const test = cases[index];
+        update(test);
+        setStatus(`Loading ${index + 1} / ${cases.length}`);
+        const current = ++token;
+        let elapsed = 0;
+        const poll = () => {
+            if (current !== token) return;
+            if (inspect()) {
+                setStatus(paused ? 'Paused' : `Viewing ${index + 1} / ${cases.length}`);
+                if (!paused && index < cases.length - 1) timer = window.setTimeout(() => { index += 1; load(); }, intervalMs);
+                else if (!paused) setStatus('Review complete');
+                return;
+            }
+            if (elapsed >= 5000) { setStatus(`Load warning: ${test.label}`, true); return; }
+            elapsed += 100;
+            window.setTimeout(poll, 100);
+        };
+        frame.onload = poll;
+        frame.src = test.url;
+    };
+    const pause = () => { paused = true; clearTimer(); runner.querySelector('[data-review-action="toggle"]').textContent = 'Resume'; setStatus('Paused'); };
+    const resume = () => { paused = false; runner.querySelector('[data-review-action="toggle"]').textContent = 'Pause'; load(); };
+    const move = delta => { pause(); index = Math.max(0, Math.min(cases.length - 1, index + delta)); load(); pause(); };
+    const restart = () => { index = 0; paused = false; runner.querySelector('[data-review-action="toggle"]').textContent = 'Pause'; load(); };
+    runner.addEventListener('click', event => {
+        const action = event.target.closest('[data-review-action]')?.dataset.reviewAction;
+        if (action === 'toggle') paused ? resume() : pause();
+        if (action === 'previous') move(-1);
+        if (action === 'next') move(1);
+        if (action === 'restart') restart();
+    });
+    load();
+    }) ();
+</script>
+{% endblock %}

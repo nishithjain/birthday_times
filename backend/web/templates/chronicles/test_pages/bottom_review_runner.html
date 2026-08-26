@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% block title %}Newspaper Bottom Visual Review{% endblock %}
+{% block extra_head %}
+<style>
+    .bottom-review {
+        max-width: 920px;
+        margin: 20px auto;
+        padding: 18px;
+        color: #17120c;
+        background: #d9e2d1;
+        font-family: Georgia, serif;
+    }
+
+    .bottom-review h1 {
+        margin: 0 0 12px;
+        font-size: 24px;
+    }
+
+    .bottom-review-status {
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .bottom-review-status.warning {
+        color: #8f3d2e;
+    }
+
+    .bottom-review-meta {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+
+    .bottom-review-meta div {
+        border-top: 1px solid rgba(23, 18, 12, .35);
+        padding-top: 4px;
+    }
+
+    .bottom-review-meta strong,
+    .bottom-review-meta span {
+        display: block;
+    }
+
+    .bottom-review-meta span {
+        color: #5d6958;
+        font-size: 12px;
+    }
+
+    .bottom-review-url {
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        padding: 5px;
+        border: 1px solid rgba(23, 18, 12, .35);
+        background: transparent;
+        color: inherit;
+    }
+
+    .bottom-review-frame {
+        width: 922px;
+        height: 178px;
+        overflow: visible;
+        margin: 0 auto 10px;
+        border: 1px solid rgba(23, 18, 12, .35);
+    }
+
+    .bottom-review-frame iframe {
+        display: block;
+        width: 920px;
+        height: 176px;
+        border: 0;
+    }
+
+    .bottom-review-progress {
+        height: 4px;
+        margin-bottom: 10px;
+        background: rgba(23, 18, 12, .15);
+    }
+
+    .bottom-review-progress span {
+        display: block;
+        height: 100%;
+        background: #526c4c;
+    }
+
+    .bottom-review-controls {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    .bottom-review-controls button {
+        padding: 6px 10px;
+        border: 1px solid #17120c;
+        background: transparent;
+        color: inherit;
+        font: 700 12px Georgia, serif;
+        cursor: pointer;
+    }
+
+    @media (max-width: 960px) {
+        .bottom-review {
+            margin: 0;
+        }
+
+        .bottom-review-meta {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .bottom-review-frame {
+            width: 100%;
+            overflow-x: auto;
+            margin-left: 0;
+        }
+    }
+</style>
+{% endblock %}
+{% block content %}
+<main class="bottom-review" data-bottom-review-runner>
+    <h1>Newspaper Bottom Visual Review</h1>
+    <div class="bottom-review-status" data-review-status aria-live="polite">Preparing review...</div>
+    <div class="bottom-review-meta">
+        <div><strong data-review-position>0 / 0</strong><span>Test</span></div>
+        <div><strong data-review-year>-</strong><span>Year</span></div>
+        <div><strong data-review-dimensions>-</strong><span>Dimensions</span></div>
+        <div><strong data-review-scroll>-</strong><span>Client / scroll</span></div>
+        <div><strong data-review-columns>-</strong><span>Costs / Facts</span></div>
+        <div><strong data-review-values>-</strong><span>Cost values</span></div>
+        <div><strong data-review-facts>-</strong><span>Facts</span></div>
+        <div><strong data-review-art>-</strong><span>Floral art</span></div>
+        <div><strong data-review-symmetry>-</strong><span>Symmetry</span></div>
+        <div><strong data-review-overflow>-</strong><span>Overflow</span></div>
+    </div>
+    <input class="bottom-review-url" data-review-url type="text" readonly
+        aria-label="Current bottom section review URL">
+    <div class="bottom-review-frame"><iframe data-review-frame title="Current newspaper bottom review page"></iframe>
+    </div>
+    <div class="bottom-review-progress" aria-hidden="true"><span data-review-progress></span></div>
+    <div class="bottom-review-controls">
+        <button type="button" data-review-action="previous">Previous</button>
+        <button type="button" data-review-action="toggle">Pause</button>
+        <button type="button" data-review-action="next">Next</button>
+        <button type="button" data-review-action="restart">Restart</button>
+    </div>
+</main>
+{% endblock %}
+{% block extra_js %}
+<script>
+    (() => {
+        const runner = document.querySelector('[data-bottom-review-runner]');
+        const frame = runner.querySelector('[data-review-frame]');
+        const years = {{ review_years| tojson
+    }};
+    const intervalMs = {{ interval| tojson }} || 1000;
+    const field = name => runner.querySelector(`[data-review-${name}]`);
+    let index = 0, paused = false, timer = null, token = 0;
+    const tests = years.map(year => ({ year, url: `/dev/sections/bottom?date=${year}-05-09&name=Bottom%20Review` }));
+    const setStatus = (text, warning = false) => { const item = runner.querySelector('[data-review-status]'); item.textContent = text; item.className = `bottom-review-status${warning ? ' warning' : ''}`; };
+    const clearTimer = () => { if (timer) window.clearTimeout(timer); timer = null; };
+    const update = test => { field('position').textContent = `${index + 1} / ${tests.length}`; field('year').textContent = test?.year || '-'; field('url').value = test?.url || ''; field('progress').style.width = tests.length ? `${((index + 1) / tests.length) * 100}%` : '0%'; };
+    const inspect = () => {
+        const doc = frame.contentDocument;
+        const root = doc?.querySelector('.newspaper-bottom');
+        const columns = root ? [...root.querySelectorAll('.bottom-column')] : [];
+        if (!root || columns.length !== 2) return false;
+        const rect = root.getBoundingClientRect();
+        const overflow = root.scrollWidth > root.clientWidth || root.scrollHeight > root.clientHeight || columns.some(column => column.scrollWidth > column.clientWidth || column.scrollHeight > column.clientHeight);
+        const art = [...root.querySelectorAll('.bottom-floral img')];
+        const sameArt = art.length === 2 && art[0].src === art[1].src;
+        field('art').textContent = art[0] ? art[0].src.split('/').pop() : 'None';
+        field('symmetry').textContent = sameArt && art[0].getBoundingClientRect().width === art[1].getBoundingClientRect().width ? 'Yes' : 'No';
+        field('dimensions').textContent = `${Math.round(rect.width)} x ${Math.round(rect.height)}`;
+        field('scroll').textContent = `${root.clientWidth}/${root.scrollWidth} x ${root.clientHeight}/${root.scrollHeight}`;
+        field('columns').textContent = columns.map(column => Math.round(column.getBoundingClientRect().width)).join(' / ');
+        field('values').textContent = [...root.querySelectorAll('.bottom-cost-value')].map(value => value.textContent.trim()).join(' | ');
+        field('facts').textContent = root.querySelectorAll('.bottom-fact').length;
+        field('overflow').textContent = overflow ? 'Yes' : 'No';
+        return true;
+    };
+    const load = () => { clearTimer(); if (!tests.length) { setStatus('NO BOTTOM REVIEW CASES FOUND', true); return; } const test = tests[index]; update(test); setStatus(`Loading ${index + 1} / ${tests.length}`); const current = ++token; let elapsed = 0; const poll = () => { if (current !== token) return; if (inspect()) { setStatus(paused ? 'Paused' : `Viewing ${index + 1} / ${tests.length}`); if (!paused && index < tests.length - 1) timer = window.setTimeout(() => { index += 1; load(); }, intervalMs); else if (!paused) setStatus('Review complete'); return; } if (elapsed >= 5000) { setStatus(`Load warning: ${test.year}`, true); return; } elapsed += 100; window.setTimeout(poll, 100); }; frame.onload = poll; frame.src = test.url; };
+    const pause = () => { paused = true; clearTimer(); runner.querySelector('[data-review-action="toggle"]').textContent = 'Resume'; setStatus('Paused'); };
+    const resume = () => { paused = false; runner.querySelector('[data-review-action="toggle"]').textContent = 'Pause'; load(); };
+    const move = delta => { pause(); index = Math.max(0, Math.min(tests.length - 1, index + delta)); load(); pause(); };
+    const restart = () => { index = 0; paused = false; runner.querySelector('[data-review-action="toggle"]').textContent = 'Pause'; load(); };
+    runner.addEventListener('click', event => { const action = event.target.closest('[data-review-action]')?.dataset.reviewAction; if (action === 'toggle') paused ? resume() : pause(); if (action === 'previous') move(-1); if (action === 'next') move(1); if (action === 'restart') restart(); });
+    load();
+    }) ();
+</script>
+{% endblock %}

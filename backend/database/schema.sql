@@ -91,26 +91,14 @@ CREATE TABLE IF NOT EXISTS famous_people (
     -- Birth date (YYYY-MM-DD)
     birth_date TEXT NOT NULL,
     
-    -- Death date (YYYY-MM-DD), NULL if alive
-    death_date TEXT,
-    
     -- Occupation(s)
     occupation TEXT,
-    
-    -- Country/nationality
-    country TEXT,
-    
-    -- Short description
-    description TEXT,
     
     -- Wikidata ID
     wikidata_id TEXT NOT NULL UNIQUE,
     
     -- Wikipedia URL
     wikipedia_url TEXT,
-    
-    -- Image URL (if available)
-    image_url TEXT,
     
     -- Number of Wikimedia sitelinks (notability indicator)
     sitelinks INTEGER DEFAULT 0,
