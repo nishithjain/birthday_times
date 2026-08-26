@@ -1,3 +1,88 @@
 .chronicle-around-this-time {
+    width: 338px;
+    height: 260px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    color: var(--ink);
+    font-family: var(--body-font, var(--font-body));
+}
+
+.around-this-time-header {
+    flex: 0 0 auto;
+}
+
+.around-this-time-title {
+    margin: 0;
+    font-family: var(--font-headline);
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.05;
+}
+
+.around-this-time-subtitle {
+    margin: 4px 0 0;
+    color: var(--ink-muted);
+    font-size: 11px;
+    line-height: 1.2;
+}
+
+.around-this-time-rule {
+    flex: 0 0 auto;
+    height: 1px;
+    margin: 7px 0 8px;
+    background: var(--rule-light);
+}
+
+.around-this-time-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+}
+
+.around-fit-pending {
+    visibility: hidden;
+}
+
+.around-this-time-events {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    gap: 7px;
+    justify-content: space-between;
+}
+
+.around-this-time-event {
+    min-width: 0;
+    padding: 0;
+}
+
+.event-date {
     display: block;
+    margin-bottom: 2px;
+    font-family: var(--font-headline);
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.05;
+}
+
+.event-text {
+    margin: 0;
+    overflow-wrap: anywhere;
+    text-align: justify;
+    hyphens: auto;
+    font-size: 11px;
+    line-height: 1.2;
+    font-weight: 400;
+}
+
+.around-this-time-empty {
+    max-width: 280px;
+    margin: 18px 0 0;
+    color: var(--ink-muted);
+    font-size: 12px;
+    font-style: italic;
+    line-height: 1.25;
 }

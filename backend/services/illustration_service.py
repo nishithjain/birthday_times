@@ -17,6 +17,13 @@ VARIANTS_SEGMENT = "/variants/{era}/"
 SPORT_CONTEXTS = frozenset({"baseball", "football", "cricket", "olympics"})
 GENERIC_ZODIAC_ID = "chinese-zodiac"
 DEFAULT_SPORTS_CONTEXT = "baseball"
+FAMOUS_PEOPLE_ICON_FILES = {
+    "Actor": "actor.png", "Cricketer": "cricketer.png", "Scientist": "scientist.png",
+    "Inventor": "inventor.png", "Entrepreneur": "entrepreneur.png", "Singer": "singer.png",
+    "Athlete": "athlete.png", "Footballer": "footballer.png", "Basketball Player": "basketball_player.png",
+    "Tennis Player": "tennis_player.png", "Artist": "artist.png", "Astronaut": "astronaut.png",
+    "Writer": "writer.png", "Musician": "musician.png", "Director": "director.png",
+}
 
 MASTHEAD_LOGO_ERAS = (
     (1950, 1969, "eagle", "eagle.png"),
@@ -291,6 +298,18 @@ class IllustrationService:
 
         return self.get_by_id(GENERIC_ZODIAC_ID)
 
+    def get_famous_people_occupation_icons(self, style_id: Optional[str] = None) -> Dict[str, Dict[str, Optional[str]]]:
+        """Return template-ready occupation icon payloads for existing assets."""
+        result = {}
+        for occupation, filename in FAMOUS_PEOPLE_ICON_FILES.items():
+            result[occupation] = self._payload({
+                "id": f"famous-people-{occupation.casefold().replace(' ', '-')}",
+                "category": "famous_people",
+                "path": f"images/illustrations/originals/famous_people/{filename}",
+                "priority": 1,
+            }, style_id)
+        return {occupation: payload for occupation, payload in result.items() if payload and payload.get("displayPath")}
+
     def _sports_context(self, sports_records: Optional[Sequence[Any]]) -> str:
         """Use a normalized sport field when present; otherwise default to baseball.
 
@@ -377,6 +396,7 @@ class IllustrationService:
             "technology": self._payload(self.get_for_category("technology", year), style_id),
             "science": self._payload(self.get_for_category("science", year), style_id),
             "zodiac": self._payload(self.get_zodiac_animal(chinese_zodiac), style_id),
+            "famousPeopleOccupationIcons": self.get_famous_people_occupation_icons(style_id),
         }
 
 

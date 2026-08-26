@@ -89,7 +89,7 @@ class ChronicleService:
                 birth_date=birth_date,
                 person_name=name,
                 newspaper_style_id=newspaper_style["id"],
-                limit=5,
+                limit=3,
             )
         except Exception as e:
             logger.warning(f"Could not fetch famous birthdays: {e}")

@@ -1,21 +1,43 @@
-<article class="chronicle-section chronicle-world-news article-world world-news-fit-pending" data-section="world-news"
+<section class="chronicle-section chronicle-world-news world-news-fit-pending" data-section="world-news"
     data-world-news-container>
-    <div class="article-header">
-        <p class="article-kicker">NEWS AROUND THE WORLD</p>
-        <h3 class="article-headline">{{ chronicle.world_news.headlineTitle if chronicle.world_news else 'Making
-            Headlines In ' ~ chronicle.person.birth_date|year }}</h3>
+    <header class="world-news-header">
+        <h2 class="world-news-title">News Around The World</h2>
+        <p class="world-news-deck">Making Headlines In {{ chronicle.world_news.year if chronicle.world_news else
+            chronicle.person.birth_date|year }}</p>
+    </header>
+    <div class="world-news-rule" aria-hidden="true"></div>
+    <div class="world-news-body">
+        <div class="world-news-left">
+            <div class="world-news-illustration">{% from "chronicles/sections/_macros.html" import
+                newspaper_illustration
+                with context %}{{ newspaper_illustration("world", "") }}</div>
+            <div class="world-news-editorial">
+                <div class="world-news-editorial-rule" aria-hidden="true"></div>
+                <div class="world-news-editorial-label">World News Desk</div>
+                <div class="world-news-editorial-subtitle">Global Dispatch</div>
+                <div class="world-news-editorial-year">{{ chronicle.world_news.year if chronicle.world_news else
+                    chronicle.person.birth_date|year }}</div>
+            </div>
+        </div>
+        <div class="world-news-list-wrap" data-world-news-content>
+            {% if chronicle.world_news and chronicle.world_news.headlines %}
+            {% set lead = chronicle.world_news.headlines[0] %}
+            <div class="world-news-right">
+                <article class="world-news-lead" data-world-news-item>
+                    <span class="world-news-copy">{{ lead.displayText }}</span>
+                </article>
+                <div class="world-news-lead-rule" aria-hidden="true"></div>
+                <ul class="world-news-list">
+                    {% for story in chronicle.world_news.headlines[1:] %}
+                    <li class="world-news-item" data-world-news-item><span class="world-news-copy">{{ story.displayText
+                            }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% else %}<div class="world-news-empty">World headlines for this year are still being gathered.</div>{%
+            endif %}
+        </div>
     </div>
-    <div class="world-content">
-        <div class="image-slot image-slot--square image-slot--illustration image-slot--globe">{% from
-            "chronicles/sections/_macros.html" import newspaper_illustration with context %}{{
-            newspaper_illustration("world", "GLOBE") }}</div>
-        <div class="world-headlines" data-world-news-content>{% if chronicle.world_news and
-            chronicle.world_news.headlines %}<ul class="headline-list">{% for story in chronicle.world_news.headlines %}
-                <li class="world-news-item" data-world-news-item><span class="world-news-bullet"
-                        aria-hidden="true">&bull;</span><span class="world-news-copy"><span class="world-story-title">{{
-                            story.displayText }}</span></span></li>{% endfor %}</ul>{% endif %}</div>
-    </div>
-    {% if chronicle.world_news and chronicle.world_news.candidates %}
-    <script type="application/json" data-world-news-candidates>{{ chronicle.world_news.candidates|tojson }}</script>{%
-    endif %}
-</article>
+    <script type="application/json"
+        data-world-news-candidates>{{ (chronicle.world_news.candidates if chronicle.world_news else [])|tojson }}</script>
+</section>

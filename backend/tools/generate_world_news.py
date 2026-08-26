@@ -21,6 +21,30 @@ FIRST_YEAR = 1950
 LAST_YEAR = 2026
 CANDIDATE_LIMIT = 10
 
+GENERIC_YEAR_RE = re.compile(r"^\d{4}$")
+DECADE_RE = re.compile(r"^\d{4}s$", re.IGNORECASE)
+METADATA_PREFIXES = ("list of ", "timeline of ", "category:", "portal:", "outline of ")
+PERIOD_RE = re.compile(r"^(?:\d{4} decade|\d{1,2}(?:st|nd|rd|th) century)$", re.IGNORECASE)
+WEAK_DESCRIPTIONS = {
+    "year", "decade", "century", "period", "article", "disambiguation page",
+    "men's doubles", "women's doubles", "men's singles", "women's singles",
+}
+WEAK_DESCRIPTION_PHRASES = (
+    "overview of ", "sovereign state", "ward of ", " rock band", " pop band",
+    "article writing contest",
+)
+EVENT_CONTEXT_TERMS = (
+    "battle", "championship", "competition", "conflict", "coup", "disaster",
+    "election", "festival", "invasion", "massacre", "operation", "prize",
+    "qualification", "rebellion", "revolution", "tournament", "treaty", "war",
+    "world cup", "anniversary", "day",
+)
+ENTERTAINMENT_TERMS = (
+    "film", "movie", "album", "song", "single", "television", "tv series",
+    "television series", "sitcom", "streaming series", "music", "concert",
+    "video game", "award ceremony",
+)
+
 CATEGORY_MAP = {
     "war_conflict": "world",
     "politics": "politics",
@@ -42,12 +66,66 @@ def normalize_title(title: str) -> str:
     return re.sub(r"[^a-z0-9]+", " ", (title or "").lower()).strip()
 
 
-def headline_text(title: str) -> str:
-    """Return a short, deterministic headline without adding facts."""
-    words = (title or "").strip().split()
-    if len(words) <= 12:
-        return " ".join(words)
-    return " ".join(words[:12]).rstrip(" ,:;-")
+def _clean_description(description: Optional[str]) -> str:
+    return re.sub(r"\s+", " ", (description or "")).strip(" \t\r\n.;:")
+
+
+def world_news_rejection_reason(event: HistoricalEvent) -> Optional[str]:
+    """Return why an event is unsuitable for World News, or None if valid."""
+    title = re.sub(r"\s+", " ", (event.title or "")).strip()
+    normalized_title = title.lower()
+    description = _clean_description(event.description)
+    normalized_description = description.lower()
+
+    if not title:
+        return "missing title"
+    if GENERIC_YEAR_RE.fullmatch(title):
+        return "generic year"
+    if DECADE_RE.fullmatch(title) or ("decade" in normalized_description and GENERIC_YEAR_RE.search(title)):
+        return "decade"
+    if PERIOD_RE.fullmatch(title):
+        return "generic period"
+    if normalized_title.startswith("timeline of ") and event.category not in {"politics", "war_conflict", "disaster", "science_space"}:
+        return "generic timeline page"
+    if normalized_title.startswith(METADATA_PREFIXES):
+        return "metadata/list page"
+    if event.category == "entertainment" or any(term in normalized_description for term in ENTERTAINMENT_TERMS):
+        return "ordinary entertainment"
+    if normalized_description in WEAK_DESCRIPTIONS or any(phrase in normalized_description for phrase in WEAK_DESCRIPTION_PHRASES):
+        return "insufficient context"
+    if event.category == "unknown" and (
+        not description
+        or len(title.split()) == 1
+        or not any(term in normalized_title or term in normalized_description for term in EVENT_CONTEXT_TERMS)
+    ):
+        return "insufficient context"
+    if not description:
+        return "insufficient context"
+    return None
+
+
+def build_world_news_display_text(event: HistoricalEvent) -> Optional[str]:
+    """Build a concise, source-derived sentence for a World News item."""
+    if world_news_rejection_reason(event):
+        return None
+    title = re.sub(r"\s+", " ", event.title.strip()).strip(" .")
+    description = _clean_description(event.description)
+    if normalize_title(description).startswith(normalize_title(title)):
+        description = description[len(title):].strip(" -:;,.")
+    if not description:
+        return None
+    text = f"The {title} was described as {description}."
+    text = re.sub(r"\.{2,}", ".", text)
+    if len(text) <= 180:
+        return text
+    available = max(20, 175 - len(title))
+    return f"The {title} was described as {description[:available].rstrip(' ,:;-')}."
+
+
+def _quality_score(event: HistoricalEvent) -> int:
+    """Score context quality without changing the source importance score."""
+    category_bonus = {"war_conflict": 4, "politics": 4, "science_space": 4, "disaster": 3, "sports": 2, "culture": 1}
+    return category_bonus.get(event.category, 0) + int(bool(_clean_description(event.description)))
 
 
 def _country_value(country: Optional[str]) -> List[str]:
@@ -84,9 +162,10 @@ class WorldNewsBuilder:
         self.output_dir = output_dir or PROJECT_ROOT / "backend" / "data" / "world_news"
 
     def select_events(self, events: Iterable[HistoricalEvent]) -> Tuple[List[HistoricalEvent], int]:
+        valid_events = [event for event in events if build_world_news_display_text(event)]
         candidates = sorted(
-            events,
-            key=lambda event: (-int(event.importance_score or 0), event.event_date, normalize_title(event.title), _stable_id(event)),
+            valid_events,
+            key=lambda event: (-int(event.importance_score or 0), -_quality_score(event), event.event_date, normalize_title(event.title), _stable_id(event)),
         )
         unique: List[HistoricalEvent] = []
         duplicates = 0
@@ -116,9 +195,12 @@ class WorldNewsBuilder:
         headlines = []
         for event in selected:
             category = CATEGORY_MAP.get(event.category, "other")
+            display_text = build_world_news_display_text(event)
+            if not display_text:
+                continue
             headlines.append({
                 "id": _stable_id(event),
-                "displayText": headline_text(event.title),
+                "displayText": display_text,
                 "eventDate": event.event_date.isoformat(),
                 "category": category,
                 "sourceCategory": event.category,

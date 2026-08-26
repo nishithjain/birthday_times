@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     fitArrivalArticle();
     fitWorldNews();
+    fitFamousBirthdays();
     fitAroundThisTime();
     fitZodiacSection();
     fitMoviesSection();
@@ -190,85 +191,156 @@ async function fitZodiacSection() {
 }
 
 async function fitAroundThisTime() {
-    const TARGET_FILL = 0.89;
-    const MAX_FILL = 0.93;
     const content = document.querySelector('[data-around-container]');
-    const article = content && content.closest('.article-around');
+    const article = content && content.closest('[data-around-root]');
     const data = document.querySelector('[data-around-candidates]');
-    const items = content && [...content.querySelectorAll('[data-around-item]')];
-    if (!content || !article || !data) return;
-    if (document.fonts && document.fonts.ready) await document.fonts.ready;
-    await new Promise(requestAnimationFrame);
+    const events = content && content.querySelector('[data-around-events]');
+    const items = events && [...events.querySelectorAll('[data-around-item]')];
+    if (!content || !article) return;
+    if (!data || !events || !items?.length) {
+        article.dataset.aroundFit = JSON.stringify({
+            candidateCount: 0,
+            displayedCount: 0,
+            bodyClientWidth: content.clientWidth,
+            bodyScrollWidth: content.scrollWidth,
+            bodyClientHeight: content.clientHeight,
+            bodyScrollHeight: content.scrollHeight,
+            rootClientWidth: article.clientWidth,
+            rootScrollWidth: article.scrollWidth,
+            rootClientHeight: article.clientHeight,
+            rootScrollHeight: article.scrollHeight,
+            heightUtilization: content.clientHeight ? content.scrollHeight / content.clientHeight : 0,
+            fitResult: 'empty',
+            attempts: [],
+        });
+        content.classList.remove('around-fit-pending');
+        return;
+    }
+    if (document.fonts && document.fonts.ready) {
+        await Promise.race([
+            document.fonts.ready,
+            new Promise(resolve => window.setTimeout(resolve, 1500)),
+        ]);
+    }
+    await Promise.race([
+        new Promise(requestAnimationFrame),
+        new Promise(resolve => window.setTimeout(resolve, 100)),
+    ]);
     const candidates = JSON.parse(data.textContent);
-    const bottom = article.getBoundingClientRect().bottom;
-    const availableHeight = Math.max(0, bottom - content.getBoundingClientRect().top - (parseFloat(getComputedStyle(article).paddingBottom) || 0));
-    const measure = () => ({ contentHeight: content.scrollHeight, fillRatio: availableHeight ? content.scrollHeight / availableHeight : 1 });
+    const availableHeight = content.clientHeight;
+    const measure = () => ({
+        bodyClientWidth: content.clientWidth,
+        bodyScrollWidth: content.scrollWidth,
+        bodyClientHeight: content.clientHeight,
+        bodyScrollHeight: content.scrollHeight,
+        naturalContentHeight: events.scrollHeight,
+        naturalContentWidth: events.scrollWidth,
+        rootClientWidth: article.clientWidth,
+        rootScrollWidth: article.scrollWidth,
+        rootClientHeight: article.clientHeight,
+        rootScrollHeight: article.scrollHeight,
+        fillRatio: availableHeight ? content.scrollHeight / availableHeight : 1,
+    });
+    const fits = result => {
+        const visibleItems = items.filter(item => getComputedStyle(item).display !== 'none');
+        const lastItem = visibleItems[visibleItems.length - 1];
+        const rootRect = article.getBoundingClientRect();
+        const lastItemRect = lastItem && lastItem.getBoundingClientRect();
+        return result.bodyScrollHeight <= result.bodyClientHeight
+            && result.bodyScrollWidth <= result.bodyClientWidth
+            && result.rootScrollHeight <= result.rootClientHeight
+            && result.rootScrollWidth <= result.rootClientWidth
+            && !!lastItemRect
+            && lastItemRect.bottom <= rootRect.bottom - 5;
+    };
     const attempts = [];
-    const render = count => {
+    const render = (count, record = true) => {
         items.forEach((item, index) => { item.style.display = index < count ? '' : 'none'; });
+        events.style.gap = count >= 5 ? '1px' : count === 4 ? '3px' : count === 3 ? '7px' : '9px';
         void content.offsetHeight;
         const result = measure();
-        attempts.push({ count, ...result, overflow: result.fillRatio > MAX_FILL });
+        const fit = fits(result);
+        if (record) attempts.push({ count, ...result, fit, overflow: !fit });
         return result;
     };
     let best = null;
-    for (let count = 0; count <= Math.min(items.length, candidates.length - 1); count += 1) {
+    for (let count = Math.min(6, items.length, candidates.length); count >= Math.min(2, items.length, candidates.length); count -= 1) {
         const result = render(count);
-        if (result.fillRatio <= MAX_FILL && (!best || Math.abs(result.fillRatio - TARGET_FILL) < Math.abs(best.fillRatio - TARGET_FILL) || (Math.abs(result.fillRatio - TARGET_FILL) === Math.abs(best.fillRatio - TARGET_FILL) && count > best.count))) {
-            best = { count, ...result };
-        }
+        if (fits(result)) { best = { count, ...result }; break; }
     }
-    best = best || { count: 0, ...render(0) };
-    render(best.count);
-    article.dataset.aroundFit = JSON.stringify({ candidateCount: candidates.length, secondaryCount: best.count, availableHeight, contentHeight: best.contentHeight, fillRatio: best.fillRatio, attempts });
+    if (!best) {
+        const count = Math.min(1, items.length, candidates.length);
+        best = { count, ...render(count) };
+    }
+    render(best.count, false);
+    const final = measure();
+    article.dataset.aroundFit = JSON.stringify({ candidateCount: candidates.length, displayedCount: best.count, availableHeight, ...final, heightUtilization: availableHeight ? final.naturalContentHeight / availableHeight : 0, fitResult: attempts.find(attempt => attempt.count === best.count)?.overflow ? 'overflow' : 'fit', attempts });
     content.classList.remove('around-fit-pending');
+    if (!article.dataset.aroundResizeObserved && window.ResizeObserver) {
+        const observer = new ResizeObserver(() => { void fitAroundThisTime(); });
+        observer.observe(article);
+        article.dataset.aroundResizeObserved = 'true';
+    }
 }
 
 async function fitWorldNews() {
     const container = document.querySelector('[data-world-news-container]');
     const data = document.querySelector('[data-world-news-candidates]');
     const content = container && container.querySelector('[data-world-news-content]');
-    const list = content && content.querySelector('.headline-list');
-    const items = list && [...list.querySelectorAll('[data-world-news-item]')];
-    if (!container || !data || !content || !list || !items.length) return;
+    const right = content && content.querySelector('.world-news-right');
+    const list = right && right.querySelector('.world-news-list');
+    const items = right && [...right.querySelectorAll('[data-world-news-item]')];
+    if (!container || !data || !content || !right || !list) return;
     if (document.fonts && document.fonts.ready) await document.fonts.ready;
     await new Promise(requestAnimationFrame);
     const candidates = JSON.parse(data.textContent);
-    const bottom = container.getBoundingClientRect().bottom;
-    const paddingBottom = parseFloat(getComputedStyle(container).paddingBottom) || 0;
-    const availableHeight = Math.max(0, bottom - content.getBoundingClientRect().top - paddingBottom);
-    const measure = () => ({ contentHeight: list.scrollHeight, fillRatio: availableHeight ? list.scrollHeight / availableHeight : 1 });
+    if (!items.length) {
+        container.classList.remove('world-news-fit-pending');
+        container.dataset.worldNewsFit = JSON.stringify({ candidateCount: candidates.length, displayCount: 0, fitResult: 'empty' });
+        return;
+    }
+    const measure = () => ({
+        clientWidth: content.clientWidth,
+        scrollWidth: right.scrollWidth,
+        clientHeight: content.clientHeight,
+        scrollHeight: right.scrollHeight,
+        briefsClientHeight: list.clientHeight,
+        briefsScrollHeight: list.scrollHeight,
+        fillRatio: content.clientHeight ? right.scrollHeight / content.clientHeight : 1,
+    });
     const attempts = [];
-    const render = (count, descriptions) => {
-        container.classList.toggle('world-news--descriptions', descriptions);
+    const render = count => {
         items.forEach((item, index) => { item.style.display = index < count ? '' : 'none'; });
-        void container.offsetHeight;
+        list.style.setProperty('--world-news-gap', '0px');
+        void list.offsetHeight;
         const measurement = measure();
-        attempts.push({ count, descriptions, ...measurement, overflow: measurement.fillRatio > 0.97 });
+        attempts.push({ count, ...measurement, overflow: measurement.scrollHeight > measurement.clientHeight || measurement.scrollWidth > measurement.clientWidth });
         return measurement;
     };
     let best = null;
     for (let count = 1; count <= Math.min(candidates.length, items.length); count += 1) {
-        const measurement = render(count, false);
-        if (measurement.fillRatio <= 0.97) best = { count, descriptions: false, measurement };
+        const measurement = render(count);
+        if (measurement.scrollHeight <= measurement.clientHeight && measurement.scrollWidth <= measurement.clientWidth) best = { count, measurement };
     }
-    if (!best || best.measurement.fillRatio < 0.82) {
-        for (let count = 1; count <= Math.min(candidates.length, items.length); count += 1) {
-            const measurement = render(count, true);
-            if (measurement.fillRatio <= 0.97 && (!best || Math.abs(measurement.fillRatio - 0.90) < Math.abs(best.measurement.fillRatio - 0.90))) {
-                best = { count, descriptions: true, measurement };
-            }
-        }
+    if (!best) best = { count: 1, measurement: render(1) };
+    render(best.count);
+    const briefCount = Math.max(0, best.count - 1);
+    const natural = measure();
+    const spareHeight = Math.max(0, content.clientHeight - natural.scrollHeight);
+    const gap = briefCount > 1 ? Math.min(10, Math.max(2, spareHeight / (briefCount - 1))) : 0;
+    list.style.setProperty('--world-news-gap', `${gap}px`);
+    void list.offsetHeight;
+    let finalMeasurement = measure();
+    if (finalMeasurement.scrollHeight > content.clientHeight * 0.97) {
+        list.style.setProperty('--world-news-gap', '2px');
+        void list.offsetHeight;
+        finalMeasurement = measure();
     }
-    if (!best) best = { count: 1, descriptions: false, measurement: render(1, false) };
-    render(best.count, best.descriptions);
     container.dataset.worldNewsFit = JSON.stringify({
         candidateCount: candidates.length,
         displayCount: best.count,
-        availableHeight,
-        contentHeight: best.measurement.contentHeight,
-        fillRatio: best.measurement.fillRatio,
-        summariesUsed: best.descriptions,
+        ...finalMeasurement,
+        fitResult: finalMeasurement.scrollHeight <= finalMeasurement.clientHeight && finalMeasurement.scrollWidth <= finalMeasurement.clientWidth ? 'fit' : 'overflow',
         attempts,
     });
     container.classList.remove('world-news-fit-pending');
@@ -631,4 +703,124 @@ async function fitWeatherCopy() {
 
     weather.classList.remove('weather-fit-pending');
     checkWeatherDimensions();
+}
+
+async function fitFamousBirthdays() {
+    const container = document.querySelector('[data-famous-birthdays-container]');
+    const content = container && container.querySelector('[data-famous-birthdays-content]');
+    const list = content && content.querySelector('[data-famous-birthdays-list]');
+    const icons = content && content.querySelector('[data-famous-birthday-icons]');
+    const items = list && [...list.querySelectorAll('[data-famous-birthday-person]')];
+    if (!container || !content || !list || !items?.length) {
+        container?.classList.remove('famous-birthdays-fit-pending');
+        return;
+    }
+    if (document.fonts && document.fonts.ready) await document.fonts.ready;
+    await new Promise(requestAnimationFrame);
+    const TOP_GAP = 6;
+    const BOTTOM_SAFETY = 6;
+    const measure = () => ({
+        clientWidth: container.clientWidth,
+        scrollWidth: container.scrollWidth,
+        clientHeight: container.clientHeight,
+        scrollHeight: container.scrollHeight,
+    });
+    let selected = items.length;
+    for (let count = items.length; count >= 1; count -= 1) {
+        items.forEach((item, index) => { item.style.display = index < count ? '' : 'none'; });
+        void content.offsetHeight;
+        const result = measure();
+        if (result.scrollHeight <= result.clientHeight && result.scrollWidth <= result.clientWidth) {
+            selected = count;
+            break;
+        }
+    }
+    items.forEach((item, index) => { item.style.display = index < selected ? '' : 'none'; });
+    const result = measure();
+    let iconMetrics = {
+        normalContentBottom: 0,
+        usableContainerBottom: 0,
+        availableHeight: 0,
+        iconRowHeight: 0,
+        topGap: TOP_GAP,
+        bottomSafety: BOTTOM_SAFETY,
+        requiredHeight: 0,
+        iconsAvailable: 0,
+        shown: false,
+        count: 0,
+        occupations: [],
+    };
+    if (icons) {
+        const iconImages = [...icons.querySelectorAll('[data-famous-birthday-icon]')];
+        icons.hidden = true;
+        iconImages.forEach(image => { image.hidden = Number(image.dataset.personIndex) >= selected; });
+        const displayedIcons = iconImages.filter(image => !image.hidden);
+        const lastNormal = content.querySelector('.famous-birthday-days') || list;
+        const containerRect = container.getBoundingClientRect();
+        const contentStyle = getComputedStyle(content);
+        const bottomPadding = parseFloat(contentStyle.paddingBottom) || 0;
+        const normalBottom = lastNormal.getBoundingClientRect().bottom;
+        const usableContainerBottom = containerRect.bottom - bottomPadding;
+        const availableHeight = Math.max(0, usableContainerBottom - normalBottom);
+        iconMetrics = {
+            normalContentBottom: normalBottom,
+            usableContainerBottom,
+            availableHeight,
+            iconRowHeight: 0,
+            topGap: TOP_GAP,
+            bottomSafety: BOTTOM_SAFETY,
+            requiredHeight: 0,
+            iconsAvailable: displayedIcons.length,
+            shown: false,
+            count: 0,
+            occupations: [],
+        };
+        if (displayedIcons.length) {
+            icons.style.marginTop = `${TOP_GAP}px`;
+            icons.hidden = false;
+            icons.style.visibility = 'hidden';
+            void icons.offsetHeight;
+            const iconImage = displayedIcons[0];
+            const iconRowHeight = iconImage.getBoundingClientRect().height;
+            const requiredHeight = TOP_GAP + iconRowHeight + BOTTOM_SAFETY;
+            iconMetrics.iconRowHeight = iconRowHeight;
+            iconMetrics.requiredHeight = requiredHeight;
+            const actualNormalBottom = lastNormal.getBoundingClientRect().bottom;
+            const actualAvailableHeight = Math.max(0, usableContainerBottom - actualNormalBottom);
+            const measuredIconRect = iconImage.getBoundingClientRect();
+            iconMetrics.normalContentBottom = actualNormalBottom;
+            iconMetrics.availableHeight = actualAvailableHeight;
+            if (actualAvailableHeight >= requiredHeight
+                && measuredIconRect.top >= actualNormalBottom + TOP_GAP - 0.5
+                && measuredIconRect.bottom <= usableContainerBottom - BOTTOM_SAFETY + 0.5) {
+                icons.style.visibility = '';
+                void icons.offsetHeight;
+                const iconRect = icons.getBoundingClientRect();
+                const finalResult = measure();
+                const finalUsableBottom = container.getBoundingClientRect().bottom - bottomPadding;
+                const fits = container.scrollHeight <= container.clientHeight
+                    && container.scrollWidth <= container.clientWidth
+                    && iconRect.bottom <= finalUsableBottom - BOTTOM_SAFETY + 0.5
+                    && iconRect.top >= normalBottom + TOP_GAP - 0.5;
+                if (fits) {
+                    iconMetrics.shown = true;
+                    iconMetrics.count = displayedIcons.length;
+                    iconMetrics.occupations = displayedIcons.map(image => image.dataset.occupation);
+                } else {
+                    icons.hidden = true;
+                }
+            } else {
+                icons.hidden = true;
+            }
+        }
+    }
+    const finalResult = measure();
+    container.dataset.famousBirthdaysFit = JSON.stringify({
+        candidateCount: items.length,
+        displayCount: selected,
+        ...finalResult,
+        ...iconMetrics,
+        fitResult: container.scrollHeight <= container.clientHeight && container.scrollWidth <= container.clientWidth ? 'fit' : 'overflow',
+    });
+    container.classList.remove('famous-birthdays-fit-pending');
 }

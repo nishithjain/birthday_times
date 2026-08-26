@@ -54,6 +54,31 @@ CREATE TABLE IF NOT EXISTS historical_events (
 );
 
 -- ------------------------------------------------------------
+-- Around This Time Events
+-- ------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS around_this_time_events (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    event_date TEXT NOT NULL,
+    title TEXT NOT NULL,
+    description TEXT NOT NULL,
+    category TEXT DEFAULT 'historical_event',
+    external_id TEXT NOT NULL,
+    source_name TEXT NOT NULL DEFAULT 'Wikidata',
+    source_url TEXT,
+    wikipedia_url TEXT,
+    date_source TEXT,
+    date_precision INTEGER NOT NULL,
+    date_property_type TEXT,
+    sitelink_count INTEGER NOT NULL DEFAULT 0,
+    importance_score INTEGER NOT NULL DEFAULT 5
+        CHECK (importance_score >= 1 AND importance_score <= 10),
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(external_id, event_date)
+);
+
+-- ------------------------------------------------------------
 -- Famous People
 -- ------------------------------------------------------------
 
@@ -395,6 +420,9 @@ CREATE INDEX IF NOT EXISTS idx_events_wikidata ON historical_events(wikidata_id)
 CREATE INDEX IF NOT EXISTS idx_events_country ON historical_events(country);
 CREATE INDEX IF NOT EXISTS idx_events_category ON historical_events(category);
 CREATE INDEX IF NOT EXISTS idx_events_importance ON historical_events(event_date, importance_score DESC);
+
+CREATE INDEX IF NOT EXISTS idx_around_this_time_event_date
+ON around_this_time_events(event_date);
 
 -- Famous People indexes
 CREATE INDEX IF NOT EXISTS idx_people_birth_date ON famous_people(birth_date);

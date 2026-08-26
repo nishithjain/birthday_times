@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% block title %}World News Visual Review{% endblock %}
+{% block extra_head %}
+<style>
+    .world-news-review {
+        max-width: 1040px;
+        margin: 20px auto;
+        padding: 18px;
+        color: #17120c;
+        background: #ead9ae;
+        font-family: Georgia, serif;
+    }
+
+    .world-news-review h1 {
+        margin: 0 0 12px;
+        font-size: 24px;
+    }
+
+    .world-news-review-status {
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .world-news-review-status.warning {
+        color: #8f3d2e;
+    }
+
+    .world-news-review-meta {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+
+    .world-news-review-meta div {
+        border-top: 1px solid rgba(23, 18, 12, .35);
+        padding-top: 4px;
+    }
+
+    .world-news-review-meta strong,
+    .world-news-review-meta span {
+        display: block;
+    }
+
+    .world-news-review-meta span {
+        color: #6b5d4f;
+        font-size: 12px;
+    }
+
+    .world-news-review-url {
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        padding: 5px;
+        border: 1px solid rgba(23, 18, 12, .35);
+        background: transparent;
+        color: inherit;
+    }
+
+    .world-news-review-frame {
+        width: 568px;
+        height: 300px;
+        overflow: hidden;
+        margin: 0 auto 10px;
+        border: 1px solid rgba(23, 18, 12, .35);
+    }
+
+    .world-news-review-frame iframe {
+        display: block;
+        width: 568px;
+        height: 300px;
+        border: 0;
+    }
+
+    .world-news-review-progress {
+        height: 4px;
+        margin-bottom: 10px;
+        background: rgba(23, 18, 12, .15);
+    }
+
+    .world-news-review-progress span {
+        display: block;
+        height: 100%;
+        background: #8f3d2e;
+    }
+
+    .world-news-review-controls {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    .world-news-review-controls button {
+        padding: 6px 10px;
+        border: 1px solid #17120c;
+        background: transparent;
+        color: inherit;
+        font: 700 12px Georgia, serif;
+        cursor: pointer;
+    }
+
+    @media (max-width: 700px) {
+        .world-news-review {
+            margin: 0;
+        }
+
+        .world-news-review-meta {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .world-news-review-frame {
+            margin-left: 0;
+        }
+    }
+</style>
+{% endblock %}
+{% block content %}
+<main class="world-news-review" data-world-news-review-runner>
+    <h1>World News Visual Review</h1>
+    <div class="world-news-review-status" data-world-news-review-status aria-live="polite">Preparing review...</div>
+    <div class="world-news-review-meta">
+        <div><strong data-review-position>0 / 0</strong><span>Test</span></div>
+        <div><strong data-review-date>-</strong><span>Date</span></div>
+        <div><strong data-review-year>-</strong><span>Year</span></div>
+        <div><strong data-review-total>-</strong><span>Service item count</span></div>
+        <div><strong data-review-candidates>-</strong><span>Candidate item count</span></div>
+        <div><strong data-review-displayed>-</strong><span>Displayed item count</span></div>
+        <div><strong data-review-width>-</strong><span>Client / scroll width</span></div>
+        <div><strong data-review-height>-</strong><span>Client / scroll height</span></div>
+        <div><strong data-review-utilization>-</strong><span>Height utilization</span></div>
+        <div><strong data-review-fit>-</strong><span>Fit result</span></div>
+        <div><strong data-review-illustration>-</strong><span>Illustration selected</span></div>
+    </div>
+    <input class="world-news-review-url" data-review-url type="text" readonly aria-label="Current World News URL">
+    <div class="world-news-review-frame"><iframe data-review-frame title="Current World News review page"></iframe>
+    </div>
+    <div class="world-news-review-progress" aria-hidden="true"><span data-review-progress></span></div>
+    <div class="world-news-review-controls">
+        <button type="button" data-review-action="previous">Previous</button>
+        <button type="button" data-review-action="toggle">Pause</button>
+        <button type="button" data-review-action="next">Next</button>
+        <button type="button" data-review-action="restart">Restart</button>
+    </div>
+</main>
+{% endblock %}
+{% block extra_js %}
+<script>
+    (() => {
+        const runner = document.querySelector('[data-world-news-review-runner]');
+        const frame = runner.querySelector('[data-review-frame]');
+        const cases = {{ review_dates| tojson
+    }};
+    const intervalMs = {{ interval| tojson }} || 1000;
+    const fields = name => runner.querySelector(`[data-review-${name}]`);
+    let index = 0, paused = false, finished = false, timer = null, token = 0;
+    const tests = cases.map(date => ({ date, url: `/dev/sections/world-news?date=${encodeURIComponent(date)}` }));
+    const status = (text, warning = false) => { const element = runner.querySelector('[data-world-news-review-status]'); element.textContent = text; element.className = `world-news-review-status${warning ? ' warning' : ''}`; };
+    const clearTimer = () => { if (timer) window.clearTimeout(timer); timer = null; };
+    const update = test => { fields('position').textContent = `${index + 1} / ${tests.length}`; fields('date').textContent = test?.date || '-'; fields('year').textContent = test?.date?.slice(0, 4) || '-'; fields('url').value = test?.url || ''; fields('progress').style.width = tests.length ? `${((index + 1) / tests.length) * 100}%` : '0%'; };
+    function inspect() {
+        const documentRoot = frame.contentDocument;
+        const root = documentRoot?.querySelector('[data-world-news-container]');
+        const content = documentRoot?.querySelector('[data-world-news-content]');
+        const list = content?.querySelector('.world-news-list');
+        const fit = root?.dataset.worldNewsFit ? JSON.parse(root.dataset.worldNewsFit) : null;
+        if (!root || !content || !list || !fit) return false;
+        fields('total').textContent = fit.candidateCount ?? '-'; fields('candidates').textContent = fit.candidateCount ?? '-'; fields('displayed').textContent = fit.displayCount ?? '-';
+        fields('width').textContent = `${content.clientWidth} / ${list.scrollWidth}`; fields('height').textContent = `${content.clientHeight} / ${list.scrollHeight}`; fields('utilization').textContent = content.clientHeight ? `${Math.round((list.scrollHeight / content.clientHeight) * 100)}%` : '-'; fields('fit').textContent = fit.fitResult || '-'; fields('illustration').textContent = root.querySelector('.world-news-illustration img')?.getAttribute('src') || 'none';
+        return true;
+    }
+    function load() { clearTimer(); if (!tests.length) return; const test = tests[index]; update(test); status(`Loading ${index + 1} / ${tests.length}`); const current = ++token; let elapsed = 0; const poll = () => { if (current !== token) return; if (inspect()) { status(paused ? 'Paused' : `Viewing ${index + 1} / ${tests.length}`); if (!paused && index < tests.length - 1) timer = window.setTimeout(() => { index += 1; load(); }, intervalMs); else if (!paused) { finished = true; status('Review complete'); } return; } if (elapsed >= 5000) { status(`Load warning: ${test.date}`, true); return; } elapsed += 100; window.setTimeout(poll, 100); }; frame.onload = poll; frame.src = test.url; }
+    function pause() { paused = true; clearTimer(); runner.querySelector('[data-review-action="toggle"]').textContent = 'Resume'; status('Paused'); }
+    function resume() { paused = false; runner.querySelector('[data-review-action="toggle"]').textContent = 'Pause'; if (finished) { finished = false; load(); } else load(); }
+    function move(delta) { pause(); index = Math.max(0, Math.min(tests.length - 1, index + delta)); load(); pause(); }
+    function restart() { index = 0; paused = false; finished = false; runner.querySelector('[data-review-action="toggle"]').textContent = 'Pause'; load(); }
+    runner.addEventListener('click', event => { const action = event.target.closest('[data-review-action]')?.dataset.reviewAction; if (action === 'toggle') paused ? resume() : pause(); if (action === 'previous') move(-1); if (action === 'next') move(1); if (action === 'restart') restart(); });
+    load();
+}) ();
+</script>
+{% endblock %}

@@ -91,14 +91,14 @@ class EventRepository:
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT(event_date, wikidata_id)
             DO UPDATE SET
-                title = excluded.title,
-                description = excluded.description,
-                category = excluded.category,
-                country = excluded.country,
-                source = excluded.source,
-                source_url = excluded.source_url,
-                wikipedia_url = excluded.wikipedia_url,
-                importance_score = excluded.importance_score,
+                title = CASE WHEN excluded.title IS NOT NULL AND trim(excluded.title) <> '' THEN excluded.title ELSE historical_events.title END,
+                description = CASE WHEN excluded.description IS NOT NULL AND trim(excluded.description) <> '' THEN excluded.description ELSE historical_events.description END,
+                category = CASE WHEN excluded.category IS NOT NULL AND excluded.category <> 'unknown' THEN excluded.category ELSE historical_events.category END,
+                country = COALESCE(excluded.country, historical_events.country),
+                source = COALESCE(excluded.source, historical_events.source),
+                source_url = COALESCE(excluded.source_url, historical_events.source_url),
+                wikipedia_url = COALESCE(excluded.wikipedia_url, historical_events.wikipedia_url),
+                importance_score = MAX(historical_events.importance_score, excluded.importance_score),
                 date_property = excluded.date_property,
                 date_property_type = excluded.date_property_type
         """

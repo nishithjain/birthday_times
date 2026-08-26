@@ -23,18 +23,34 @@ Birthday Chronicles is a Python application that generates an interesting, histo
 
 ```SHELL
 
+# macOS / Linux
 unset PYTHONHOME
 unset PYTHONPATH
 
 python -m venv .venv
 
-source .venv/Scripts/activate
+source .venv/bin/activate
 
 pip install -r requirements.txt
 
 python -m backend.app
 
 ```
+
+On Windows PowerShell, use the equivalent commands below instead:
+
+```powershell
+$env:PYTHONHOME = $null
+$env:PYTHONPATH = $null
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python -m backend.app
+```
+
+The development review links below require this Flask server to be running on
+`http://127.0.0.1:5000`; they will not work when the README is opened without
+starting the server.
 
 ## World News Preparation
 
@@ -77,6 +93,9 @@ the browser without changing production routes or saving review output.
 | Extra! | <http://127.0.0.1:5000/dev/sections/extra-review> | 19 date and layout stress cases |
 | Masthead | <http://127.0.0.1:5000/dev/sections/masthead-review> | 18 date, era, and title-layout cases |
 | Arrival / Birth Story | <http://127.0.0.1:5000/dev/sections/arrival-review> | 10 names, locations, presidents, and era cases |
+| News Around the World | <http://127.0.0.1:5000/dev/sections/world-news-review> | 10 dates across 1950-2026 |
+| Around This Time | <http://127.0.0.1:5000/dev/sections/around-this-time-review> | 11 dates across 1950-2026, including low-data and boundary cases |
+| Famous Birthdays | <http://127.0.0.1:5000/dev/sections/famous-birthdays-review> | Occupation preference and fallback selection |
 
 The standalone Masthead component is available at
 <http://127.0.0.1:5000/dev/sections/masthead>. It renders the publication

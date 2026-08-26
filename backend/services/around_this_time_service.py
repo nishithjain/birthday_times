@@ -4,12 +4,23 @@ import re
 from datetime import date
 from typing import Any, Dict, Iterable, Optional
 
-from backend.repositories.event_repository import EventRepository
-from backend.services.accuracy import EXACT_DATE, NEAR_DATE
+from backend.repositories.around_this_time_repository import AroundThisTimeRepository
+from backend.services.accuracy import NEAR_DATE
 from backend.services.illustration_service import illustration_service
+from backend.services.historical_event_quality import (
+    accuracy_for_event,
+    classify_event_date_precision,
+    deduplicate_events,
+    is_usable_around_this_time_event,
+    quality_score,
+)
+from backend.services.historical_event_quality import YEAR_LEVEL
 
-WINDOWS = (14, 30, 45)
+WINDOWS = (0, 30, 60, 90, 120, 150, 180)
+DEFAULT_CANDIDATE_LIMIT = 6
+MAX_CANDIDATES = 6
 TARGET_FILL = 0.89
+SHORT_DESCRIPTION_MAX_CHARS = 90
 
 
 def _short_description(value: Optional[str]) -> Optional[str]:
@@ -21,14 +32,37 @@ def _short_description(value: Optional[str]) -> Optional[str]:
     return selected or text
 
 
+def _sentence_case(value: Optional[str]) -> Optional[str]:
+    """Capitalize the first letter without changing proper-noun casing."""
+    text = " ".join((value or "").split())
+    if not text:
+        return None
+    match = re.search(r"[A-Za-z]", text)
+    if not match:
+        return text
+    index = match.start()
+    return text[:index] + text[index].upper() + text[index + 1:]
+
+
+def _has_short_description(event) -> bool:
+    description = _short_description(getattr(event, "description", None))
+    return bool(description) and len(description) <= SHORT_DESCRIPTION_MAX_CHARS
+
+
 def _title_key(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", " ", value.casefold()).strip()
+
+
+def _display_text(event) -> str:
+    title = _sentence_case(getattr(event, "title", None)) or ""
+    description = _sentence_case(_short_description(getattr(event, "description", None))) or ""
+    return max(title, description, key=len)
 
 
 class AroundThisTimeService:
     """Build a Chronicle-ready nearby-event payload from SQLite."""
 
-    def __init__(self, repository=EventRepository, illustrations=illustration_service):
+    def __init__(self, repository=AroundThisTimeRepository, illustrations=illustration_service):
         self.repository = repository
         self.illustrations = illustrations
 
@@ -36,10 +70,15 @@ class AroundThisTimeService:
     def _score(event, target: date) -> float:
         distance = abs((event.event_date - target).days)
         proximity = max(0, 20 - distance * 0.5)
-        description = 3 if event.description else 0
-        precision = 4 if event.date_property_type not in {"year", "year_only"} else -8
-        category = 1 if event.category and event.category != "unknown" else 0
-        return int(event.importance_score or 0) * 4 + proximity + description + precision + category
+        return quality_score(event) + proximity
+
+    @staticmethod
+    def _identity(event) -> str:
+        """Prefer a stable source ID, falling back to normalized title."""
+        source_id = getattr(event, "wikidata_id", None)
+        if source_id:
+            return f"source:{source_id}"
+        return f"title:{_title_key(event.title)}"
 
     @staticmethod
     def _illustration_context(category: Optional[str]) -> str:
@@ -61,24 +100,50 @@ class AroundThisTimeService:
         birth_date: date,
         newspaper_style_id: Optional[str] = None,
         excluded_event_ids: Optional[Iterable[str]] = None,
+        limit: int = DEFAULT_CANDIDATE_LIMIT,
     ) -> Dict[str, Any]:
+        target_count = max(5, min(int(limit), MAX_CANDIDATES))
         excluded = {str(item) for item in (excluded_event_ids or [])}
-        seen_titles = set()
+        seen_ids = set()
         candidates = []
+        candidate_windows = {}
         for window in WINDOWS:
-            raw_events = self.repository.get_events_near_date(birth_date, window, window)
+            raw_events = self.repository.get_events_near_date(birth_date, window, window, limit=100)
             for event in raw_events:
-                if event.date_property_type in {"year", "year_only"}:
+                if event.event_date.year != birth_date.year:
+                    continue
+                if classify_event_date_precision(event) == YEAR_LEVEL:
+                    continue
+                if not is_usable_around_this_time_event(event, allow_sparse=window > 30):
                     continue
                 if event.wikidata_id and event.wikidata_id in excluded:
                     continue
-                title_key = _title_key(event.title)
-                if title_key in seen_titles:
+                identity = self._identity(event)
+                if identity in seen_ids:
                     continue
-                seen_titles.add(title_key)
+                seen_ids.add(identity)
                 candidates.append(event)
-            if len(candidates) >= 3 or window == WINDOWS[-1]:
-                break
+                candidate_windows.setdefault(identity, window)
+        if len(deduplicate_events(candidates)) < target_count:
+            year_start = date(birth_date.year, 1, 1)
+            year_end = date(birth_date.year, 12, 31)
+            raw_events = self.repository.get_between_dates(year_start, year_end, limit=100)
+            for event in raw_events:
+                if event.event_date.year != birth_date.year:
+                    continue
+                if classify_event_date_precision(event) == YEAR_LEVEL:
+                    continue
+                if not is_usable_around_this_time_event(event, allow_sparse=True):
+                    continue
+                if event.wikidata_id and event.wikidata_id in excluded:
+                    continue
+                identity = self._identity(event)
+                if identity in seen_ids:
+                    continue
+                seen_ids.add(identity)
+                candidates.append(event)
+                candidate_windows.setdefault(identity, WINDOWS[-1])
+        deduplicated = deduplicate_events(candidates)
         if not candidates:
             return {
                 "available": False,
@@ -93,34 +158,50 @@ class AroundThisTimeService:
                 "reason": "nearby_events_unavailable",
             }
         ranked = sorted(
-            candidates,
-            key=lambda event: (-self._score(event, birth_date), abs((event.event_date - birth_date).days), event.title.casefold(), event.wikidata_id or ""),
-        )
+            deduplicated,
+            key=lambda event: (
+                -int(getattr(event, "importance_score", 0) or 0),
+                -len(_display_text(event)),
+                abs((event.event_date - birth_date).days),
+                event.title.casefold(),
+                self._identity(event),
+            ),
+        )[:target_count]
         featured = ranked[0]
-        featured_payload = {
-            "id": featured.wikidata_id,
-            "title": featured.title,
-            "date": featured.event_date.isoformat(),
-            "dateDisplay": featured.event_date.strftime("%b %-d, %Y") if not __import__("os").name == "nt" else featured.event_date.strftime("%b %#d, %Y"),
-            "daysFromBirthday": (featured.event_date - birth_date).days,
-            "description": _short_description(featured.description),
-            "category": featured.category,
-            "importance": featured.importance_score,
-            "accuracyType": EXACT_DATE if featured.event_date == birth_date else NEAR_DATE,
-        }
-        secondary = []
-        for event in ranked[1:]:
-            secondary.append({
-                "id": event.wikidata_id,
-                "title": event.title,
-                "date": event.event_date.isoformat(),
-                "dateDisplay": event.event_date.strftime("%b %-d") if not __import__("os").name == "nt" else event.event_date.strftime("%b %#d"),
-                "daysFromBirthday": (event.event_date - birth_date).days,
-                "description": _short_description(event.description),
-                "category": event.category,
-                "importance": event.importance_score,
-                "accuracyType": EXACT_DATE if event.event_date == birth_date else NEAR_DATE,
-            })
+        def payload(event):
+            identity = self._identity(event)
+            distance = (event.event_date - birth_date).days
+            event_accuracy = accuracy_for_event(event, birth_date)
+            clean_description = _short_description(event.description)
+            formatted_title = _sentence_case(event.title)
+            formatted_description = _sentence_case(clean_description)
+            display_text = max(
+                (formatted_title, formatted_description or ""),
+                key=len,
+            )
+            return {
+            "id": event.wikidata_id,
+            "wikidataId": event.wikidata_id,
+            "title": formatted_title,
+            "date": event.event_date.isoformat(),
+            "eventDate": event.event_date.isoformat(),
+            "dateDisplay": event.event_date.strftime("%b %-d, %Y") if not __import__("os").name == "nt" else event.event_date.strftime("%b %#d, %Y"),
+            "daysFromBirthday": distance,
+            "days_from_birthday": distance,
+            "absDaysFromBirthday": abs(distance),
+            "description": formatted_description,
+            "displayText": display_text,
+            "category": event.category,
+            "importance": event.importance_score,
+            "qualityScore": self._score(event, birth_date),
+            "dateSource": event.date_property or event.date_property_type,
+            "selectionWindow": candidate_windows[identity],
+            "accuracyType": event_accuracy,
+            "accuracy": event_accuracy,
+            }
+
+        featured_payload = payload(featured)
+        secondary = [payload(event) for event in ranked[1:]]
         context = self._illustration_context(featured.category)
         illustration = self.illustrations.get_for_context(context, birth_date.year) or self.illustrations.get_for_context("world", birth_date.year)
         illustration_id = illustration.get("id") if illustration else None

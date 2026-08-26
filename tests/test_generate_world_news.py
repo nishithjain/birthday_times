@@ -5,7 +5,11 @@ from datetime import date
 from unittest.mock import patch
 
 from backend.models.event import HistoricalEvent
-from backend.tools.generate_world_news import WorldNewsBuilder
+from backend.tools.generate_world_news import (
+    WorldNewsBuilder,
+    build_world_news_display_text,
+    world_news_rejection_reason,
+)
 
 
 def event(title, day, category, importance, qid):
@@ -22,6 +26,44 @@ def event(title, day, category, importance, qid):
 
 
 class TestWorldNewsBuilder:
+    def test_quality_filter_rejects_generic_year_decade_and_metadata(self):
+        assert world_news_rejection_reason(event("2020", 1, "unknown", 8, "Q1")) == "generic year"
+        assert world_news_rejection_reason(event("2020s", 1, "unknown", 8, "Q2")) == "decade"
+        assert world_news_rejection_reason(event("List of events in 2020", 1, "unknown", 8, "Q3")) == "metadata/list page"
+
+    def test_quality_filter_rejects_contextless_one_word_and_entertainment(self):
+        no_context = event("Dracula", 1, "unknown", 8, "Q1")
+        no_context.description = None
+        assert world_news_rejection_reason(no_context) == "insufficient context"
+        television = event("Dracula", 1, "entertainment", 8, "Q2")
+        television.description = "2020 British horror television series"
+        assert world_news_rejection_reason(television) == "ordinary entertainment"
+        assert build_world_news_display_text(television) is None
+
+    def test_quality_filter_rejects_non_event_unknown_records(self):
+        overview = event("2020 in sports", 1, "unknown", 8, "Q1")
+        overview.description = "overview of sports-related events during the year of 2020"
+        assert world_news_rejection_reason(overview) == "insufficient context"
+        place = event("Sa Pa", 1, "unknown", 8, "Q2")
+        place.description = "ward of Lao Cai province, Vietnam"
+        assert world_news_rejection_reason(place) == "insufficient context"
+
+    def test_meaningful_year_event_and_international_sport_get_display_text(self):
+        formula_one = event("2020 Formula One World Championship", 1, "sports", 8, "Q1")
+        formula_one.description = "71st running of the Formula One World Championship"
+        display_text = build_world_news_display_text(formula_one)
+        assert display_text
+        assert display_text != formula_one.title
+        assert "71st running" in display_text
+
+        sports = event("2022 FIFA World Cup qualification (CONMEBOL)", 1, "sports", 8, "Q2")
+        assert build_world_news_display_text(sports).startswith("The 2022 FIFA World Cup")
+
+    def test_timeline_is_rejected_without_a_world_news_category(self):
+        timeline = event("Timeline of the COVID-19 pandemic", 1, "unknown", 8, "Q1")
+        timeline.description = "timeline"
+        assert world_news_rejection_reason(timeline) == "generic timeline page"
+
     def test_rank_dedupe_balance_and_candidate_limit(self, tmp_path):
         records = [
             event("Apollo 11 Moon Landing", 1, "science_space", 10, "Q1"),

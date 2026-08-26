@@ -100,7 +100,12 @@ class FamousBirthdaysService:
         except (OSError, ValueError):
             return []
 
-    def _select(self, candidates: List[FamousPerson], month: int, day: int, limit: int) -> List[FamousPerson]:
+    @staticmethod
+    def _has_meaningful_occupation(person: FamousPerson) -> bool:
+        value = (person.occupation or "").strip()
+        return value.casefold() not in {"", "unknown", "n/a", "none", "null"}
+
+    def _rank(self, candidates: List[FamousPerson], month: int, day: int) -> List[FamousPerson]:
         by_id = {person.wikidata_id: person for person in candidates if person.wikidata_id}
         selected: List[FamousPerson] = []
         for person_id in self._override_ids(month, day):
@@ -110,17 +115,19 @@ class FamousBirthdaysService:
         ranked = sorted(candidates, key=lambda person: (-person.notability_score, person.birth_date, person.name.lower(), person.wikidata_id or ""))
         used_groups = {_group(person.occupation) for person in selected}
         for person in ranked:
-            if len(selected) >= limit:
-                break
             if person not in selected and _group(person.occupation) not in used_groups:
                 selected.append(person)
                 used_groups.add(_group(person.occupation))
         for person in ranked:
-            if len(selected) >= limit:
-                break
             if person not in selected:
                 selected.append(person)
-        return selected[:limit]
+        return selected
+
+    def _select(self, candidates: List[FamousPerson], month: int, day: int, limit: int) -> List[FamousPerson]:
+        ranked = self._rank(candidates, month, day)
+        with_occupation = [person for person in ranked if self._has_meaningful_occupation(person)]
+        without_occupation = [person for person in ranked if not self._has_meaningful_occupation(person)]
+        return (with_occupation + without_occupation)[:limit]
 
     def get_famous_birthdays(self, birth_date: date, person_name: Optional[str] = None, as_of_date: Optional[date] = None, limit: int = 5, newspaper_style_id: Optional[str] = None) -> Dict[str, Any]:
         as_of_date = as_of_date or date.today()

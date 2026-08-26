@@ -1,13 +1,38 @@
-<article class="chronicle-section chronicle-famous-birthdays article-celebrity" data-section="famous-birthdays">
-    <div class="article-header">
-        <h3 class="article-headline">{{ chronicle.famous_birthdays.headline if chronicle.famous_birthdays else
-            'Celebrities Share Your Birthday' }}</h3>
+<section class="chronicle-section chronicle-famous-birthdays famous-birthdays-fit-pending"
+    data-section="famous-birthdays" data-famous-birthdays-container>
+    {% set birthdays = chronicle.famous_birthdays %}
+    <header class="famous-birthdays-header">
+        <h2 class="famous-birthdays-title">{{ birthdays.headline if birthdays else 'Famous Birthdays' }}</h2>
+        <p class="famous-birthdays-deck">Born On {{ birthdays.monthName if birthdays else
+            chronicle.person.birth_date|year }} {{ birthdays.day if birthdays else '' }}</p>
+    </header>
+    <div class="famous-birthdays-rule" aria-hidden="true"></div>
+    <div class="famous-birthdays-content" data-famous-birthdays-content>
+        {% if birthdays and birthdays.people %}
+        <p class="famous-birthdays-intro">{{ birthdays.introText }}</p>
+        <ul class="famous-birthdays-list" data-famous-birthdays-list>
+            {% for person in birthdays.people %}
+            <li class="famous-birthday-person" data-famous-birthday-person>
+                <strong>{{ person.name }}</strong>
+                {% if person.occupation %}<span>{{ person.occupation }}</span>{% endif %}
+                <small>{{ person.birthDate|year }}</small>
+            </li>
+            {% endfor %}
+        </ul>
+        {% if birthdays.daysAliveText %}<p class="famous-birthdays-days">{{ birthdays.daysAliveText }}</p>{% endif %}
+        {% set occupation_icons = (chronicle.illustrations or {}).get('famousPeopleOccupationIcons', {}) %}
+        <div class="famous-birthday-icons" data-famous-birthday-icons hidden aria-hidden="true">
+            {% for person in birthdays.people %}
+            {% if occupation_icons.get(person.occupation) %}<img class="famous-birthday-icon"
+                src="{{ url_for('static', filename=occupation_icons[person.occupation].displayPath) }}" alt=""
+                data-famous-birthday-icon data-person-index="{{ loop.index0 }}"
+                data-occupation="{{ person.occupation }}">{% endif %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="famous-birthdays-empty">Famous birthdays from this day are not available.</p>
+        {% endif %}
     </div>
-    <div class="image-slot image-slot--portrait image-slot--photo image-slot--celebrity-portrait">
-        <div class="image-placeholder">CELEBRITY / ACTOR</div>
-    </div>
-    <div class="celebrity-content">{% if chronicle.famous_birthdays and chronicle.famous_birthdays.people %}<p
-            class="article-body">{{ chronicle.famous_birthdays.introText }}</p>{% else %}<p
-            class="article-body placeholder-text">Famous birthdays from this day will appear here as the archive grows.
-        </p>{% endif %}</div>
-</article>
+    <script type="application/json"
+        data-famous-birthdays-candidates>{{ (birthdays.people if birthdays else [])|tojson }}</script>
+</section>

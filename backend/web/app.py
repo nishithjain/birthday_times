@@ -456,6 +456,49 @@ def development_weather_review():
     )
 
 
+@app.route("/dev/sections/world-news-review")
+def development_world_news_review():
+    try:
+        interval = min(max(int(request.args.get("interval", 1000)), 500), 10000)
+    except ValueError:
+        interval = 1000
+    review_dates = [f"{year}-05-09" for year in (1950, 1955, 1960, 1970, 1982, 1990, 2000, 2010, 2020, 2026)]
+    return render_template(
+        "chronicles/test_pages/world_news_review_runner.html",
+        review_dates=review_dates,
+        interval=interval,
+    )
+
+
+@app.route("/dev/sections/around-this-time-review")
+def development_around_this_time_review():
+    try:
+        interval = min(max(int(request.args.get("interval", 1000)), 500), 10000)
+    except ValueError:
+        interval = 1000
+    return render_template(
+        "chronicles/test_pages/around_this_time_review_runner.html",
+        review_dates=[
+            "1950-01-01", "1950-05-09", "1960-05-09", "1970-05-09",
+            "1982-05-09", "1990-05-09", "2000-05-09", "2010-05-09",
+            "2020-05-09", "2026-05-09", "2020-12-29",
+        ],
+        interval=interval,
+    )
+
+
+@app.route("/dev/sections/famous-birthdays-review")
+def development_famous_birthdays_review():
+    return render_template(
+        "chronicles/test_pages/famous_birthdays_review_runner.html",
+        review_dates=[
+            "1950-05-09", "1955-09-30", "1960-05-09", "1970-11-29",
+            "1982-05-09", "1990-09-30", "2000-02-29", "2010-05-09",
+            "2020-02-29", "2025-12-31",
+        ],
+    )
+
+
 @app.route("/dev/sections/<section_name>")
 def development_section(section_name):
     template_names = {

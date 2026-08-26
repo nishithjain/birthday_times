@@ -9,6 +9,9 @@ import argparse
 import sys
 import time
 import logging
+import re
+import json
+from pathlib import Path
 from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import List, Dict, Any, Optional, Tuple
@@ -49,6 +52,9 @@ DATE_PROPERTIES = {
     "P580": "start_time",      # Start of an event
     "P571": "inception",       # Inception/founding date
 }
+DAY_PRECISION = 11
+DEFAULT_CHECKPOINT_PATH = PROJECT_ROOT / "backend" / "data" / "import-state" / "wikidata_events.json"
+REQUEST_DELAY = config.wikidata_rate_limit
 
 PROPERTY_PRIORITY = {
     "P585": 1,
@@ -182,8 +188,13 @@ SELECT DISTINCT
     ?typeLabel
     ?article
     ?sitelinks
+    ?datePrecision
 WHERE {{
     ?event wdt:{property_id} ?eventDate .
+    ?event p:{property_id} ?dateStatement .
+    ?dateStatement psv:{property_id} ?dateValueNode .
+    ?dateValueNode wikibase:timePrecision ?datePrecision .
+    FILTER (?datePrecision = {DAY_PRECISION})
     FILTER (
         ?eventDate >= "{start_value}"^^xsd:dateTime &&
         ?eventDate < "{end_value}"^^xsd:dateTime
@@ -217,9 +228,13 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX schema: <http://schema.org/>
 
 SELECT DISTINCT ?event ?eventLabel ?eventDescription ?eventDate ?country
-    ?countryLabel ?type ?typeLabel ?article ?sitelinks
+    ?countryLabel ?type ?typeLabel ?article ?sitelinks ?datePrecision
 WHERE {{
     ?event wdt:{property_id} ?eventDate .
+    ?event p:{property_id} ?dateStatement .
+    ?dateStatement psv:{property_id} ?dateValueNode .
+    ?dateValueNode wikibase:timePrecision ?datePrecision .
+    FILTER (?datePrecision = {DAY_PRECISION})
     FILTER (?eventDate >= "{start_value}"^^xsd:dateTime &&
             ?eventDate < "{end_value}"^^xsd:dateTime)
     ?article schema:about ?event ;
@@ -326,6 +341,8 @@ def convert_results(data: Dict, property_id: str) -> List[Dict[str, Any]]:
             continue
         
         try:
+            precision_value = get_value(row, "datePrecision")
+            precision = int(precision_value) if precision_value else None
             clean_date = datetime.fromisoformat(
                 event_date_value.replace("Z", "+00:00")
             ).date().isoformat()
@@ -352,6 +369,7 @@ def convert_results(data: Dict, property_id: str) -> List[Dict[str, Any]]:
                 "wikipedia_url": get_value(row, "article"),
                 "date_property": property_id,
                 "date_property_type": DATE_PROPERTIES.get(property_id, "unknown"),
+                "date_precision": precision,
                 "sitelinks": sitelinks,
                 "types": []
             }
@@ -396,6 +414,20 @@ def is_excluded(event: Dict) -> Tuple[bool, Optional[str]]:
         for keyword in EXCLUDED_TYPE_KEYWORDS:
             if keyword in type_label:
                 return True, f"Excluded type: {type_label}"
+
+    title = normalize(event.get("title", ""))
+    if not title or re.fullmatch(r"(?:\d{4}|\d{4}s)", title):
+        return True, "Generic year or decade title"
+    if title.startswith(("list of ", "category:", "portal:", "outline of ", "index of ", "timeline of ")):
+        return True, "Metadata or navigation title"
+
+    description = normalize(event.get("description", ""))
+    if not description or description in {"year", "event", "historical event", "calendar year", "decade", "period"}:
+        return True, "Weak description"
+    if description == title or len(re.sub(r"[^a-z0-9]+", "", description)) < 15:
+        return True, "Weak description"
+    if event.get("category") == "entertainment":
+        return True, "Ordinary entertainment"
     
     return False, None
 
@@ -488,6 +520,10 @@ def classify_events(events: List[Dict]) -> Tuple[List[HistoricalEvent], List[Dic
     rejected = []
     
     for event in events:
+        if event.get("date_precision") != DAY_PRECISION:
+            event["filter_reason"] = "Date is not day-level precision"
+            rejected.append(event)
+            continue
         excluded, reason = is_excluded(event)
         if excluded:
             event["filter_reason"] = reason
@@ -495,6 +531,15 @@ def classify_events(events: List[Dict]) -> Tuple[List[HistoricalEvent], List[Dic
             continue
         
         category = determine_category(event)
+
+        if category == "entertainment":
+            event["filter_reason"] = "Ordinary entertainment"
+            rejected.append(event)
+            continue
+        if category == "sports" and event.get("sitelinks", 0) < 50:
+            event["filter_reason"] = "Sports event below global-notability threshold"
+            rejected.append(event)
+            continue
         
         # Filter minor disasters only (still keep major ones)
         if category == "disaster" and event.get("sitelinks", 0) < 5:
@@ -553,6 +598,8 @@ def fetch_events(target_date: date, limit_per_property: int = 100) -> Tuple[List
         
         property_events = convert_results(data, property_id)
         logger.info(f"  Found {len(property_events)} candidate records.")
+        if property_id != list(DATE_PROPERTIES)[-1]:
+            time.sleep(REQUEST_DELAY)
         
         for event in property_events:
             key = (event["event_date"], event["wikidata_id"])
@@ -592,6 +639,8 @@ def fetch_events_for_year(year: int, limit_per_property: int = 500) -> Tuple[Lis
         except RuntimeError as exc:
             logger.warning("Error querying %s for %s: %s", property_id, year, exc)
             continue
+        if property_id != list(DATE_PROPERTIES)[-1]:
+            time.sleep(REQUEST_DELAY)
         for event in convert_results(data, property_id):
             key = (event["event_date"], event["wikidata_id"])
             if key not in collected:
@@ -614,6 +663,26 @@ def import_year(year: int, limit: int = 500, dry_run: bool = False) -> Tuple[int
     if not dry_run:
         EventRepository.save(accepted)
     return len(accepted), new_count, len(accepted) - new_count
+
+
+def load_checkpoint(path: Path) -> set[int]:
+    """Load completed years; a missing or malformed checkpoint is empty."""
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        return {int(year) for year in payload.get("completed_years", [])}
+    except (OSError, ValueError, TypeError):
+        return set()
+
+
+def save_checkpoint(path: Path, completed_years: set[int]) -> None:
+    """Persist a completed-year checkpoint after the database transaction."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(
+        json.dumps({"completed_years": sorted(completed_years)}, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    temporary.replace(path)
 
 
 # ============================================================
@@ -690,8 +759,14 @@ def main() -> None:
     parser.add_argument("--dry-run", action="store_true", help="Do not save to SQLite")
     parser.add_argument("--show-filtered", action="store_true", help="Display rejected records")
     parser.add_argument("--replace-date", action="store_true", help="Delete existing data for this date")
+    parser.add_argument("--checkpoint-file", type=Path, default=DEFAULT_CHECKPOINT_PATH, help="Completed-year checkpoint path")
+    parser.add_argument("--no-resume", action="store_true", help="Ignore an existing year checkpoint")
+    parser.add_argument("--delay", type=float, default=config.wikidata_rate_limit, help="Seconds between Wikidata property requests")
+    parser.add_argument("--commit", action="store_true", help="Write accepted records (default for non-dry-run mode)")
     
     args = parser.parse_args()
+    global REQUEST_DELAY
+    REQUEST_DELAY = max(0.0, args.delay)
 
     range_mode = args.year is not None or args.from_year is not None or args.to_year is not None
     if range_mode and args.date:
@@ -703,12 +778,19 @@ def main() -> None:
             parser.error("provide --year or both --from-year and --to-year")
         print("Importing historical events")
         inserted = existing = failed = 0
+        completed_years = set() if args.no_resume or args.dry_run else load_checkpoint(args.checkpoint_file)
         for year in range(start, end + 1):
+            if year in completed_years:
+                print(f"{year} ... skipped (checkpoint complete)")
+                continue
             try:
                 candidates, new_count, existing_count = import_year(year, args.limit, args.dry_run)
                 inserted += new_count
                 existing += existing_count
                 print(f"{year} ... {candidates} candidates / {new_count} inserted / {existing_count} existing")
+                if not args.dry_run:
+                    completed_years.add(year)
+                    save_checkpoint(args.checkpoint_file, completed_years)
             except Exception as exc:
                 failed += 1
                 print(f"{year} ... FAILED: {exc}")

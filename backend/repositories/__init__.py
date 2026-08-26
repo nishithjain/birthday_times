@@ -7,6 +7,7 @@ from .movie_repository import MovieRepository
 from .weather_repository import WeatherRepository
 from .weather_location_repository import WeatherLocationRepository
 from .music_repository import MusicRepository
+from .around_this_time_repository import AroundThisTimeRepository
 
 __all__ = [
     "EventRepository",
@@ -15,4 +16,5 @@ __all__ = [
     "WeatherRepository",
     "WeatherLocationRepository",
     "MusicRepository",
+    "AroundThisTimeRepository",
 ]

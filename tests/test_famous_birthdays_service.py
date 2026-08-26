@@ -66,3 +66,36 @@ def test_february_29_and_future_safety(tmp_path):
     assert result["monthDay"] == "02-29"
     assert result["daysAlive"] is None
     assert result["daysAliveText"] == ""
+
+
+def test_selection_prefers_occupied_people_and_preserves_fallback_order(tmp_path):
+    people = [
+        person("No Occupation", "1980-05-09", 10, None, "Q1"),
+        person("Actor", "1981-05-09", 8, "actor", "Q2"),
+        person("Historian", "1982-05-09", 7, "Historian", "Q3"),
+        person("Blank", "1983-05-09", 6, "  ", "Q4"),
+        person("Singer", "1984-05-09", 5, "singer", "Q5"),
+    ]
+    result = service(tmp_path, people).get_famous_birthdays(date(1982, 5, 9), limit=3)
+    assert [value["name"] for value in result["people"]] == ["Actor", "Singer", "Historian"]
+
+
+def test_selection_fills_from_missing_occupation_candidates(tmp_path):
+    people = [
+        person("Actor", "1981-05-09", 8, "actor", "Q1"),
+        person("Writer", "1982-05-09", 7, "writer", "Q2"),
+        person("Fallback One", "1983-05-09", 9, None, "Q3"),
+        person("Fallback Two", "1984-05-09", 6, "", "Q4"),
+    ]
+    result = service(tmp_path, people).get_famous_birthdays(date(1982, 5, 9), limit=3)
+    assert [value["name"] for value in result["people"]] == ["Actor", "Writer", "Fallback One"]
+
+
+def test_selection_treats_placeholders_as_missing_and_keeps_non_priority_occupation(tmp_path):
+    people = [
+        person("Placeholder", "1980-05-09", 10, "Unknown", "Q1"),
+        person("Historian", "1981-05-09", 5, "Historian", "Q2"),
+        person("Whitespace", "1982-05-09", 9, "   ", "Q3"),
+    ]
+    result = service(tmp_path, people).get_famous_birthdays(date(1982, 5, 9), limit=2)
+    assert [value["name"] for value in result["people"]] == ["Historian", "Placeholder"]
