@@ -7,7 +7,7 @@ import traceback
 from datetime import datetime, date
 from pathlib import Path
 
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, abort, render_template, request, redirect, url_for, flash
 
 # Add project root to path
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -223,8 +223,34 @@ def generate_chronicle():
         return redirect(url_for("index"))
     
     return render_template(
-        chronicle["newspaper_style"]["template"],
-        chronicle=chronicle,
+        "chronicles/master/chronicle_master.html",
+        chronicle=_prepare_modular_chronicle(chronicle),
+        show_print_controls=True,
+    )
+
+
+@app.route("/chronicle/export")
+def export_chronicle_page():
+    """Render the production Chronicle artifact for browser-based export."""
+    raw_date = request.args.get("date", "").strip()
+    try:
+        birth_date = datetime.strptime(raw_date, "%Y-%m-%d").date()
+    except ValueError:
+        abort(400, "date must use YYYY-MM-DD format")
+
+    if not date(1950, 1, 1) <= birth_date <= date.today():
+        abort(400, "date must be between 1950-01-01 and today")
+
+    chronicle = ChronicleService.generate_chronicle(
+        birth_date=birth_date,
+        name=request.args.get("name") or None,
+        country=request.args.get("country", "India"),
+        birth_city=request.args.get("city") or None,
+    )
+    return render_template(
+        "chronicles/master/chronicle_master.html",
+        chronicle=_prepare_modular_chronicle(chronicle),
+        show_print_controls=False,
     )
 
 
@@ -241,6 +267,26 @@ def weather_copy_templates():
         (PROJECT_ROOT / "backend" / "data" / "weather_copy_templates.json").read_text(encoding="utf-8"),
         mimetype="application/json",
     )
+
+
+def _prepare_modular_chronicle(chronicle):
+    """Add presentation metadata required by the modular Chronicle template."""
+    chronicle["section_stylesheets"] = [
+        f"css/chronicles/sections/{name}.css"
+        for name in ("masthead", "weather", "arrival", "world_news", "famous_birthdays", "around_this_time", "movies", "music", "zodiac", "what_things_cost", "sports", "footer")
+    ]
+    style_id = str(chronicle.get("newspaper_style", {}).get("id", "2015"))
+    chronicle["extraOrnament"] = EXTRA_ORNAMENTS.get(style_id, "•")
+    chronicle["mastheadTitle"] = MASTHEAD_TITLES.get(style_id, "The Birthday Times")
+    dispatch = NEWS_DISPATCH_PRESENTATION.get(style_id, NEWS_DISPATCH_PRESENTATION["2015"])
+    chronicle["arrival"]["dispatchLabel"] = dispatch["label"]
+    chronicle["arrival"]["dispatchArtwork"] = {
+        "displayPath": f"images/illustrations/originals/news_dispatch/{dispatch['image']}",
+        "alt": dispatch["alt"],
+        "natural": dispatch["natural"],
+        "expected": dispatch["expected"],
+    }
+    return chronicle
 
 
 def _development_chronicle():
@@ -262,27 +308,34 @@ def _development_chronicle():
             "temperatureCharacter": "cold",
             "illustration": illustration_service.resolve_by_id("weather_snow", "1990"),
         })
-    chronicle["section_stylesheets"] = [
-        f"css/chronicles/sections/{name}.css"
-        for name in ("masthead", "weather", "arrival", "world_news", "famous_birthdays", "around_this_time", "movies", "music", "zodiac", "what_things_cost", "sports", "footer")
-    ]
-    style_id = str(chronicle.get("newspaper_style", {}).get("id", "2015"))
-    chronicle["extraOrnament"] = EXTRA_ORNAMENTS.get(style_id, "•")
-    chronicle["mastheadTitle"] = MASTHEAD_TITLES.get(style_id, "The Birthday Times")
-    dispatch = NEWS_DISPATCH_PRESENTATION.get(style_id, NEWS_DISPATCH_PRESENTATION["2015"])
-    chronicle["arrival"]["dispatchLabel"] = dispatch["label"]
-    chronicle["arrival"]["dispatchArtwork"] = {
-        "displayPath": f"images/illustrations/originals/news_dispatch/{dispatch['image']}",
-        "alt": dispatch["alt"],
-        "natural": dispatch["natural"],
-        "expected": dispatch["expected"],
-    }
-    return chronicle
+    return _prepare_modular_chronicle(chronicle)
 
 
 @app.route("/dev/chronicle-master")
 def development_master():
     return render_template("chronicles/master/chronicle_master.html", chronicle=_development_chronicle())
+
+
+@app.route("/dev/chronicle-master-review")
+def development_master_review():
+    try:
+        interval = min(max(int(request.args.get("interval", 1000)), 500), 10000)
+    except ValueError:
+        interval = 1000
+    return render_template(
+        "chronicles/test_pages/chronicle_master_review_runner.html",
+        review_dates=[
+            "1950-01-01", "1950-05-09", "1955-09-30", "1959-12-31",
+            "1960-02-29", "1964-07-20", "1969-12-31", "1970-01-01",
+            "1975-11-29", "1979-06-15", "1980-02-16", "1982-01-25",
+            "1982-05-09", "1989-12-31", "1990-01-01", "1995-09-30",
+            "1999-12-31", "2000-02-29", "2000-05-09", "2004-12-31",
+            "2005-01-01", "2009-08-26", "2010-05-09", "2014-12-31",
+            "2015-01-01", "2018-11-02", "2020-02-29", "2020-12-29",
+            "2025-05-09", "2026-05-09",
+        ],
+        interval=interval,
+    )
 
 
 @app.route("/dev/sections/masthead-review")

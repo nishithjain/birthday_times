@@ -10,7 +10,6 @@
     color: var(--ink, #17120c);
     background: var(--paper-light, #e5cc94);
     border: 1px solid var(--rule-light, rgba(30, 20, 10, .25));
-    border-radius: 6px;
     font-family: var(--body-font, Georgia, "Times New Roman", serif);
 }
 

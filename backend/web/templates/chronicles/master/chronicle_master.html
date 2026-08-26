@@ -1,29 +1,60 @@
 {% extends "base.html" %}
-{% block title %}Chronicle Modular Preview - {{ chronicle.person.birth_date_display }}{% endblock %}
+{% block title %}The Birthday Chronicle - {{ chronicle.person.birth_date_display }}{% endblock %}
 {% block extra_head %}
+<style>
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+    }
+</style>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/chronicles/chronicle_common.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/chronicles/chronicle_master.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chronicles/sections/bottom.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chronicles/sections/extra.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chronicles/sections/eagle_logo.css') }}">
 {% for stylesheet in chronicle.section_stylesheets|default([]) %}
 <link rel="stylesheet" href="{{ url_for('static', filename=stylesheet) }}">{% endfor %}
 {% endblock %}
 {% block content %}
-<div class="chronicle-master chronicle-section-development">
-    {% include "chronicles/sections/masthead.html" %}
-    {% include "chronicles/sections/eagle_logo.html" %}
-    {% include "chronicles/sections/weather.html" %}
-    <section class="chronicle-year-headline" data-section="year-headline">
-        <p>{{ chronicle.person.birth_date|year }}</p>
-        <h2>{{ chronicle.lead_story.headline }}</h2>
-    </section>
-    {% include "chronicles/sections/arrival_president.html" %}
-    {% include "chronicles/sections/world_news.html" %}
-    {% include "chronicles/sections/famous_birthdays.html" %}
-    {% include "chronicles/sections/around_this_time.html" %}
-    {% include "chronicles/sections/movies.html" %}
-    {% include "chronicles/sections/music.html" %}
-    {% include "chronicles/sections/chinese_zodiac.html" %}
-    {% include "chronicles/sections/what_things_cost.html" %}
-    {% include "chronicles/sections/sports.html" %}
-    {% include "chronicles/sections/footer.html" %}
+{% if show_print_controls %}
+<div class="chronicle-export-controls">
+    <button type="button" class="chronicle-print-button" onclick="window.print()">Print / Save PDF</button>
 </div>
+{% endif %}
+<main class="chronicle-page" data-era="{{ chronicle.newspaper_style.id }}"
+    style="--master-paper: url('{{ url_for('static', filename=chronicle.newspaper_style.backgroundImage) }}');">
+    <div class="chronicle-inner">
+        <section class="master-row master-top" data-master-row="top">
+            <div class="master-slot master-weather">{% include "chronicles/sections/weather.html" %}</div>
+            <div class="master-divider" aria-hidden="true"></div>
+            <div class="master-slot master-eagle">{% include "chronicles/sections/eagle_logo.html" %}</div>
+            <div class="master-divider" aria-hidden="true"></div>
+            <div class="master-slot master-extra">
+                {% include "chronicles/sections/extra.html" %}
+            </div>
+        </section>
+        <section class="master-row master-masthead" data-master-row="masthead">{% include
+            "chronicles/sections/masthead.html" %}</section>
+        <section class="master-row master-arrival" data-master-row="arrival">{% include
+            "chronicles/sections/arrival_president.html" %}</section>
+        <section class="master-row master-world-famous" data-master-row="world-famous">
+            <div class="master-slot">{% include "chronicles/sections/world_news.html" %}</div>
+            <div class="master-divider" aria-hidden="true"></div>
+            <div class="master-slot">{% include "chronicles/sections/famous_birthdays.html" %}</div>
+        </section>
+        <section class="master-row master-around-movies" data-master-row="around-movies">
+            <div class="master-slot">{% include "chronicles/sections/around_this_time.html" %}</div>
+            <div class="master-divider" aria-hidden="true"></div>
+            <div class="master-slot">{% include "chronicles/sections/movies.html" %}</div>
+        </section>
+        <section class="master-row master-music-zodiac" data-master-row="music-zodiac">
+            <div class="master-slot">{% include "chronicles/sections/music.html" %}</div>
+            <div class="master-divider" aria-hidden="true"></div>
+            <div class="master-slot">{% include "chronicles/sections/chinese_zodiac.html" %}</div>
+        </section>
+        <section class="master-row master-bottom" data-master-row="bottom">{% include "chronicles/sections/bottom.html"
+            %}</section>
+    </div>
+</main>
 {% endblock %}

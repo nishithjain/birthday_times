@@ -414,7 +414,6 @@ ON around_this_time_events(event_date);
 
 -- Famous People indexes
 CREATE INDEX IF NOT EXISTS idx_people_birth_date ON famous_people(birth_date);
-CREATE INDEX IF NOT EXISTS idx_people_country ON famous_people(country);
 CREATE INDEX IF NOT EXISTS idx_people_wikidata ON famous_people(wikidata_id);
 CREATE INDEX IF NOT EXISTS idx_weather_date_location ON historical_weather(weather_date, latitude, longitude);
 CREATE INDEX IF NOT EXISTS idx_weather_location_date ON historical_weather(location_id, weather_date);
@@ -451,14 +450,6 @@ FOR EACH ROW
 WHEN NEW.updated_at = OLD.updated_at
 BEGIN
     UPDATE historical_events SET updated_at = CURRENT_TIMESTAMP WHERE id = NEW.id;
-END;
-
-CREATE TRIGGER IF NOT EXISTS trg_people_updated_at
-AFTER UPDATE ON famous_people
-FOR EACH ROW
-WHEN NEW.updated_at = OLD.updated_at
-BEGIN
-    UPDATE famous_people SET updated_at = CURRENT_TIMESTAMP WHERE id = NEW.id;
 END;
 
 -- ------------------------------------------------------------

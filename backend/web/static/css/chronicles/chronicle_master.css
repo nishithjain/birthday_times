@@ -1,12 +1,191 @@
-/* Development-only assembly foundation. Final page dimensions and layout are intentionally undefined. */
-.chronicle-master {
-    display: block;
+/* Fixed modular master assembly: 1000x1596 page with a 40px inset. */
+.chronicle-export-controls {
+    width: 1000px;
+    margin: 16px 0;
+    text-align: center;
 }
 
-.chronicle-section-development {
-    padding: 24px;
+.chronicle-print-button {
+    padding: 9px 16px;
+    border: 1px solid var(--ink, #17120c);
+    border-radius: 0;
+    background: var(--paper-light, #e5cc94);
+    color: var(--ink, #17120c);
+    cursor: pointer;
+    font: 700 14px var(--font-headline, Georgia, serif);
 }
 
-.chronicle-section-development>[data-section] {
-    margin-bottom: 24px;
+@media print {
+    .chronicle-export-controls {
+        display: none;
+    }
+}
+
+.chronicle-page,
+.chronicle-page * {
+    box-sizing: border-box;
+}
+
+.chronicle-page {
+    width: 1000px;
+    height: 1596px;
+    overflow: hidden;
+    padding: 40px;
+    color: var(--ink, #17120c);
+    background-color: var(--paper, #d7bb7d);
+    background-image: var(--master-paper);
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    font-family: var(--body-font, Georgia, "Times New Roman", serif);
+}
+
+.chronicle-inner {
+    width: 920px;
+    height: 1516px;
+    display: grid;
+    grid-template-rows: 100px 150px 310px 300px 260px 220px 176px;
+    overflow: hidden;
+}
+
+.master-row {
+    width: 920px;
+    min-width: 0;
+    min-height: 0;
+    display: grid;
+    gap: 0;
+    overflow: hidden;
+}
+
+.master-slot {
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.master-slot>.chronicle-section,
+.master-row>.chronicle-section {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.master-divider {
+    width: 2px;
+    height: 220px;
+    box-sizing: border-box;
+    background: var(--rule-light, rgba(30, 20, 10, .25));
+}
+
+.master-world-famous .master-divider {
+    margin-top: 40px;
+}
+
+.master-top {
+    grid-template-columns: 228px 2px 458px 2px 230px;
+}
+
+.master-masthead {
+    grid-template-columns: 920px;
+}
+
+.master-arrival {
+    grid-template-columns: 920px;
+}
+
+.master-world-famous {
+    grid-template-columns: 568px 2px 350px;
+}
+
+.master-around-movies {
+    grid-template-columns: 338px 2px 580px;
+}
+
+.master-music-zodiac {
+    grid-template-columns: 338px 2px 580px;
+}
+
+.master-bottom {
+    grid-template-columns: 920px;
+}
+
+.master-top .chronicle-weather {
+    width: 228px;
+    height: 100px;
+}
+
+.master-top .chronicle-eagle-logo {
+    width: 458px;
+    height: 100px;
+}
+
+.master-top .chronicle-extra {
+    width: 230px;
+    height: 100px;
+}
+
+.master-world-famous .chronicle-world-news {
+    width: 568px;
+    height: 300px;
+}
+
+.master-world-famous .chronicle-famous-birthdays {
+    width: 350px;
+    height: 300px;
+}
+
+.master-around-movies .chronicle-around-this-time {
+    width: 338px;
+    height: 260px;
+}
+
+.master-around-movies .chronicle-movies {
+    width: 580px;
+    height: 260px;
+}
+
+.master-music-zodiac .chronicle-music {
+    width: 338px;
+    height: 220px;
+}
+
+.master-music-zodiac .chronicle-chinese-zodiac {
+    width: 580px;
+    height: 220px;
+}
+
+.master-music-zodiac .chronicle-music {
+    border-right: 0;
+}
+
+.master-music-zodiac .chronicle-chinese-zodiac {
+    border-left: 0;
+}
+
+.master-bottom .newspaper-bottom {
+    width: 920px;
+    height: 176px;
+}
+
+.chronicle-page .chronicle-music,
+.chronicle-page .chronicle-chinese-zodiac {
+    background: transparent;
+    border-color: var(--rule-light, rgba(30, 20, 10, .25));
+}
+
+.master-top .chronicle-weather,
+.master-top .chronicle-eagle-logo,
+.master-top .chronicle-extra,
+.master-masthead .chronicle-masthead,
+.master-arrival .chronicle-arrival,
+.master-world-famous .chronicle-world-news,
+.master-world-famous .chronicle-famous-birthdays,
+.master-around-movies .chronicle-around-this-time,
+.master-around-movies .chronicle-movies,
+.master-music-zodiac .chronicle-music,
+.master-music-zodiac .chronicle-chinese-zodiac,
+.master-bottom .newspaper-bottom {
+    overflow: hidden;
 }

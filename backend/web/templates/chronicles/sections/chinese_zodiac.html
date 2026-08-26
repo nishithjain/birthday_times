@@ -1,6 +1,6 @@
 <article
     class="chronicle-section chronicle-chinese-zodiac article-zodiac{% if chronicle.chinese_zodiac and chronicle.chinese_zodiac.illustration and chronicle.chinese_zodiac.illustration.displayPath %} has-zodiac-art{% endif %}"
-    data-section="chinese-zodiac">
+    data-section="chinese-zodiac" data-era="{{ chronicle.newspaper_style.id }}">
     <header class="zodiac-header">
         <h2 class="zodiac-title">CHINESE ZODIAC</h2>
         {% if chronicle.chinese_zodiac and chronicle.chinese_zodiac.available %}
@@ -24,7 +24,8 @@
         {% if chronicle.chinese_zodiac and chronicle.chinese_zodiac.illustration and
         chronicle.chinese_zodiac.illustration.displayPath %}
         <div class="zodiac-illustration-box">
-            <img src="{{ url_for('static', filename=chronicle.chinese_zodiac.illustration.displayPath) }}"
+            <img class="chronicle-era-illustration{% if chronicle.chinese_zodiac.illustration.variantPath %} chronicle-processed-illustration{% endif %}"
+                src="{{ url_for('static', filename=chronicle.chinese_zodiac.illustration.displayPath) }}"
                 alt="{{ chronicle.chinese_zodiac.animal }} - Chinese zodiac illustration">
         </div>
         {% endif %}

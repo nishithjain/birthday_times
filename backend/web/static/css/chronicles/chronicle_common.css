@@ -266,72 +266,93 @@
    per-era stylesheets, which load after this file.
    ============================================================ */
 
-.newspaper-page {
-    --illustration-filter: grayscale(100%) contrast(112%) brightness(92%);
-    --illustration-opacity: 0.96;
+.newspaper-page,
+.chronicle-page {
+    --chronicle-illustration-filter: grayscale(12%) sepia(8%) saturate(93%) contrast(101%) brightness(98%);
+    --chronicle-illustration-opacity: .97;
+    --chronicle-photo-filter: none;
+    --chronicle-photo-opacity: .97;
+    --chronicle-photo-blend-mode: multiply;
 }
 
-.newspaper-page[data-era="1950"] {
-    --illustration-filter: grayscale(100%) sepia(30%) contrast(120%) brightness(85%);
-    --illustration-opacity: 0.92;
+[data-era="1950"] {
+    --chronicle-illustration-filter: grayscale(100%) sepia(70%) saturate(45%) contrast(107%) brightness(86%);
+    --chronicle-illustration-opacity: .88;
+    --chronicle-photo-opacity: .90;
 }
 
-.newspaper-page[data-era="1960"] {
-    --illustration-filter: grayscale(100%) sepia(24%) contrast(117%) brightness(88%);
-    --illustration-opacity: 0.93;
+[data-era="1960"] {
+    --chronicle-illustration-filter: grayscale(95%) sepia(65%) saturate(48%) contrast(106%) brightness(88%);
+    --chronicle-illustration-opacity: .90;
+    --chronicle-photo-opacity: .91;
 }
 
-.newspaper-page[data-era="1970"] {
-    --illustration-filter: grayscale(100%) sepia(18%) contrast(115%) brightness(90%);
-    --illustration-opacity: 0.94;
+[data-era="1970"] {
+    --chronicle-illustration-filter: grayscale(88%) sepia(57%) saturate(52%) contrast(105%) brightness(89%);
+    --chronicle-illustration-opacity: .91;
+    --chronicle-photo-opacity: .92;
 }
 
-.newspaper-page[data-era="1980"] {
-    --illustration-filter: grayscale(100%) sepia(13%) contrast(113%) brightness(92%);
-    --illustration-opacity: 0.95;
+[data-era="1980"] {
+    --chronicle-illustration-filter: grayscale(82%) sepia(52%) saturate(55%) contrast(105%) brightness(90%);
+    --chronicle-illustration-opacity: .90;
+    --chronicle-photo-opacity: .93;
 }
 
-.newspaper-page[data-era="1990"] {
-    --illustration-filter: grayscale(100%) sepia(8%) contrast(111%) brightness(94%);
-    --illustration-opacity: 0.96;
+[data-era="1990"] {
+    --chronicle-illustration-filter: grayscale(65%) sepia(38%) saturate(68%) contrast(103%) brightness(93%);
+    --chronicle-illustration-opacity: .92;
+    --chronicle-photo-opacity: .94;
 }
 
-.newspaper-page[data-era="1995"] {
-    --illustration-filter: grayscale(100%) sepia(5%) contrast(109%) brightness(96%);
-    --illustration-opacity: 0.97;
+[data-era="1995"] {
+    --chronicle-illustration-filter: grayscale(55%) sepia(32%) saturate(72%) contrast(103%) brightness(94%);
+    --chronicle-illustration-opacity: .93;
+    --chronicle-photo-opacity: .95;
 }
 
-.newspaper-page[data-era="2000"] {
-    --illustration-filter: grayscale(100%) sepia(4%) contrast(108%) brightness(97%);
-    --illustration-opacity: 0.98;
+[data-era="2000"] {
+    --chronicle-illustration-filter: grayscale(42%) sepia(25%) saturate(78%) contrast(102%) brightness(95%);
+    --chronicle-illustration-opacity: .94;
+    --chronicle-photo-opacity: .96;
 }
 
-.newspaper-page[data-era="2005"] {
-    --illustration-filter: grayscale(100%) sepia(3%) contrast(107%) brightness(98%);
-    --illustration-opacity: 0.98;
+[data-era="2005"] {
+    --chronicle-illustration-filter: grayscale(32%) sepia(20%) saturate(82%) contrast(102%) brightness(96%);
+    --chronicle-illustration-opacity: .95;
+    --chronicle-photo-opacity: .96;
 }
 
-.newspaper-page[data-era="2010"] {
-    --illustration-filter: grayscale(100%) sepia(1%) contrast(105%) brightness(99%);
-    --illustration-opacity: 0.99;
+[data-era="2010"] {
+    --chronicle-illustration-filter: grayscale(22%) sepia(15%) saturate(88%) contrast(101%) brightness(97%);
+    --chronicle-illustration-opacity: .96;
+    --chronicle-photo-opacity: .97;
 }
 
-.newspaper-page[data-era="2015"] {
-    --illustration-filter: grayscale(100%) sepia(0%) contrast(103%) brightness(100%);
-    --illustration-opacity: 1;
+[data-era="2015"] {
+    --chronicle-illustration-filter: grayscale(12%) sepia(8%) saturate(93%) contrast(101%) brightness(98%);
+    --chronicle-illustration-opacity: .97;
+    --chronicle-photo-opacity: .98;
 }
 
-/* The attribute selectors are a safety net for any illustration that is
-   rendered without the shared class. Photographs, QR codes and uploads live
-   outside the illustrations directory and are deliberately untouched. */
-.newspaper-page img.newspaper-illustration,
-.newspaper-page img[src*="/illustrations/"],
-.newspaper-page img[src*="images/illustrations/"] {
+.chronicle-era-illustration,
+.newspaper-illustration {
     background: transparent;
     mix-blend-mode: multiply;
-    filter: var(--illustration-filter);
-    opacity: var(--illustration-opacity);
     object-fit: contain;
+}
+
+.chronicle-era-illustration:not(.chronicle-processed-illustration),
+.newspaper-illustration:not(.chronicle-processed-illustration) {
+    filter: var(--chronicle-illustration-filter);
+    opacity: var(--chronicle-illustration-opacity);
+}
+
+.chronicle-era-photo {
+    background: transparent;
+    mix-blend-mode: var(--chronicle-photo-blend-mode);
+    filter: var(--chronicle-photo-filter);
+    opacity: var(--chronicle-photo-opacity);
 }
 
 /* Containers must never paint a light plate behind the artwork, or the paper
@@ -351,11 +372,6 @@
     aspect-ratio: 4 / 5;
     object-fit: cover;
     display: block;
-}
-
-.newspaper-photo {
-    mix-blend-mode: multiply;
-    opacity: 1;
 }
 
 .president-caption {

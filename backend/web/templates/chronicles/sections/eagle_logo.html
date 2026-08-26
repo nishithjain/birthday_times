@@ -1,10 +1,10 @@
 {% set eagle = (chronicle.illustrations or {}).get("masthead") %}
 <section class="chronicle-section chronicle-eagle-logo" data-section="eagle-logo"
-    data-logo-era="{{ eagle.logoEra if eagle else '1950-1969' }}"
+    data-era="{{ chronicle.newspaper_style.id }}" data-logo-era="{{ eagle.logoEra if eagle else '1950-1969' }}"
     data-logo-type="{{ eagle.logoType if eagle else 'eagle' }}">
     {% if eagle and eagle.displayPath %}
     <img src="{{ url_for('static', filename=eagle.displayPath) }}" alt="Birthday Chronicle eagle emblem"
-        class="eagle-logo-image">
+        class="chronicle-era-illustration{% if eagle.variantPath %} chronicle-processed-illustration{% endif %} eagle-logo-image">
     {% else %}
     <div class="eagle-logo-placeholder" role="img" aria-label="Eagle emblem unavailable for this era">EAGLE / LOGO</div>
     {% endif %}

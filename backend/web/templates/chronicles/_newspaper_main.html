@@ -1,7 +1,8 @@
 {% macro newspaper_illustration(slot_name, placeholder) -%}
 {% set item = (chronicle.illustrations or {}).get(slot_name) %}
 {% if item and item.displayPath %}
-<img src="{{ url_for('static', filename=item.displayPath) }}" alt="" class="newspaper-illustration">
+<img src="{{ url_for('static', filename=item.displayPath) }}" alt=""
+    class="chronicle-era-illustration newspaper-illustration{% if item.variantPath %} chronicle-processed-illustration{% endif %}">
 {% else %}
 <div class="image-placeholder">{{ placeholder }}</div>
 {% endif %}
@@ -21,7 +22,7 @@
                 or {}).get("weather") %}
                 {% if weather_illustration and weather_illustration.displayPath %}
                 <img src="{{ url_for('static', filename=weather_illustration.displayPath) }}" alt=""
-                    class="newspaper-illustration weather-illustration">
+                    class="chronicle-era-illustration newspaper-illustration{% if weather_illustration.variantPath %} chronicle-processed-illustration{% endif %} weather-illustration">
                 {% else %}
                 <div class="weather-icon weather-illustration" aria-hidden="true">☀</div>
                 {% endif %}
@@ -78,8 +79,7 @@
                     <div class="image-slot image-slot--portrait image-slot--photo image-slot--arrival-portrait">
                         {% if chronicle.president and chronicle.president.displayPath %}
                         <img src="{{ url_for('static', filename=chronicle.president.displayPath) }}"
-                            alt="{{ chronicle.president.displayName }}"
-                            class="president-portrait{% if chronicle.president.usingVariant %} newspaper-photo{% endif %}">
+                            alt="{{ chronicle.president.displayName }}" class="president-portrait chronicle-era-photo">
                         {% else %}
                         <div class="image-placeholder">PRESIDENT / LEADER</div>
                         {% endif %}
@@ -183,7 +183,8 @@
                 <div class="around-feature">
                     <div class="around-illustration">
                         {% if around.illustration and around.illustration.displayPath %}
-                        <img src="{{ url_for('static', filename=around.illustration.displayPath) }}" alt="">
+                        <img src="{{ url_for('static', filename=around.illustration.displayPath) }}" alt=""
+                            class="chronicle-era-illustration{% if around.illustration.variantPath %} chronicle-processed-illustration{% endif %}">
                         {% endif %}
                     </div>
                     <div class="around-feature-copy">
@@ -221,7 +222,8 @@
                 <div class="movie-feature">
                     <div class="movie-illustration">
                         {% if chronicle.movies.illustration and chronicle.movies.illustration.displayPath %}
-                        <img src="{{ url_for('static', filename=chronicle.movies.illustration.displayPath) }}" alt="">
+                        <img src="{{ url_for('static', filename=chronicle.movies.illustration.displayPath) }}" alt=""
+                            class="chronicle-era-illustration{% if chronicle.movies.illustration.variantPath %} chronicle-processed-illustration{% endif %}">
                         {% endif %}
                     </div>
                     <div class="movie-feature-copy">
@@ -264,7 +266,7 @@
                 {% if chronicle.music and chronicle.music.available and chronicle.music.illustration and
                 chronicle.music.illustration.displayPath %}
                 <img src="{{ url_for('static', filename=chronicle.music.illustration.displayPath) }}" alt=""
-                    class="newspaper-illustration music-illustration">
+                    class="chronicle-era-illustration newspaper-illustration{% if chronicle.music.illustration.variantPath %} chronicle-processed-illustration{% endif %} music-illustration">
                 {% else %}
                 {{ newspaper_illustration("music", "JUKEBOX / MUSIC") }}
                 {% endif %}
@@ -340,7 +342,7 @@
                     chronicle.chinese_zodiac.illustration.displayPath %}
                     <img src="{{ url_for('static', filename=chronicle.chinese_zodiac.illustration.displayPath) }}"
                         alt="{{ chronicle.chinese_zodiac.animal }} - Chinese zodiac illustration"
-                        class="newspaper-illustration zodiac-illustration">
+                        class="chronicle-era-illustration newspaper-illustration{% if chronicle.chinese_zodiac.illustration.variantPath %} chronicle-processed-illustration{% endif %} zodiac-illustration">
                     {% else %}
                     {{ newspaper_illustration("zodiac", "CHINESE ZODIAC") }}
                     {% endif %}

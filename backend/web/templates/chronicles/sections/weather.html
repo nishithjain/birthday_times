@@ -1,4 +1,5 @@
-<section class="chronicle-section chronicle-weather weather-fit-pending" data-section="weather" data-weather-component
+<section class="chronicle-section chronicle-weather weather-fit-pending" data-section="weather"
+    data-era="{{ chronicle.newspaper_style.id }}" data-weather-component
     data-weather-condition="{{ chronicle.weather.condition if chronicle.weather and chronicle.weather.available else 'generic' }}"
     data-weather-temperature-character="{{ chronicle.weather.temperatureCharacter if chronicle.weather and chronicle.weather.available else 'mild' }}"
     data-weather-copy-key="{{ chronicle.weather.weatherCopyKey if chronicle.weather and chronicle.weather.available else 'generic_seasonal' }}">
@@ -12,7 +13,7 @@
             {}).get("weather") %}
             {% if weather_illustration and weather_illustration.displayPath %}
             <img src="{{ url_for('static', filename=weather_illustration.displayPath) }}" alt="Weather illustration"
-                class="newspaper-illustration weather-illustration">
+                class="chronicle-era-illustration newspaper-illustration{% if weather_illustration.variantPath %} chronicle-processed-illustration{% endif %} weather-illustration">
             {% else %}
             <span class="weather-art-fallback" aria-hidden="true">☀</span>
             {% endif %}

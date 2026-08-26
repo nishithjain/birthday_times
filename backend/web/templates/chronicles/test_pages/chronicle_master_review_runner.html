@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+{% block title %}Chronicle Master Visual Review{% endblock %}
+{% block extra_head %}
+<style>
+    .master-review {
+        max-width: 1100px;
+        margin: 20px auto;
+        padding: 18px;
+        color: #17120c;
+        background: #d9e2d1;
+        font-family: Georgia, serif;
+    }
+
+    .master-review h1 {
+        margin: 0 0 12px;
+        font-size: 24px;
+    }
+
+    .master-review-status {
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .master-review-status.warning {
+        color: #8f3d2e;
+    }
+
+    .master-review-meta {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+
+    .master-review-meta div {
+        border-top: 1px solid rgba(23, 18, 12, .35);
+        padding-top: 4px;
+        min-width: 0;
+    }
+
+    .master-review-meta strong,
+    .master-review-meta span {
+        display: block;
+    }
+
+    .master-review-meta strong {
+        overflow-wrap: break-word;
+    }
+
+    .master-review-meta span {
+        color: #5d6958;
+        font-size: 12px;
+    }
+
+    .master-review-url {
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        padding: 5px;
+        border: 1px solid rgba(23, 18, 12, .35);
+        background: transparent;
+        color: inherit;
+    }
+
+    .master-review-frame {
+        width: 1002px;
+        height: 1598px;
+        overflow: auto;
+        margin: 0 auto 10px;
+        border: 1px solid rgba(23, 18, 12, .35);
+    }
+
+    .master-review-frame iframe {
+        display: block;
+        width: 1000px;
+        height: 1596px;
+        border: 0;
+    }
+
+    .master-review-progress {
+        height: 4px;
+        margin-bottom: 10px;
+        background: rgba(23, 18, 12, .15);
+    }
+
+    .master-review-progress span {
+        display: block;
+        height: 100%;
+        background: #526c4c;
+    }
+
+    .master-review-controls {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    .master-review-controls button {
+        padding: 6px 10px;
+        border: 1px solid #17120c;
+        background: transparent;
+        color: inherit;
+        font: 700 12px Georgia, serif;
+        cursor: pointer;
+    }
+
+    @media (max-width: 1120px) {
+        .master-review {
+            margin: 0;
+        }
+
+        .master-review-meta {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .master-review-frame {
+            width: 100%;
+            margin-left: 0;
+        }
+    }
+</style>
+{% endblock %}
+{% block content %}
+<main class="master-review" data-master-review-runner>
+    <h1>Chronicle Master Visual Review</h1>
+    <div class="master-review-status" data-review-status aria-live="polite">Preparing review...</div>
+    <div class="master-review-meta">
+        <div><strong data-review-position>0 / 0</strong><span>Test</span></div>
+        <div><strong data-review-date>-</strong><span>Birth date</span></div>
+        <div><strong data-review-style>-</strong><span>Era / style</span></div>
+        <div><strong data-review-page>-</strong><span>Page</span></div>
+        <div><strong data-review-inner>-</strong><span>Inner</span></div>
+        <div><strong data-review-rows>-</strong><span>Rows</span></div>
+        <div><strong data-review-components>-</strong><span>Components</span></div>
+        <div><strong data-review-gaps>-</strong><span>Gaps</span></div>
+        <div><strong data-review-overflow>-</strong><span>Overflow</span></div>
+    </div>
+    <input class="master-review-url" data-review-url type="text" readonly
+        aria-label="Current Chronicle master review URL">
+    <div class="master-review-frame"><iframe data-review-frame title="Current Chronicle master page"></iframe></div>
+    <div class="master-review-progress" aria-hidden="true"><span data-review-progress></span></div>
+    <div class="master-review-controls">
+        <button type="button" data-review-action="previous">Previous</button>
+        <button type="button" data-review-action="toggle">Pause</button>
+        <button type="button" data-review-action="next">Next</button>
+        <button type="button" data-review-action="restart">Restart</button>
+    </div>
+</main>
+{% endblock %}
+{% block extra_js %}
+<script>
+    (() => {
+        const runner = document.querySelector('[data-master-review-runner]');
+        const frame = runner.querySelector('[data-review-frame]');
+        const dates = {{ review_dates| tojson
+    }};
+    const intervalMs = {{ interval| tojson }} || 1000;
+    const field = name => runner.querySelector(`[data-review-${name}]`);
+    let index = 0, paused = false, timer = null, token = 0;
+    const tests = dates.map(date => ({ date, url: `/dev/chronicle-master?date=${date}&name=Master%20Review` }));
+    const setStatus = (text, warning = false) => { const item = runner.querySelector('[data-review-status]'); item.textContent = text; item.className = `master-review-status${warning ? ' warning' : ''}`; };
+    const clearTimer = () => { if (timer) window.clearTimeout(timer); timer = null; };
+    const update = test => { field('position').textContent = `${index + 1} / ${tests.length}`; field('date').textContent = test?.date || '-'; field('url').value = test?.url || ''; field('progress').style.width = tests.length ? `${((index + 1) / tests.length) * 100}%` : '0%'; };
+    const inspect = () => {
+        const doc = frame.contentDocument;
+        const page = doc?.querySelector('.chronicle-page');
+        const inner = doc?.querySelector('.chronicle-inner');
+        const rows = page ? [...page.querySelectorAll('[data-master-row]')] : [];
+        const components = page ? [...page.querySelectorAll('.master-slot > .chronicle-section, .master-row > .chronicle-section, .master-row > .newspaper-bottom')] : [];
+        if (!page || !inner || rows.length !== 7) return false;
+        const pageRect = page.getBoundingClientRect();
+        const innerRect = inner.getBoundingClientRect();
+        const rowRects = rows.map(row => row.getBoundingClientRect());
+        const gaps = rowRects.slice(1).map((row, position) => row.top - rowRects[position].bottom);
+        const componentOverflow = components.some(component => component.scrollWidth > component.clientWidth || component.scrollHeight > component.clientHeight);
+        const pageOverflow = page.scrollWidth > page.clientWidth || page.scrollHeight > page.clientHeight;
+        const rowOverlap = rowRects.some((row, position) => rowRects.slice(position + 1).some(other => row.top < other.bottom && row.bottom > other.top));
+        const dimensions = Math.abs(pageRect.width - 1000) < .5 && Math.abs(pageRect.height - 1596) < .5 && Math.abs(innerRect.width - 920) < .5 && Math.abs(innerRect.height - 1516) < .5;
+        field('style').textContent = page.dataset.era || '-';
+        field('page').textContent = `${Math.round(pageRect.width)} x ${Math.round(pageRect.height)}`;
+        field('inner').textContent = `${Math.round(innerRect.width)} x ${Math.round(innerRect.height)}`;
+        field('rows').textContent = rows.map(row => Math.round(row.getBoundingClientRect().height)).join(' / ');
+        field('components').textContent = `${components.length} checked`;
+        field('gaps').textContent = gaps.every(gap => Math.abs(gap) < .5) ? '0' : gaps.map(gap => Math.round(gap)).join(' / ');
+        field('overflow').textContent = dimensions && !componentOverflow && !pageOverflow && !rowOverlap ? 'No' : 'Yes';
+        return true;
+    };
+    const load = () => { clearTimer(); if (!tests.length) { setStatus('NO MASTER REVIEW CASES FOUND', true); return; } const test = tests[index]; update(test); setStatus(`Loading ${index + 1} / ${tests.length}`); const current = ++token; let elapsed = 0; const poll = () => { if (current !== token) return; if (inspect()) { setStatus(paused ? 'Paused' : `Viewing ${index + 1} / ${tests.length}`); if (!paused && index < tests.length - 1) timer = window.setTimeout(() => { index += 1; load(); }, intervalMs); else if (!paused) setStatus('Review complete'); return; } if (elapsed >= 10000) { setStatus(`Load warning: ${test.date}`, true); return; } elapsed += 100; window.setTimeout(poll, 100); }; frame.onload = poll; frame.src = test.url; };
+    const pause = () => { paused = true; clearTimer(); runner.querySelector('[data-review-action="toggle"]').textContent = 'Resume'; setStatus('Paused'); };
+    const resume = () => { paused = false; runner.querySelector('[data-review-action="toggle"]').textContent = 'Pause'; load(); };
+    const move = delta => { pause(); index = Math.max(0, Math.min(tests.length - 1, index + delta)); load(); pause(); };
+    const restart = () => { index = 0; paused = false; runner.querySelector('[data-review-action="toggle"]').textContent = 'Pause'; load(); };
+    runner.addEventListener('click', event => { const action = event.target.closest('[data-review-action]')?.dataset.reviewAction; if (action === 'toggle') paused ? resume() : pause(); if (action === 'previous') move(-1); if (action === 'next') move(1); if (action === 'restart') restart(); });
+    load();
+    }) ();
+</script>
+{% endblock %}

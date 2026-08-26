@@ -1,5 +1,5 @@
 <article class="chronicle-section chronicle-arrival arrival-fit-pending" data-section="arrival"
-    data-arrival-fit-container data-birth-story>
+    data-era="{{ chronicle.newspaper_style.id }}" data-arrival-fit-container data-birth-story>
     <header class="arrival-feature-header">
         <h2 class="arrival-feature-headline">{{ chronicle.arrival.birthStoryHeadline }}</h2>
         <p class="arrival-feature-deck">{{ chronicle.calendar.day_of_week }}, {{ chronicle.person.birth_date_display
@@ -12,7 +12,7 @@
             <div class="arrival-dispatch-label">{{ chronicle.arrival.dispatchLabel|default("Telegram") }}</div>
             <div class="arrival-dispatch-art">
                 {% if chronicle.arrival.dispatchArtwork and chronicle.arrival.dispatchArtwork.displayPath %}<img
-                    class="arrival-dispatch-image"
+                    class="chronicle-era-illustration{% if chronicle.arrival.dispatchArtwork.variantPath %} chronicle-processed-illustration{% endif %} arrival-dispatch-image"
                     src="{{ url_for('static', filename=chronicle.arrival.dispatchArtwork.displayPath) }}"
                     alt="{{ chronicle.arrival.dispatchArtwork.alt }}">{% else %}<span aria-hidden="true">NEWS</span>{%
                 endif %}
@@ -40,7 +40,8 @@
                     data-white-house-flow>
                     {% if chronicle.president and chronicle.president.displayPath %}<img
                         src="{{ url_for('static', filename=chronicle.president.displayPath) }}"
-                        alt="Portrait of {{ chronicle.president.displayName }}" class="arrival-president-photo">{%
+                        alt="Portrait of {{ chronicle.president.displayName }}"
+                        class="chronicle-era-photo arrival-president-photo">{%
                     endif %}
                     {% if chronicle.president %}<div class="arrival-president-identity">
                         <div class="arrival-president-name">{{ chronicle.president.displayName }}</div>

@@ -1,5 +1,5 @@
 <section class="chronicle-section chronicle-famous-birthdays famous-birthdays-fit-pending"
-    data-section="famous-birthdays" data-famous-birthdays-container>
+    data-section="famous-birthdays" data-era="{{ chronicle.newspaper_style.id }}" data-famous-birthdays-container>
     {% set birthdays = chronicle.famous_birthdays %}
     <header class="famous-birthdays-header">
         <h2 class="famous-birthdays-title">{{ birthdays.headline if birthdays else 'Famous Birthdays' }}</h2>
@@ -23,7 +23,8 @@
         {% set occupation_icons = (chronicle.illustrations or {}).get('famousPeopleOccupationIcons', {}) %}
         <div class="famous-birthday-icons" data-famous-birthday-icons hidden aria-hidden="true">
             {% for person in birthdays.people %}
-            {% if occupation_icons.get(person.occupation) %}<img class="famous-birthday-icon"
+            {% if occupation_icons.get(person.occupation) %}<img
+                class="chronicle-era-illustration{% if occupation_icons[person.occupation].variantPath %} chronicle-processed-illustration{% endif %} famous-birthday-icon"
                 src="{{ url_for('static', filename=occupation_icons[person.occupation].displayPath) }}" alt=""
                 data-famous-birthday-icon data-person-index="{{ loop.index0 }}"
                 data-occupation="{{ person.occupation }}">{% endif %}

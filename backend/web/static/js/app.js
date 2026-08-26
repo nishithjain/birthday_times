@@ -836,12 +836,25 @@ async function fitFamousBirthdays() {
         items.forEach((item, index) => { item.style.display = index < count ? '' : 'none'; });
         void content.offsetHeight;
         const result = measure();
-        if (result.scrollHeight <= result.clientHeight && result.scrollWidth <= result.clientWidth) {
+        const hasIconForSelection = icons && [...icons.querySelectorAll('[data-famous-birthday-icon]')]
+            .some(image => Number(image.dataset.personIndex) < count);
+        const iconReserve = hasIconForSelection ? TOP_GAP + 28 + BOTTOM_SAFETY : 0;
+        if (result.scrollHeight + iconReserve <= result.clientHeight
+            && result.scrollWidth <= result.clientWidth) {
             selected = count;
             break;
         }
     }
     items.forEach((item, index) => { item.style.display = index < selected ? '' : 'none'; });
+    const iconImages = icons ? [...icons.querySelectorAll('[data-famous-birthday-icon]')] : [];
+    const selectedPersonIndices = new Set(Array.from({ length: selected }, (_, index) => index));
+    const hasSelectedIcon = iconImages.some(image => selectedPersonIndices.has(Number(image.dataset.personIndex)));
+    if (!hasSelectedIcon && iconImages.length) {
+        const preferredIndex = Number(iconImages[0].dataset.personIndex);
+        selectedPersonIndices.clear();
+        selectedPersonIndices.add(preferredIndex);
+        items.forEach((item, index) => { item.style.display = selectedPersonIndices.has(index) ? '' : 'none'; });
+    }
     const result = measure();
     let iconMetrics = {
         normalContentBottom: 0,
@@ -857,9 +870,8 @@ async function fitFamousBirthdays() {
         occupations: [],
     };
     if (icons) {
-        const iconImages = [...icons.querySelectorAll('[data-famous-birthday-icon]')];
         icons.hidden = true;
-        iconImages.forEach(image => { image.hidden = Number(image.dataset.personIndex) >= selected; });
+        iconImages.forEach(image => { image.hidden = !selectedPersonIndices.has(Number(image.dataset.personIndex)); });
         const displayedIcons = iconImages.filter(image => !image.hidden);
         const lastNormal = content.querySelector('.famous-birthday-days') || list;
         const containerRect = container.getBoundingClientRect();

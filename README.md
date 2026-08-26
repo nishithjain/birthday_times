@@ -52,6 +52,39 @@ The development review links below require this Flask server to be running on
 `http://127.0.0.1:5000`; they will not work when the README is opened without
 starting the server.
 
+## Chronicle Export
+
+The export tool captures the same modular Chronicle rendered by the application,
+at its fixed `1000 x 1596` CSS geometry. It waits for fonts, images, and section
+fit logic, then screenshots the `.chronicle-page` element with Chromium. A4
+outputs are composed from that PNG with proportional scaling only: they are
+centered without cropping or stretching.
+
+Install the Python dependencies and Chromium once, then start the Flask server:
+
+```powershell
+pip install -r requirements.txt
+python -m playwright install chromium
+python -m backend.app
+```
+
+In another PowerShell terminal, create a native PNG, a true Chromium-rendered
+3x PNG, an A4 PDF, or all available export files:
+
+```powershell
+python -m backend.tools.export_chronicle --date 1982-08-26 --format png --scale 1
+python -m backend.tools.export_chronicle --date 1982-08-26 --format png --scale 3
+python -m backend.tools.export_chronicle --date 1982-08-26 --format a4-pdf --scale 3
+python -m backend.tools.export_chronicle --date 1982-08-26 --all --scale 3 --a4-margin-mm 5
+```
+
+Files are written to `output/chronicles/YYYY-MM-DD/`. Native output is
+`1000 x 1596`; scale 2 is `2000 x 3192`; scale 3 is `3000 x 4788`. A4 uses a
+white `210 x 297 mm` page with a default `5 mm` safety margin. The Chronicle
+fits at approximately `179.82 x 287 mm` with that margin, centered on the page.
+Use `--a4-margin-mm 0` only with a borderless printer; it places the Chronicle
+at approximately `186.09 x 297 mm`.
+
 ## World News Preparation
 
 Historical world-news files are derived from SQLite and are not generated during
@@ -100,6 +133,7 @@ the browser without changing production routes or saving review output.
 | Music | <http://127.0.0.1:5000/dev/sections/music-review> | 9 birth years across 1950-2025 |
 | Chinese Zodiac | <http://127.0.0.1:5000/dev/sections/zodiac-review> | Boundary, animal, leap-year, and long-name cases |
 | Bottom Section | <http://127.0.0.1:5000/dev/sections/bottom-review> | Database-backed Costs and 8 Fun Facts across 1950-2026 |
+| Chronicle Master | <http://127.0.0.1:5000/dev/chronicle-master-review> | Native 1000 x 1596 master assembly across 30 date and era cases |
 
 The standalone Masthead component is available at
 <http://127.0.0.1:5000/dev/sections/masthead>. It renders the publication
