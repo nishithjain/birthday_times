@@ -16,6 +16,7 @@
     justify-items: center;
     background: transparent;
     color: var(--ink, #17120c);
+    border: 1px solid var(--rule-light, rgba(30, 20, 10, .25));
     overflow: visible;
     text-align: center;
 }

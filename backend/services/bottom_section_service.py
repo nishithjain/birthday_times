@@ -12,6 +12,7 @@ REQUIRED_INDICATORS = (
     ("Bread (White, Pan)", "USD per pound"),
 )
 FLORAL_STATIC_ROOT = Path(__file__).resolve().parents[1] / "web" / "static"
+FLORAL_ERAS = (1950, 1960, 1970, 1980, 1990, 2000, 2010, 2015)
 
 
 class BottomSectionService:
@@ -70,12 +71,17 @@ class BottomSectionService:
         return [row["fact"] for row in rows]
 
     @staticmethod
-    def get_era_artwork(year: int) -> str:
-        """Return the available floral artwork for the newspaper era."""
+    def get_era_artwork(year: int, side: str = "left") -> str:
+        """Return the available side-specific floral artwork for the newspaper era."""
         year = int(year)
-        era = min(max((year // 10) * 10, 1950), 2020)
+        side = side.lower()
+        if side not in {"left", "right"}:
+            raise ValueError("side must be 'left' or 'right'")
+        era = 2015 if year >= 2015 else min(max((year // 10) * 10, 1950), 2010)
+        if era not in FLORAL_ERAS:
+            era = 2015
         base = "images/illustrations/originals/florals"
-        era_path = f"{base}/{era}.png"
+        era_path = f"{base}/floral_{era}_{side}.png"
         if (FLORAL_STATIC_ROOT / era_path).is_file():
             return era_path
         return f"{base}/generic.png"
@@ -87,6 +93,8 @@ class BottomSectionService:
             "costs": self.get_costs(year),
             "facts": self.get_facts(year),
             "floralArtwork": self.get_era_artwork(year),
+            "floralArtworkLeft": self.get_era_artwork(year, "left"),
+            "floralArtworkRight": self.get_era_artwork(year, "right"),
         }
 
 

@@ -348,6 +348,11 @@
     opacity: var(--chronicle-illustration-opacity);
 }
 
+.chronicle-era-illustration.weather-illustration {
+    filter: var(--chronicle-illustration-filter);
+    opacity: var(--chronicle-illustration-opacity);
+}
+
 .chronicle-era-photo {
     background: transparent;
     mix-blend-mode: var(--chronicle-photo-blend-mode);

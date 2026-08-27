@@ -28,3 +28,16 @@ def test_bottom_data_formats_missing_values(monkeypatch):
 
     assert [item["value"] for item in result["costs"]] == ["-", "-", "-"]
     assert result["facts"] == []
+
+
+def test_bottom_data_uses_side_specific_florals():
+    result = BottomSectionService().get_bottom_data(2015)
+
+    assert result["floralArtworkLeft"].endswith("floral_2015_left.png")
+    assert result["floralArtworkRight"].endswith("floral_2015_right.png")
+    assert result["floralArtwork"] == result["floralArtworkLeft"]
+
+
+def test_floral_artwork_uses_2015_assets_for_later_years():
+    assert BottomSectionService.get_era_artwork(2026, "left").endswith("floral_2015_left.png")
+    assert BottomSectionService.get_era_artwork(2026, "right").endswith("floral_2015_right.png")

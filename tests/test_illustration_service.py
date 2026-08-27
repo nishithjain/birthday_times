@@ -50,7 +50,9 @@ class TestYearAndPrioritySelection:
             ("rain", "1990", "rain_1980.png"),
             ("fog", "2000", "fog_2000.png"),
             ("fog", "1970", "fog_1950.png"),
-            ("sunny", "2020", "sunny_2000.png"),
+            ("sunny", "2010", "sunny_2010.png"),
+            ("sunny", "2015", "sunny_2010.png"),
+            ("sunny", "2020", "sunny_2010.png"),
         ],
     )
     def test_weather_art_uses_requested_era_or_previous_available_era(
