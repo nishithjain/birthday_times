@@ -17,6 +17,7 @@ VARIANTS_SEGMENT = "/variants/{era}/"
 SPORT_CONTEXTS = frozenset({"baseball", "football", "cricket", "olympics"})
 GENERIC_ZODIAC_ID = "chinese-zodiac"
 DEFAULT_SPORTS_CONTEXT = "baseball"
+WEATHER_ASSET_ERAS = (1950, 1960, 1970, 1980, 1990, 2000, 2010, 2015)
 FAMOUS_PEOPLE_ICON_FILES = {
     "Activist": "activist.png", "Actor": "actor.png", "Administrator": "governor.png",
     "Agriculturalist": "scientist.png", "Apostle": "religious-leader.png", "Architect": "architect.png",
@@ -214,6 +215,38 @@ class IllustrationService:
     def _static_file_exists(self, static_relative_path: str) -> bool:
         return (self.static_root / Path(static_relative_path)).is_file()
 
+    def _weather_original_path(
+        self,
+        original_path: str,
+        style_id: Optional[str],
+    ) -> str:
+        """Select the latest available condition artwork for the requested era."""
+        if not style_id or "/weather/" not in original_path:
+            return original_path
+
+        filename = Path(original_path).name
+        condition = re.sub(r"_\d{4}$", "", Path(filename).stem)
+        if condition == "weather":
+            return original_path
+        try:
+            requested_era = int(style_id)
+        except (TypeError, ValueError):
+            return original_path
+
+        weather_root = self.static_root / "images" / "illustrations" / "originals" / "weather"
+        available = [
+            era for era in WEATHER_ASSET_ERAS
+            if era <= requested_era and (weather_root / f"{condition}_{era}.png").is_file()
+        ]
+        if not available:
+            available = [
+                era for era in WEATHER_ASSET_ERAS
+                if (weather_root / f"{condition}_{era}.png").is_file()
+            ]
+        if not available:
+            return original_path
+        return f"images/illustrations/originals/weather/{condition}_{max(available)}.png"
+
     def _copy(self, illustration: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
         if illustration is None:
             return None
@@ -367,7 +400,7 @@ class IllustrationService:
         if illustration is None:
             return None
 
-        original_path = illustration["path"]
+        original_path = self._weather_original_path(illustration["path"], style_id)
         original_exists = self._static_file_exists(original_path)
 
         variant_path = variant_path_for(original_path, style_id) if style_id else None
