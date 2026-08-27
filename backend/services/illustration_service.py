@@ -18,11 +18,33 @@ SPORT_CONTEXTS = frozenset({"baseball", "football", "cricket", "olympics"})
 GENERIC_ZODIAC_ID = "chinese-zodiac"
 DEFAULT_SPORTS_CONTEXT = "baseball"
 FAMOUS_PEOPLE_ICON_FILES = {
-    "Actor": "actor.png", "Cricketer": "cricketer.png", "Scientist": "scientist.png",
-    "Inventor": "inventor.png", "Entrepreneur": "entrepreneur.png", "Singer": "singer.png",
-    "Athlete": "athlete.png", "Footballer": "footballer.png", "Basketball Player": "basketball_player.png",
-    "Tennis Player": "tennis_player.png", "Artist": "artist.png", "Astronaut": "astronaut.png",
-    "Writer": "writer.png", "Musician": "musician.png", "Director": "director.png",
+    "Activist": "activist.png", "Actor": "actor.png", "Administrator": "governor.png",
+    "Agriculturalist": "scientist.png", "Apostle": "religious-leader.png", "Architect": "architect.png",
+    "Artisan": "artisan.png", "Artist": "artist.png", "Astronaut": "astronaut.png",
+    "Astronomer": "scientist.png", "Athlete": "athlete.png", "Author": "writer.png",
+    "Banker": "banker.png", "Basketball Player": "basketball_player.png", "Biologist": "biologist.png",
+    "Caliph": "ruler.png", "Chemist": "chemist.png", "Composer": "composer.png",
+    "Cook": "cook.png", "Cricketer": "cricketer.png", "Criminal": "pirate.png",
+    "Dancer": "dancer.png", "Diplomat": "diplomat.png", "Director": "director.png",
+    "Doge": "ruler.png", "Duchess": "princess.png", "Duke": "prince.png",
+    "Economist": "economist.png", "Educator": "scholar.png", "Emperor": "emperor.png",
+    "Empress": "queen.png", "Engineer": "engineer.png", "Entrepreneur": "entrepreneur.png",
+    "Evangelist": "religious-leader.png", "Explorer": "explorer.png", "Footballer": "footballer.png",
+    "General": "military_commander.png", "Governor": "governor.png", "Historian": "historian.png",
+    "Inventor": "inventor.png", "Judge": "judge.png", "King": "king.png",
+    "Lawyer": "lawyer.png", "Librarian": "librarian.png", "Mathematician": "mathematician.png",
+    "Merchant": "banker.png", "Military Commander": "military_commander.png", "Monarch": "monarch.png",
+    "Musician": "musician.png", "Noble": "prince.png", "Nurse": "nurse.png",
+    "Painter": "painter.png", "Philosopher": "philosopher.png", "Physician": "nurse.png",
+    "Physicist": "physicist.png", "Pirate": "pirate.png", "Playwright": "writer.png",
+    "Poet": "poet.png", "Politician": "politician.png", "Pope": "pope.png",
+    "Prince": "prince.png", "Princess": "princess.png", "Printer": "librarian.png",
+    "Prophet": "prophet.png", "Publisher": "librarian.png", "Queen": "queen.png",
+    "Religious Leader": "religious-leader.png", "Ruler": "ruler.png", "Saint": "religious-leader.png",
+    "Scholar": "scholar.png", "Scientist": "scientist.png", "Shogun": "military_commander.png",
+    "Singer": "singer.png", "Soldier": "soldier.png", "Statesman": "politician.png",
+    "Sultan": "sultan.png", "Tennis Player": "tennis_player.png", "Theologian": "religious-leader.png",
+    "Tsar": "emperor.png", "Writer": "writer.png",
 }
 
 MASTHEAD_LOGO_ERAS = (

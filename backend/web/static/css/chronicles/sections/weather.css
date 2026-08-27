@@ -12,7 +12,10 @@
     box-sizing: border-box;
     margin: 0;
     padding: 2px 6px 2px;
-    border: 1px solid var(--ink, #17120c);
+    border: 2px solid var(--rule-light, rgba(30, 20, 10, .25));
+    /* No right border: the master-top row's own divider sits flush against
+       this edge, and a second border here would double up with it. */
+    border-right: 0;
     display: grid;
     grid-template-rows: 13px 1px minmax(0, 1fr) auto 11px;
     grid-template-columns: 1fr;

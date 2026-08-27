@@ -55,11 +55,11 @@
 
 .chronicle-arrival .arrival-story {
     padding: 10px 12px;
-    border-left: 1px solid currentColor;
+    border-left: 2px solid var(--rule-light, rgba(30, 20, 10, .25));
 }
 
 .chronicle-arrival .arrival-white-house {
-    border-left: 1px solid currentColor;
+    border-left: 2px solid var(--rule-light, rgba(30, 20, 10, .25));
 }
 
 .chronicle-arrival .arrival-white-house-content {

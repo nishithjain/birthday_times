@@ -80,8 +80,8 @@
 }
 
 .master-world-famous .master-divider {
-    margin-top: 40px;
-    height: 270px;
+    margin-top: 20px;
+    height: 280px;
 }
 
 .master-top {
@@ -100,7 +100,13 @@
     grid-template-columns: 568px 2px 350px;
     overflow: visible;
     position: relative;
-    z-index: 2;
+    z-index: 10;
+}
+
+/* Bring-to-front: the slot must not clip the panel it hosts, or the panel's
+   stacking order never gets a chance to paint over the row below it. */
+.master-world-famous .master-famous-birthdays {
+    overflow: visible;
 }
 
 .master-around-movies {

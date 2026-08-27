@@ -13,10 +13,108 @@
       "priority": 10
     },
     {
-      "id": "globe",
+      "id": "globe_1950",
       "category": "world",
-      "path": "images/illustrations/originals/world/globe.png",
+      "path": "images/illustrations/originals/world/1950.png",
       "yearFrom": 1950,
+      "yearTo": 1959,
+      "contexts": [
+        "world",
+        "world_news",
+        "international",
+        "global"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "globe_1960",
+      "category": "world",
+      "path": "images/illustrations/originals/world/1960.png",
+      "yearFrom": 1960,
+      "yearTo": 1969,
+      "contexts": [
+        "world",
+        "world_news",
+        "international",
+        "global"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "globe_1970",
+      "category": "world",
+      "path": "images/illustrations/originals/world/1970.png",
+      "yearFrom": 1970,
+      "yearTo": 1979,
+      "contexts": [
+        "world",
+        "world_news",
+        "international",
+        "global"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "globe_1980",
+      "category": "world",
+      "path": "images/illustrations/originals/world/1980.png",
+      "yearFrom": 1980,
+      "yearTo": 1989,
+      "contexts": [
+        "world",
+        "world_news",
+        "international",
+        "global"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "globe_1990",
+      "category": "world",
+      "path": "images/illustrations/originals/world/1990.png",
+      "yearFrom": 1990,
+      "yearTo": 1999,
+      "contexts": [
+        "world",
+        "world_news",
+        "international",
+        "global"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "globe_2000",
+      "category": "world",
+      "path": "images/illustrations/originals/world/2000.png",
+      "yearFrom": 2000,
+      "yearTo": 2009,
+      "contexts": [
+        "world",
+        "world_news",
+        "international",
+        "global"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "globe_2010",
+      "category": "world",
+      "path": "images/illustrations/originals/world/2010.png",
+      "yearFrom": 2010,
+      "yearTo": 2019,
+      "contexts": [
+        "world",
+        "world_news",
+        "international",
+        "global"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "globe_2020",
+      "category": "world",
+      "path": "images/illustrations/originals/world/2020.png",
+      "yearFrom": 2020,
       "yearTo": null,
       "contexts": [
         "world",
@@ -24,8 +122,7 @@
         "international",
         "global"
       ],
-      "priority": 10,
-      "evergreen": true
+      "priority": 10
     },
     {
       "id": "weather_generic",

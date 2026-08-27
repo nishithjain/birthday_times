@@ -117,9 +117,9 @@ def test_templates_do_not_hardcode_illustration_paths():
         ("1955-06-15", "music/jukebox.png"),
         ("1965-06-15", "music/jukebox.png"),
         ("1985-05-09", "music/boombox.png"),
-        ("1997-03-15", "world/globe.png"),
-        ("2007-08-20", "world/globe.png"),
-        ("2018-11-02", "world/globe.png"),
+        ("1997-03-15", "world/1990.png"),
+        ("2007-08-20", "world/2000.png"),
+        ("2018-11-02", "world/2010.png"),
     ],
 )
 @patch(REPOSITORY_PATCHES[0])
@@ -288,21 +288,43 @@ def test_famous_birthdays_fit_reserves_space_for_occupation_icons():
     assert "icons.hidden = true" in app_source
 
 
-def test_famous_birthdays_content_starts_40px_lower():
-    css = Path(
+def test_famous_birthdays_heading_aligns_with_world_news_heading():
+    famous_css = Path(
         "backend/web/static/css/chronicles/sections/famous_birthdays.css"
     ).read_text(encoding="utf-8")
+    world_news_css = Path(
+        "backend/web/static/css/chronicles/sections/world_news.css"
+    ).read_text(encoding="utf-8")
 
-    assert "padding: 48px 10px 0" in css
+    assert "padding: 8px 10px 0" in famous_css
+    assert "padding: 8px 10px 0" in world_news_css
 
 
-def test_world_famous_divider_moves_with_famous_birthdays_content():
+def test_world_famous_divider_offset_is_20px():
     css = Path("backend/web/static/css/chronicles/chronicle_master.css").read_text(
         encoding="utf-8"
     )
 
     assert ".master-world-famous .master-divider" in css
-    assert "margin-top: 40px" in css
+    assert "margin-top: 20px" in css
+    assert "margin-top: 40px" not in css
+
+
+def test_world_news_globe_illustration_is_enlarged():
+    css = Path(
+        "backend/web/static/css/chronicles/sections/world_news.css"
+    ).read_text(encoding="utf-8")
+
+    assert "width: 126px;\n    height: 150px;" in css
+    assert "max-width: 126px;\n    max-height: 150px;" in css
+
+
+def test_world_news_globe_illustration_is_shifted_down_25px():
+    css = Path(
+        "backend/web/static/css/chronicles/sections/world_news.css"
+    ).read_text(encoding="utf-8")
+
+    assert "margin-top: 25px;" in css
 
 
 def test_famous_birthdays_extends_80px_into_following_master_row():
@@ -315,15 +337,51 @@ def test_famous_birthdays_extends_80px_into_following_master_row():
 
     assert "height: 380px" in section_css
     assert "overflow: visible" in master_css
-    assert "z-index: 2" in master_css
+    assert "z-index: 10" in master_css
 
 
-def test_world_famous_divider_extends_50px_into_following_row():
+def test_world_famous_divider_extends_60px_into_following_row():
     css = Path("backend/web/static/css/chronicles/chronicle_master.css").read_text(
         encoding="utf-8"
     )
 
-    assert "height: 270px" in css
+    assert "height: 280px" in css
+    assert "margin-top: 20px" in css
+
+
+def test_weather_box_does_not_double_up_with_the_row_divider():
+    css = Path(
+        "backend/web/static/css/chronicles/sections/weather.css"
+    ).read_text(encoding="utf-8")
+
+    assert "border-right: 0;" in css
+
+
+def test_section_rule_lines_match_the_master_divider_style():
+    reference = Path(
+        "backend/web/static/css/chronicles/chronicle_master.css"
+    ).read_text(encoding="utf-8")
+    weather_css = Path(
+        "backend/web/static/css/chronicles/sections/weather.css"
+    ).read_text(encoding="utf-8")
+    arrival_css = Path(
+        "backend/web/static/css/chronicles/sections/arrival.css"
+    ).read_text(encoding="utf-8")
+    world_news_css = Path(
+        "backend/web/static/css/chronicles/sections/world_news.css"
+    ).read_text(encoding="utf-8")
+    famous_css = Path(
+        "backend/web/static/css/chronicles/sections/famous_birthdays.css"
+    ).read_text(encoding="utf-8")
+
+    assert "background: var(--rule-light, rgba(30, 20, 10, .25));" in reference
+    reference_rule = "2px solid var(--rule-light, rgba(30, 20, 10, .25))"
+    assert f"border: {reference_rule};" in weather_css
+    assert arrival_css.count(f"border-left: {reference_rule};") == 2
+    assert f"border-top: {reference_rule};" in world_news_css
+    assert f"border-left: {reference_rule};" in world_news_css
+    assert world_news_css.count(f"border-top: {reference_rule};") == 2
+    assert f"border-top: {reference_rule};" in famous_css
 
 
 def test_famous_birthdays_contains_its_overflow():
@@ -335,6 +393,18 @@ def test_famous_birthdays_contains_its_overflow():
     ).read_text(encoding="utf-8")
 
     assert "overflow: hidden" in section_css
-    assert "z-index: 3" in section_css
+    assert "z-index: 11" in section_css
     assert ".master-world-famous .chronicle-famous-birthdays" in master_css
+
+
+def test_famous_birthdays_slot_does_not_clip_its_own_panel():
+    html = Path("backend/web/templates/chronicles/master/chronicle_master.html").read_text(
+        encoding="utf-8"
+    )
+    master_css = Path("backend/web/static/css/chronicles/chronicle_master.css").read_text(
+        encoding="utf-8"
+    )
+
+    assert 'class="master-slot master-famous-birthdays"' in html
+    assert ".master-world-famous .master-famous-birthdays {\n    overflow: visible;\n}" in master_css
 

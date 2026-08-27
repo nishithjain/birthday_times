@@ -5,7 +5,7 @@
     margin: 0;
     overflow: hidden;
     position: relative;
-    z-index: 3;
+    z-index: 11;
     background: transparent;
     color: var(--ink, #17120c);
     display: flex;
@@ -18,7 +18,7 @@
 
 .famous-birthdays-header {
     flex: 0 0 auto;
-    padding: 48px 10px 0;
+    padding: 8px 10px 0;
 }
 
 .famous-birthdays-title {
@@ -39,7 +39,7 @@
 .famous-birthdays-rule {
     flex: 0 0 auto;
     margin: 7px 10px 8px;
-    border-top: 1px solid currentColor;
+    border-top: 2px solid var(--rule-light, rgba(30, 20, 10, .25));
 }
 
 .famous-birthdays-content {

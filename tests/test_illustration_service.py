@@ -6,6 +6,7 @@ import pytest
 from PIL import Image
 
 from backend.services.illustration_service import (
+    FAMOUS_PEOPLE_ICON_FILES,
     IllustrationService,
     illustration_service,
     normalize_context,
@@ -31,9 +32,8 @@ ANIMALS = [
 
 class TestIllustrationCatalog:
     def test_all_current_assets_are_loaded(self):
-        assert len(illustration_service.illustrations) == 42
-        assert illustration_service.get_by_id("globe")["id"] == "globe"
-        assert illustration_service.get_by_id("globe")["path"].endswith("world/globe.png")
+        assert illustration_service.get_by_id("globe_1950")["id"] == "globe_1950"
+        assert illustration_service.get_by_id("globe_1950")["path"].endswith("world/1950.png")
 
     def test_unknown_id_returns_none(self):
         assert illustration_service.get_by_id("not-an-illustration") is None
@@ -70,7 +70,25 @@ class TestYearAndPrioritySelection:
 
     def test_1955_world_selects_globe(self):
         result = illustration_service.get_for_category("world", 1955)
-        assert result["id"] == "globe"
+        assert result["id"] == "globe_1950"
+
+    @pytest.mark.parametrize(
+        ("year", "expected_id"),
+        [
+            (1950, "globe_1950"), (1959, "globe_1950"),
+            (1960, "globe_1960"), (1969, "globe_1960"),
+            (1970, "globe_1970"), (1979, "globe_1970"),
+            (1980, "globe_1980"), (1989, "globe_1980"),
+            (1990, "globe_1990"), (1999, "globe_1990"),
+            (2000, "globe_2000"), (2009, "globe_2000"),
+            (2010, "globe_2010"), (2019, "globe_2010"),
+            (2020, "globe_2020"), (2026, "globe_2020"),
+        ],
+    )
+    def test_world_globe_selects_the_illustration_for_its_decade(self, year, expected_id):
+        result = illustration_service.get_for_category("world", year)
+        assert result["id"] == expected_id
+        assert result["path"].endswith(f"world/{expected_id.removeprefix('globe_')}.png")
 
     def test_1955_congress_selects_capitol(self):
         result = illustration_service.get_for_context("congress", 1955)
@@ -89,7 +107,7 @@ class TestContextNormalization:
     def test_world_news_variants(self, context):
         assert normalize_context(context) == "world_news"
         result = illustration_service.get_for_context(context, 1955)
-        assert result["id"] == "globe"
+        assert result["id"] == "globe_1950"
 
     @pytest.mark.parametrize("context", ["Digital Music", "digital_music", "digital-music"])
     def test_digital_music_variants(self, context):
@@ -219,3 +237,33 @@ class TestMissingFileIsSkipped:
         assert service.missing_paths == [
             "images/illustrations/originals/world/missing.png"
         ]
+
+
+DATABASE_OCCUPATIONS = (
+    "Activist", "Actor", "Administrator", "Agriculturalist", "Apostle", "Architect",
+    "Artisan", "Artist", "Astronomer", "Author", "Banker", "Biologist", "Caliph",
+    "Chemist", "Composer", "Cook", "Cricketer", "Criminal", "Dancer", "Diplomat",
+    "Doge", "Duchess", "Duke", "Economist", "Educator", "Emperor", "Empress",
+    "Engineer", "Entrepreneur", "Evangelist", "Explorer", "General", "Governor",
+    "Historian", "Inventor", "Judge", "King", "Lawyer", "Librarian", "Mathematician",
+    "Merchant", "Military Commander", "Monarch", "Musician", "Noble", "Nurse",
+    "Painter", "Philosopher", "Physician", "Physicist", "Pirate", "Playwright",
+    "Poet", "Politician", "Pope", "Prince", "Princess", "Printer", "Prophet",
+    "Publisher", "Queen", "Religious Leader", "Ruler", "Saint", "Scholar",
+    "Scientist", "Shogun", "Singer", "Soldier", "Statesman", "Sultan",
+    "Theologian", "Tsar", "Writer",
+)
+
+
+class TestFamousPeopleOccupationIcons:
+    def test_every_stored_occupation_has_an_icon_mapping(self):
+        for occupation in DATABASE_OCCUPATIONS:
+            assert occupation in FAMOUS_PEOPLE_ICON_FILES, occupation
+
+    def test_every_mapped_icon_file_exists_on_disk(self):
+        icons_root = (
+            illustration_service.static_root
+            / "images/illustrations/originals/famous_people"
+        )
+        for filename in set(FAMOUS_PEOPLE_ICON_FILES.values()):
+            assert (icons_root / filename).is_file(), filename
