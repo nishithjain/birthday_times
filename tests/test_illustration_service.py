@@ -44,6 +44,22 @@ class TestIllustrationCatalog:
 
 class TestYearAndPrioritySelection:
     @pytest.mark.parametrize(
+        ("condition", "style_id", "expected_filename"),
+        [
+            ("rain", "1980", "rain_1980.png"),
+            ("rain", "1990", "rain_1980.png"),
+            ("fog", "2000", "fog_2000.png"),
+            ("fog", "1970", "fog_1950.png"),
+            ("sunny", "2020", "sunny_2000.png"),
+        ],
+    )
+    def test_weather_art_uses_requested_era_or_previous_available_era(
+        self, condition, style_id, expected_filename
+    ):
+        result = illustration_service.resolve_by_id(f"weather_{condition}", style_id)
+        assert result["displayPath"].endswith(f"weather/{expected_filename}")
+
+    @pytest.mark.parametrize(
         ("year", "expected_id"),
         [
             (1955, "jukebox"),

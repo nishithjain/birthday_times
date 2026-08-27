@@ -140,7 +140,7 @@
     {
       "id": "weather_sunny",
       "category": "weather",
-      "path": "images/illustrations/originals/weather/sunny.png",
+      "path": "images/illustrations/originals/weather/sunny_1950.png",
       "yearFrom": 1950,
       "yearTo": null,
       "contexts": [
@@ -153,7 +153,7 @@
     {
       "id": "weather_partly_cloudy",
       "category": "weather",
-      "path": "images/illustrations/originals/weather/partly-cloudy.png",
+      "path": "images/illustrations/originals/weather/partly-cloudy_1950.png",
       "yearFrom": 1950,
       "yearTo": null,
       "contexts": [
@@ -166,7 +166,7 @@
     {
       "id": "weather_cloudy",
       "category": "weather",
-      "path": "images/illustrations/originals/weather/cloudy.png",
+      "path": "images/illustrations/originals/weather/cloudy_1950.png",
       "yearFrom": 1950,
       "yearTo": null,
       "contexts": [
@@ -179,7 +179,7 @@
     {
       "id": "weather_showers",
       "category": "weather",
-      "path": "images/illustrations/originals/weather/showers.png",
+      "path": "images/illustrations/originals/weather/showers_1950.png",
       "yearFrom": 1950,
       "yearTo": null,
       "contexts": [
@@ -192,7 +192,7 @@
     {
       "id": "weather_rain",
       "category": "weather",
-      "path": "images/illustrations/originals/weather/rain.png",
+      "path": "images/illustrations/originals/weather/rain_1950.png",
       "yearFrom": 1950,
       "yearTo": null,
       "contexts": [
@@ -205,7 +205,7 @@
     {
       "id": "weather_thunderstorm",
       "category": "weather",
-      "path": "images/illustrations/originals/weather/thunderstorm.png",
+      "path": "images/illustrations/originals/weather/thunderstorm_1950.png",
       "yearFrom": 1950,
       "yearTo": null,
       "contexts": [
@@ -218,7 +218,7 @@
     {
       "id": "weather_snow",
       "category": "weather",
-      "path": "images/illustrations/originals/weather/snow.png",
+      "path": "images/illustrations/originals/weather/snow_1950.png",
       "yearFrom": 1950,
       "yearTo": null,
       "contexts": [
@@ -231,7 +231,7 @@
     {
       "id": "weather_fog",
       "category": "weather",
-      "path": "images/illustrations/originals/weather/fog.png",
+      "path": "images/illustrations/originals/weather/fog_1950.png",
       "yearFrom": 1950,
       "yearTo": null,
       "contexts": [
@@ -244,7 +244,7 @@
     {
       "id": "weather_windy",
       "category": "weather",
-      "path": "images/illustrations/originals/weather/windy.png",
+      "path": "images/illustrations/originals/weather/windy_1950.png",
       "yearFrom": 1950,
       "yearTo": null,
       "contexts": [

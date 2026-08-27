@@ -4,7 +4,7 @@
 }
 
 .chronicle-weather {
-    --weather-image-size: 48px;
+    --weather-image-size: 38px;
     --weather-image-x: 0px;
     --weather-image-y: 0px;
     width: 228px;
@@ -52,15 +52,15 @@
 
 /* ── Illustration ── */
 .weather-art {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    flex: 0 0 48px;
-    overflow: visible;
-    transform: translate(12px, -2px);
+    flex: 0 0 44px;
+    overflow: hidden;
+    transform: translate(18px, -1px);
 }
 
 .weather-illustration {
@@ -81,38 +81,38 @@
 
 .chronicle-weather[data-weather-condition="cloudy"],
 .chronicle-weather[data-weather-condition="overcast"] {
-    --weather-image-size: 55px;
+    --weather-image-size: 38px;
     --weather-image-x: 1px;
     --weather-image-y: 2px;
 }
 
 .chronicle-weather[data-weather-condition="fog"],
 .chronicle-weather[data-weather-condition="foggy"] {
-    --weather-image-size: 51px;
+    --weather-image-size: 38px;
     --weather-image-y: -1px;
 }
 
 .chronicle-weather[data-weather-condition="partly_cloudy"] {
-    --weather-image-size: 51px;
+    --weather-image-size: 38px;
     --weather-image-x: 1px;
     --weather-image-y: 3px;
 }
 
 .chronicle-weather[data-weather-condition="rain"],
 .chronicle-weather[data-weather-condition="rainy"] {
-    --weather-image-size: 55px;
+    --weather-image-size: 38px;
     --weather-image-y: 1px;
 }
 
 .chronicle-weather[data-weather-condition="showers"],
 .chronicle-weather[data-weather-condition="showery"] {
-    --weather-image-size: 55px;
+    --weather-image-size: 38px;
     --weather-image-x: 1px;
 }
 
 .chronicle-weather[data-weather-condition="snow"],
 .chronicle-weather[data-weather-condition="snowy"] {
-    --weather-image-size: 55px;
+    --weather-image-size: 38px;
     --weather-image-x: 1px;
     --weather-image-y: -1px;
 }
@@ -120,22 +120,22 @@
 .chronicle-weather[data-weather-condition="sunny"],
 .chronicle-weather[data-weather-condition="clear"],
 .chronicle-weather[data-weather-condition="dry"] {
-    --weather-image-size: 62px;
+    --weather-image-size: 40px;
     --weather-image-y: 1px;
 }
 
 .chronicle-weather[data-weather-condition="thunderstorm"],
 .chronicle-weather[data-weather-condition="storm"] {
-    --weather-image-size: 55px;
+    --weather-image-size: 38px;
 }
 
 .chronicle-weather[data-weather-condition="windy"] {
-    --weather-image-size: 45px;
+    --weather-image-size: 36px;
     --weather-image-y: 3px;
 }
 
 .chronicle-weather[data-weather-condition="generic"] {
-    --weather-image-size: 46px;
+    --weather-image-size: 38px;
 }
 
 /* ── Details Column ── */
