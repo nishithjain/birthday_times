@@ -42,6 +42,13 @@ def test_modular_development_routes_render():
     assert client.get("/dev/sections/extra?date=2000-02-29").status_code == 200
 
 
+def test_chronicle_master_review_supplies_weather_city():
+    response = app.test_client().get("/dev/chronicle-master-review")
+
+    assert response.status_code == 200
+    assert b"&city=Bengaluru" in response.data
+
+
 def test_extra_ornaments_follow_newspaper_style_ids():
     client = app.test_client()
     expected = {

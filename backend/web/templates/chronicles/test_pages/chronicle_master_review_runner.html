@@ -157,7 +157,7 @@
     const intervalMs = {{ interval| tojson }} || 1000;
     const field = name => runner.querySelector(`[data-review-${name}]`);
     let index = 0, paused = false, timer = null, token = 0;
-    const tests = dates.map(date => ({ date, url: `/dev/chronicle-master?date=${date}&name=Master%20Review` }));
+    const tests = dates.map(date => ({ date, url: `/dev/chronicle-master?date=${date}&name=Master%20Review&city=Bengaluru` }));
     const setStatus = (text, warning = false) => { const item = runner.querySelector('[data-review-status]'); item.textContent = text; item.className = `master-review-status${warning ? ' warning' : ''}`; };
     const clearTimer = () => { if (timer) window.clearTimeout(timer); timer = null; };
     const update = test => { field('position').textContent = `${index + 1} / ${tests.length}`; field('date').textContent = test?.date || '-'; field('url').value = test?.url || ''; field('progress').style.width = tests.length ? `${((index + 1) / tests.length) * 100}%` : '0%'; };
