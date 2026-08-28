@@ -127,4 +127,6 @@
     height: 28px;
     object-fit: contain;
     flex: 0 0 28px;
+    filter: grayscale(100%) sepia(42%) saturate(55%) contrast(108%) brightness(78%);
+    opacity: .88;
 }

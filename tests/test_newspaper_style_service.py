@@ -30,6 +30,8 @@ class TestNewspaperStyleService:
             (2007, "2005", "chronicles/chronicle_2005.html", "css/chronicles/chronicle_2005.css", "2005"),
             (2012, "2010", "chronicles/chronicle_2005.html", "css/chronicles/chronicle_2005.css", "2010"),
             (2018, "2015", "chronicles/chronicle_2015.html", "css/chronicles/chronicle_2015.css", "2015"),
+            (2020, "2020", "chronicles/chronicle_2015.html", "css/chronicles/chronicle_2015.css", "2020"),
+            (2026, "2020", "chronicles/chronicle_2015.html", "css/chronicles/chronicle_2015.css", "2020"),
         ],
     )
     def test_get_style_for_year(

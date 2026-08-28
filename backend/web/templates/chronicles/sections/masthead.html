@@ -12,4 +12,12 @@
         <div class="masthead-meta-right">SPECIAL EDITION</div>
     </div>
     <div class="masthead-bottom-rule" aria-hidden="true"></div>
+    <div class="masthead-stars masthead-stars--left" aria-hidden="true">
+        {% for _ in range(5) %}<img class="masthead-star chronicle-era-illustration"
+            src="{{ url_for('static', filename=chronicle.mastheadStarPath) }}" alt="">{% endfor %}
+    </div>
+    <div class="masthead-stars masthead-stars--right" aria-hidden="true">
+        {% for _ in range(5) %}<img class="masthead-star chronicle-era-illustration"
+            src="{{ url_for('static', filename=chronicle.mastheadStarPath) }}" alt="">{% endfor %}
+    </div>
 </section>

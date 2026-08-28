@@ -4,6 +4,7 @@
     width: 920px;
     height: 150px;
     box-sizing: border-box;
+    position: relative;
     margin: 0;
     padding: 8px 10px 6px;
     display: grid;
@@ -91,6 +92,35 @@
     height: 3px;
     border-top: 2px solid currentColor;
     border-bottom: 1px solid currentColor;
+}
+
+.chronicle-masthead .masthead-stars {
+    position: absolute;
+    top: 76px;
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    width: 136px;
+    height: 24px;
+    overflow: hidden;
+}
+
+.chronicle-masthead .masthead-stars--left {
+    left: 16px;
+    justify-content: flex-start;
+}
+
+.chronicle-masthead .masthead-stars--right {
+    right: 16px;
+    justify-content: flex-end;
+}
+
+.chronicle-masthead .masthead-star {
+    display: block;
+    width: auto;
+    height: 22px;
+    flex: 0 0 auto;
+    object-fit: contain;
 }
 
 .chronicle-masthead[data-masthead-style="1950"],

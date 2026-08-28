@@ -335,6 +335,22 @@
     --chronicle-photo-opacity: .98;
 }
 
+[data-era="2020"] {
+    --paper: #eef0f0;
+    --paper-light: #f7f8f8;
+    --paper-dark: #d9dddd;
+    --ink: #171615;
+    --ink-headline: #121110;
+    --ink-muted: #4a4946;
+    --ink-light: #777774;
+    --rule: rgba(35, 35, 33, 0.62);
+    --rule-light: rgba(35, 35, 33, 0.24);
+    --rule-thin: rgba(35, 35, 33, 0.14);
+    --chronicle-illustration-filter: grayscale(8%) sepia(0%) saturate(90%) contrast(102%) brightness(96%);
+    --chronicle-illustration-opacity: .96;
+    --chronicle-photo-opacity: .98;
+}
+
 .chronicle-era-illustration,
 .newspaper-illustration {
     background: transparent;

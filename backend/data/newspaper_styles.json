@@ -286,8 +286,39 @@
     {
       "id": "2015",
       "yearFrom": 2015,
-      "yearTo": 2026,
+      "yearTo": 2019,
       "backgroundImage": "images/newspaper/2015.png",
+      "mastheadFont": "\"UnifrakturCook\", \"Old English Text MT\", serif",
+      "headlineFont": "\"Roboto Condensed\", Arial, sans-serif",
+      "bodyFont": "\"Newsreader\", Georgia, serif",
+      "theme": "modern-news",
+      "template": "chronicles/chronicle_2015.html",
+      "stylesheet": "css/chronicles/chronicle_2015.css",
+      "printStyle": {
+        "colorMode": "full_color",
+        "photoTreatment": "modern_editorial",
+        "colorStrength": 1.0,
+        "halftoneStrength": 0.06,
+        "grainStrength": 0.04,
+        "contrast": 1.04,
+        "brightness": 1.0
+      },
+      "illustrationPrintStyle": {
+        "colorMode": "full_color",
+        "colorStrength": 1.0,
+        "inkStrength": 1.0,
+        "inkSpread": 0.005,
+        "roughness": 0.005,
+        "detailRetention": 1.0,
+        "grainStrength": 0.01,
+        "softness": 0.0
+      }
+    },
+    {
+      "id": "2020",
+      "yearFrom": 2020,
+      "yearTo": 9999,
+      "backgroundImage": "images/newspaper/2020.png",
       "mastheadFont": "\"UnifrakturCook\", \"Old English Text MT\", serif",
       "headlineFont": "\"Roboto Condensed\", Arial, sans-serif",
       "bodyFont": "\"Newsreader\", Georgia, serif",

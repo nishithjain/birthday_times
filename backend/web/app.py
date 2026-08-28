@@ -47,6 +47,19 @@ MASTHEAD_TITLES = {
     "2015": "The Birthday Times",
 }
 
+MASTHEAD_STAR_ASSETS = {
+    "1950": "1950.png",
+    "1960": "1960.png",
+    "1970": "1970.png",
+    "1980": "1980.png",
+    "1990": "1990.png",
+    "1995": "1990.png",
+    "2000": "2000.png",
+    "2005": "2000.png",
+    "2010": "2010.png",
+    "2015": "2015.png",
+}
+
 NEWS_DISPATCH_PRESENTATION = {
     "1950": {"image": "telegram_1950.png", "label": "Telegram", "alt": "Vintage telegram dispatch", "natural": "902 x 471", "expected": "124 x 65"},
     "1960": {"image": "wire_globe_1960.png", "label": "Wire Service", "alt": "Wire service bulletin", "natural": "808 x 538", "expected": "120 x 80"},
@@ -278,6 +291,10 @@ def _prepare_modular_chronicle(chronicle):
     style_id = str(chronicle.get("newspaper_style", {}).get("id", "2015"))
     chronicle["extraOrnament"] = EXTRA_ORNAMENTS.get(style_id, "•")
     chronicle["mastheadTitle"] = MASTHEAD_TITLES.get(style_id, "The Birthday Times")
+    chronicle["mastheadStarPath"] = (
+        "images/illustrations/originals/stars/"
+        f"{MASTHEAD_STAR_ASSETS.get(style_id, MASTHEAD_STAR_ASSETS['2015'])}"
+    )
     dispatch = NEWS_DISPATCH_PRESENTATION.get(style_id, NEWS_DISPATCH_PRESENTATION["2015"])
     chronicle["arrival"]["dispatchLabel"] = dispatch["label"]
     chronicle["arrival"]["dispatchArtwork"] = {
